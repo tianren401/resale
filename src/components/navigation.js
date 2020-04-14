@@ -7,6 +7,7 @@ const StyledNavigation = styled.div`
   padding: 25px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Logo = styled(Link)`
