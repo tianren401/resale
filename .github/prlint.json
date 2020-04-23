@@ -1,0 +1,8 @@
+{
+  "title": [
+    {
+      "pattern": "^RP-[0-9]{1,5}: ",
+      "message": "Your title should include RP-[ticket_number]: [pr_summary]"
+    }
+  ]
+}

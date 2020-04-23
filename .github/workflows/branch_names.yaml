@@ -1,0 +1,14 @@
+name: Branch name rules
+on: [push]
+
+jobs:
+    build:
+        name: Branch name rules
+        runs-on: ubuntu-latest
+        steps:
+            - name: Enforce branch name
+              uses: deepakputhraya/action-branch-name@v1.0.0
+              with:
+                  regex: '[a-z]+\/(ed|rp)-\d+((-.*)*)'
+                  allowed_prefixes: 'feature,bugfix,enhancement,release'
+                  ignore: master,stage,dev
