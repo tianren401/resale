@@ -60,7 +60,7 @@ jobs:
           # command: |
           #   npm build-${BUILD_ENV}
           command: |
-            npm build
+            npm run-script build
 
       - persist_to_workspace:
           root: ~/
