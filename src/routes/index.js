@@ -1,24 +1,26 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { GlobalStyles } from '../globalStyles';
 import { Navigation } from 'components';
-import { Home, Login } from 'containers';
+import { Home } from 'containers';
 
 const MainContent = styled.div`
   padding: 25px;
 `;
 
 const Routes = () => (
-  <BrowserRouter>
+  <Router>
     <GlobalStyles />
     <Navigation />
     <MainContent>
-      <Route exact path="/" component={Home} />
-      <Route path="/login" component={Login} />
+      <Switch>
+        <Route exact path="/home" component={Home} />
+        <Redirect to="/home" />
+      </Switch>
     </MainContent>
-  </BrowserRouter>
+  </Router>
 );
 
 export default Routes;

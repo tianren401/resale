@@ -1,6 +1,7 @@
 {
   "env": {
     "browser": true,
+    "node": true,
     "es6": true
   },
   "extends": [
@@ -19,7 +20,10 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier"],
+  "plugins": [
+    "react",
+    "prettier"
+  ],
   "rules": {
     "env": 0,
     "experimentalDecorators": 0,
@@ -31,12 +35,19 @@
     "react/prop-types": 1,
     "no-use-before-define": [
       "error",
-      { "functions": true, "classes": true, "variables": false }
+      {
+        "functions": true,
+        "classes": true,
+        "variables": false
+      }
     ],
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
       }
     ],
     "prettier/prettier": [
@@ -60,13 +71,21 @@
     "propWrapperFunctions": [
       // The names of any function used to wrap propTypes, e.g. `forbidExtraProps`. If this isn't set, any propTypes wrapped in a function will be skipped.
       "forbidExtraProps",
-      { "property": "freeze", "object": "Object" },
-      { "property": "myFavoriteWrapper" }
+      {
+        "property": "freeze",
+        "object": "Object"
+      },
+      {
+        "property": "myFavoriteWrapper"
+      }
     ],
     "linkComponents": [
       // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
       "Hyperlink",
-      { "name": "Link", "linkAttribute": "to" }
+      {
+        "name": "Link",
+        "linkAttribute": "to"
+      }
     ]
   }
 }

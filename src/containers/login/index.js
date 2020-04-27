@@ -1,3 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { loginAction } from 'store/auth';
+import LoginForm from './components/loginForm';
 
-export const Login = () => <div>Login</div>;
+export const Login = () => {
+  const dispatch = useDispatch();
+  const handleSubmit = (values) => {
+    dispatch(loginAction(values));
+  };
+  return (
+    <div>
+      <LoginForm handleSubmit={handleSubmit} />
+    </div>
+  );
+};
