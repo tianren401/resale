@@ -1,2 +1,10 @@
 import React from 'react';
-export const Home = () => <div>Home</div>;
+import { UpcomingSection } from './upcomingSection';
+
+export const Home = () => {
+  return (
+    <div>
+      <UpcomingSection />
+    </div>
+  );
+};
