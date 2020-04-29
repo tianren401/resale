@@ -1,11 +1,11 @@
-## :round_pushpin: Overview
+## Overview
 What’s going on in this PR?
 
-### :clipboard: Changelog
+### Changelog
 
-### :ticket: JIRA Ticket(s)
+### JIRA Ticket(s)
 
 ### Related Pull Requests
 <!--- PRs can be referenced using Github Links by starting with a `#` -->
 
-### :camera: Screenshots:
+### Screenshots:
