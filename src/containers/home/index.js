@@ -1,2 +1,8 @@
 import React from 'react';
-export const Home = () => <div>Home</div>;
+import SearchBar from 'components/SearchBar';
+import { fetchSearch } from 'services/actions';
+export const Home = () => (
+  <div>
+    <SearchBar fetchData={fetchSearch} onChange={() => {}} />
+  </div>
+);
