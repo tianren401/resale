@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
 
-import leftArrow from '../images/leftArrow.svg';
-import rightArrow from '../images/rightArrow.svg';
-
 const StyledCarouselItem = styled.div`
   display: flex;
   width: 100%;
@@ -12,7 +9,6 @@ const StyledCarouselItem = styled.div`
   color: #fff;
   font-size: 4em;
   background-size: cover;
-  background-image: url("https://blog.ticketmaster.com/wp-content/uploads/BillieEilish-2020-1024x564.jpg");
 `;
 
 const EventInfo = styled.div`
@@ -46,17 +42,14 @@ width: 60%;
 margin: 0 auto;
 `;
 
-export const Arrow = styled.img`
-margin-bottom: 75px;
-`;
-
 export const CarouselItem = (props) => (
-  <StyledCarouselItem>
+  <StyledCarouselItem style={{ backgroundImage: `url("/static/media/concertEvent11.a7557f11.png")` }} >
+
     <ArrowGroup>
 
       <EventInfo>
-        <Artist>Billie Eilish</Artist>
-        <EventLocation>September 6th Georgia Dome</EventLocation>
+        <Artist>{props.title}</Artist>
+        <EventLocation>{props.desc}</EventLocation>
         <StyledButton>Buy Tickets</StyledButton>
       </EventInfo>
 

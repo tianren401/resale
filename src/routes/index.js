@@ -16,7 +16,7 @@ const Routes = () => (
     <GlobalStyles />
     {/* <MainContent> */}
     <Navigation />
-      <HeroCarousel />
+      {/* <HeroCarousel /> */}
       {/* <EventCarousel /> */}
       <Switch>
         <Route exact path="/home" component={Home} />

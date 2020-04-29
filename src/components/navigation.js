@@ -14,7 +14,9 @@ const StyledNavigation = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  text-align: center;
+  left: 150px;
+  width: 80%;
   z-index: 1;
 `;
 
@@ -69,10 +71,10 @@ export const Navigation = () => {
           </Modal>
         </div>
       ) : (
-        <div>
-          <UserItems onClick={handlelogout}>Log Out</UserItems>
-        </div>
-      )}
+          <div>
+            <UserItems onClick={handlelogout}>Log Out</UserItems>
+          </div>
+        )}
     </StyledNavigation>
   );
 };

@@ -1,5 +1,12 @@
 import React from 'react';
+import { UpcomingSection } from './upcomingSection';
+import { HeroSection } from './heroSection';
 
-export const Home = () => <div>
-Home component text
-</div>;
+export const Home = () => {
+  return (
+    <>
+      <HeroSection />
+      <UpcomingSection />
+    </>
+  );
+};

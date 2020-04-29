@@ -1,10 +1,10 @@
-import React from 'react';
-import { UpcomingSection } from './upcomingSection';
+// import React from 'react';
+// import { UpcomingSection } from './upcomingSection';
 
-export const Home = () => {
-  return (
-    <div>
-      <UpcomingSection />
-    </div>
-  );
-};
+// export const Home = () => {
+//   return (
+//     <div>
+//       <UpcomingSection />
+//     </div>
+//   );
+// };
