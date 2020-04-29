@@ -10,5 +10,5 @@ jobs:
               uses: deepakputhraya/action-branch-name@v1.0.0
               with:
                   regex: '[a-z]+\/(ed|rp)-\d+((-.*)*)'
-                  allowed_prefixes: 'feature,bugfix,enhancement,release'
+                  allowed_prefixes: 'feature,bugfix,enhancement,release,task,test'
                   ignore: master,stage,dev
