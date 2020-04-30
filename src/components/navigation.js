@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { navigationHeight } from 'constants/styleConstants';
+import { navigationHeight } from '_constants/styleConstants';
 import { Login } from 'pages';
 import { logout } from 'store/auth';
 import { Modal } from './modal';

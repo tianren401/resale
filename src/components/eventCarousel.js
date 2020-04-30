@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Carousel from 'react-elastic-carousel';
+import { format } from 'date-fns';
 
 import arrowImage from 'images/arrowImage.png';
 
@@ -23,6 +24,7 @@ const CarouselItem = styled.div`
   display: inline-block;
   cursor: pointer;
   position: relative;
+  max-width: 220px;
 `;
 
 const CarouselTitle = styled.div`
@@ -81,7 +83,6 @@ const SlideButton = styled.div`
   position: absolute;
   top: 71px;
   bottom: 0;
-  align-item: center;
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -112,6 +113,11 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
   const [showPrevBtn, setShowPrevBtn] = useState(false);
   const [showNextBtn, setShowNextBtn] = useState(false);
 
+  const breakPoints = [
+    { width: 1, itemsToShow: 2, itemPadding: [0, 30] },
+    { width: 768, itemsToShow: 4 },
+  ];
+
   useEffect(() => {
     if (events.length > itemCount) setShowNextBtn(true);
   }, [itemCount, events]);
@@ -138,18 +144,22 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
         ref={carousel}
         onPrevEnd={handleButtonVisible}
         onNextEnd={handleButtonVisible}
+        breakPoints={breakPoints}
       >
         {events.map((item) => {
-          let imgUri = item.src || '';
+          let imgUri = item.venue.image || '';
           if (!imgUri.startsWith('http')) {
             imgUri = require(`../${imgUri}`);
           }
+          let date = format(new Date(item.timestamp), 'MMM d');
 
           return (
             <CarouselItem key={item.id}>
               <CarouselItemImage style={{ backgroundImage: `url(${imgUri})` }} />
-              <CarouselItemTitle>{item.title}</CarouselItemTitle>
-              <CarouselItemDesc>{item.desc}</CarouselItemDesc>
+              <CarouselItemTitle>{item.name}</CarouselItemTitle>
+              <CarouselItemDesc>
+                {date} · {item.venue.name}
+              </CarouselItemDesc>
               <CarouselItemPrice>${item.price}</CarouselItemPrice>
             </CarouselItem>
           );

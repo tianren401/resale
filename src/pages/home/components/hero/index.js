@@ -5,7 +5,7 @@ import { testImages } from './testData';
 import { get } from 'helpers'
 
 
-export const HeroSection = () => {
+export const Hero = () => {
   const [events, setEvents] = useState([]);
 
   // TODO: Pull real events from Redux

@@ -8,7 +8,7 @@ import { Home } from 'pages';
 // import { EventCarousel } from 'components/eventCarousel';
 
 const MainContent = styled.div`
-  padding: 25px;
+  //Todo:
 `;
 
 const Routes = () => (
