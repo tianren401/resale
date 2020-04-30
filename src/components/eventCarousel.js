@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Carousel from 'react-elastic-carousel';
 
-import arrowImage from 'assets/images/arrowImage.png';
+import arrowImage from 'images/arrowImage.png';
 
 const Container = styled.div`
   display: block;

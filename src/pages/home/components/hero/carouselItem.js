@@ -1,5 +1,8 @@
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
+
+import leftArrow from 'images/leftArrow.svg'
+import rightArrow from 'images/rightArrow.svg'
 
 const StyledCarouselItem = styled.div`
   display: flex;
@@ -9,6 +12,7 @@ const StyledCarouselItem = styled.div`
   color: #fff;
   font-size: 4em;
   background-size: cover;
+  background-image: url(${({ backgroundImage }) => backgroundImage});
 `;
 
 const EventInfo = styled.div`
@@ -42,17 +46,21 @@ width: 60%;
 margin: 0 auto;
 `;
 
+const Arrow = styled.img`
+
+`;
+
 export const CarouselItem = (props) => (
-  <StyledCarouselItem style={{ backgroundImage: `url("/static/media/concertEvent11.a7557f11.png")` }} >
+  <StyledCarouselItem backgroundImage={props.backgroundImage}>
 
     <ArrowGroup>
-
+      <Arrow src={leftArrow} onClick={props.slidePrev} />
       <EventInfo>
         <Artist>{props.title}</Artist>
         <EventLocation>{props.desc}</EventLocation>
         <StyledButton>Buy Tickets</StyledButton>
       </EventInfo>
-
+      <Arrow src={rightArrow} onClick={props.slideNext} />
     </ArrowGroup>
   </StyledCarouselItem>
 )
