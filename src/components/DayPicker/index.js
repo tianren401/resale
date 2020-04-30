@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import ReactDayPicker from 'react-day-picker';
 
-import { shadows, colors } from '_constants';
-import { Flex, Text } from '_components';
+import { shadows, colors } from 'theme';
+import { Flex, Text } from 'components';
 import { ErrorAlert } from './ErrorAlert';
 
 const DayPickerContainer = styled.div`
@@ -30,7 +30,7 @@ const DayPickerContainer = styled.div`
 `;
 DayPickerContainer.displayName = 'DropdownMenu';
 
-export const DayPicker = ({
+export default ({
   dateRangePickerOpen,
   from,
   to,

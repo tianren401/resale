@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from './Autocomplete';
+import DayPicker from 'components/DayPicker';
+import { Flex } from 'components';
 const SearchBar = ({ value, placeholder, onChange, ...rest }) => (
-  <Autocomplete
-    {...rest}
-    value={value || null}
-    placeholder={placeholder}
-    onChange={(_, value) => onChange(value)}
-  />
+  <Flex>
+    <Autocomplete
+      {...rest}
+      value={value || null}
+      placeholder={placeholder}
+      onChange={(_, value) => onChange(value)}
+    />
+    <DayPicker />
+  </Flex>
 );
 
 SearchBar.propTypes = {
