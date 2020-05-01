@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import throttle from 'lodash/throttle';
 /* Styled Components */
@@ -11,21 +11,32 @@ import {
 
 import { FlexItem } from 'components';
 
-const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
+const Autocomplete = ({ fetchData, placeholder, onChange, ...rest }) => {
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [activeOption, setActiveOption] = useState(0);
 
+  const dropdownEl = useRef(null);
+  const inputEl = useRef(null);
+
   const handleChange = (event) => {
     setInputValue(event.target.value);
+    onChange(event.target.value);
   };
 
-  const handleClick = (event) => {
+  const resetSearch = () => {
+    setShowOptions(false);
+    setActiveOption(0);
+    setOptions([]);
+    setLoading(false);
+  };
+
+  const handleItemClick = (event) => {
     setActiveOption(0);
     setShowOptions(false);
-    setInputValue(event.target.value);
+    setInputValue(options[activeOption]);
   };
 
   const handleKeyDown = (event) => {
@@ -44,6 +55,22 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
         return;
       }
       setActiveOption(activeOption + 1);
+    } else if (key === 'Escape') {
+      resetSearch();
+    }
+  };
+
+  const handleDocumentClick = (event) => {
+    const dropdownArea = dropdownEl.current;
+    const searchInput = inputEl.current;
+
+    if (
+      dropdownArea &&
+      !dropdownArea.contains(event.target) &&
+      searchInput &&
+      !searchInput.contains(event.target)
+    ) {
+      resetSearch();
     }
   };
 
@@ -68,8 +95,11 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
       }
     });
 
+    document.addEventListener('click', handleDocumentClick);
+
     return () => {
       active = false;
+      document.removeEventListener('click', handleDocumentClick);
     };
   }, [inputValue, fetch]);
 
@@ -77,7 +107,7 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
   if (showOptions && inputValue) {
     if (options.length) {
       optionList = (
-        <AutocompleteList>
+        <AutocompleteList ref={dropdownEl}>
           {options.map((optionName, index) => {
             let className;
             if (index === activeOption) {
@@ -87,7 +117,7 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
               <AutoCompletItem
                 className={className}
                 key={optionName}
-                onClick={handleClick}
+                onClick={handleItemClick}
               >
                 {optionName}
               </AutoCompletItem>
@@ -111,6 +141,7 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
         onKeyDown={handleKeyDown}
         value={inputValue}
         placeholder={placeholder}
+        ref={inputEl}
       />
       {optionList}
     </FlexItem>
@@ -120,6 +151,7 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
 Autocomplete.propTypes = {
   placeholder: PropTypes.string,
   fetchData: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default Autocomplete;

@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { colors } from 'theme';
-import { Flex } from 'components';
 
 export const SearchContainer = styled.div`
   text-align: left;
@@ -59,7 +58,6 @@ export const AutocompleteList = styled.ul`
 export const AutoCompletItem = styled.li`
   display: block;
   background: white;
-  margin: 10px auto;
   padding: 10px;
   font-size: 1.2rem;
   width: 100%;

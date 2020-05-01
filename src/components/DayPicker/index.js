@@ -36,12 +36,12 @@ const DayPickerContainer = styled.div`
   }
 `;
 
-const DayPicker = ({ value, dateError, handleDateChange }) => {
+const DayPicker = ({ value, dateError, onDateChange }) => {
   return (
     <Flex height="60px" width="100%">
       <DayPickerContainer show>
         {dateError && <ErrorAlert msg="Date is required" />}
-        <DayPickerInput value={value} onDayChange={handleDateChange} />
+        <DayPickerInput value={value} onDayChange={onDateChange} />
       </DayPickerContainer>
     </Flex>
   );
@@ -50,7 +50,7 @@ const DayPicker = ({ value, dateError, handleDateChange }) => {
 DayPicker.propTypes = {
   value: PropTypes.any,
   dateError: PropTypes.string,
-  handleDateChange: PropTypes.func,
+  onDateChange: PropTypes.func,
 };
 
 export default DayPicker;
