@@ -50,17 +50,17 @@ const Arrow = styled.img`
 
 `;
 
-export const CarouselItem = (props) => (
-  <StyledCarouselItem backgroundImage={props.backgroundImage}>
+export const CarouselItem = ({ backgroundImage, title, desc, slidePrev, slideNext }) => (
+  <StyledCarouselItem backgroundImage={backgroundImage}>
 
     <ArrowGroup>
-      <Arrow src={leftArrow} onClick={props.slidePrev} />
+      <Arrow src={leftArrow} onClick={slidePrev} />
       <EventInfo>
-        <Artist>{props.title}</Artist>
-        <EventLocation>{props.desc}</EventLocation>
+        <Artist>{title}</Artist>
+        <EventLocation>{desc}</EventLocation>
         <StyledButton>Buy Tickets</StyledButton>
       </EventInfo>
-      <Arrow src={rightArrow} onClick={props.slideNext} />
+      <Arrow src={rightArrow} onClick={slideNext} />
     </ArrowGroup>
   </StyledCarouselItem>
 )
