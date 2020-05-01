@@ -4,7 +4,7 @@ import Autocomplete from './Autocomplete';
 import DayPicker from 'components/DayPicker';
 import { Flex } from 'components';
 const SearchBar = ({ value, placeholder, onChange, ...rest }) => (
-  <Flex>
+  <Flex position="relative">
     <Autocomplete
       {...rest}
       value={value || null}

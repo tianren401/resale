@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const SearchContainer = styled.div`
   text-align: left;
@@ -53,13 +53,21 @@ export const SubmitButton = styled.input`
   }
 `;
 
+const dropdownPosition = css`
+  position: absolute;
+  left: 2px;
+  top: 61px;
+  padding-left: 0;
+  z-index: 1;
+`;
+
 export const AutocompleteList = styled.ul`
   display: block;
   list-style: none;
   width: 30rem;
   transition: width 0.3s;
   margin: auto;
-  position: relative;
+  ${dropdownPosition}
 `;
 
 export const AutoCompletItem = styled.li`
@@ -87,4 +95,5 @@ export const AutoCompletItem = styled.li`
 
 export const EmptyListContainer = styled.div`
   color: white;
+  ${dropdownPosition}
 `;

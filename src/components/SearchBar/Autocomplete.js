@@ -9,6 +9,7 @@ import {
   AutocompleteList,
   EmptyListContainer,
 } from './StyledComponents';
+import { Flex } from 'components/Flex';
 
 const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
   const [loading, setLoading] = useState(false);
@@ -103,7 +104,7 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
     }
   }
   return (
-    <>
+    <Flex position="relative">
       <SearchContainer>
         <SearchInput
           type="text"
@@ -115,7 +116,7 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
         <SubmitButton type="submit" value="" />
       </SearchContainer>
       {optionList}
-    </>
+    </Flex>
   );
 };
 

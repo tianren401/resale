@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { deviceSize } from '_constants';
 
 import { withBoxModelProps } from 'helpers/style-utils';
 import { colors } from 'theme';
@@ -108,3 +109,20 @@ export const Text = withBoxModelProps(styled.p`
   text-transform: ${(props) => props.textTransform};
   ${ellipsis};
 `);
+
+export const Container = styled.div`
+  width: 100%;
+  margin: auto;
+  padding: 30px 0;
+  max-width: 940px;
+
+  @media (min-width: ${deviceSize.tablet}) {
+    width: calc(100% - 60px);
+    padding: 30px;
+  }
+
+  @media (min-width: ${deviceSize.laptop}) {
+    width: 100%;
+    padding: 30px 0;
+  }
+`;
