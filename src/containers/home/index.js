@@ -26,7 +26,7 @@ export const Home = () => {
       }}
     >
       <Container>
-        <SearchBar fetchData={fetchSearch} onChange={() => {}} />
+        <SearchBar fetchLocation={fetchSearch} fetchQuery={fetchSearch} />
       </Container>
       <EventsGroup
         events={trendingEvents}

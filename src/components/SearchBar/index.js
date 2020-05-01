@@ -5,7 +5,7 @@ import DayPicker from 'components/DayPicker';
 import { Flex } from 'components';
 import { SearchContainer } from './StyledComponents';
 
-const SearchBar = ({ value, ...rest }) => {
+const SearchBar = ({ value, fetchQuery, fetchLocation, ...rest }) => {
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('');
   const [date, setDate] = useState(null);
@@ -19,6 +19,7 @@ const SearchBar = ({ value, ...rest }) => {
       <Flex flex={3}>
         <Autocomplete
           {...rest}
+          fetchData={fetchQuery}
           value={value || null}
           placeholder="Search by..."
           onChange={(value) => setQuery(value)}
@@ -27,6 +28,7 @@ const SearchBar = ({ value, ...rest }) => {
       <Flex flex={1}>
         <Autocomplete
           {...rest}
+          fetchData={fetchLocation}
           value={value || null}
           placeholder="Anywhere"
           onChange={(value) => setLocation(value)}
