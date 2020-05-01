@@ -6,7 +6,7 @@ const sports = [
     price: '84+',
     venue: {
       name: 'Banc of California Stadium',
-      image: 'assets/images/mocks/sportEvent11.png',
+      image: 'images/mocks/sportEvent11.png',
     },
   },
 
@@ -17,7 +17,7 @@ const sports = [
     price: '32+',
     venue: {
       name: 'RingCentral Coliseum',
-      image: 'assets/images/mocks/sportEvent12.png',
+      image: 'images/mocks/sportEvent12.png',
     },
   },
   {
@@ -27,7 +27,7 @@ const sports = [
     price: '24+',
     venue: {
       name: 'Oracle Park',
-      image: 'assets/images/mocks/sportEvent13.png',
+      image: 'images/mocks/sportEvent13.png',
     },
   },
   {
@@ -37,7 +37,7 @@ const sports = [
     price: '79+',
     venue: {
       name: 'State Farm Arena',
-      image: 'assets/images/mocks/sportEvent14.png',
+      image: 'images/mocks/sportEvent14.png',
     },
   },
   {
@@ -47,7 +47,7 @@ const sports = [
     price: '84+',
     venue: {
       name: 'Banc of California Stadium',
-      image: 'assets/images/mocks/sportEvent11.png',
+      image: 'images/mocks/sportEvent11.png',
     },
   },
   {
@@ -57,7 +57,7 @@ const sports = [
     price: '32+',
     venue: {
       name: 'RingCentral Coliseum',
-      image: 'assets/images/mocks/sportEvent12.png',
+      image: 'images/mocks/sportEvent12.png',
     },
   },
   {
@@ -67,7 +67,7 @@ const sports = [
     price: '24+',
     venue: {
       name: 'Oracle Park',
-      image: 'assets/images/mocks/sportEvent13.png',
+      image: 'images/mocks/sportEvent13.png',
     },
   },
   {
@@ -77,7 +77,7 @@ const sports = [
     price: '79+',
     venue: {
       name: 'State Farm Arena',
-      image: 'assets/images/mocks/sportEvent14.png',
+      image: 'images/mocks/sportEvent14.png',
     },
   },
 ];
@@ -90,7 +90,7 @@ const concerts = [
     price: '56+',
     venue: {
       name: 'Oracle Park',
-      image: 'assets/images/mocks/concertEvent11.png',
+      image: 'images/mocks/concertEvent11.png',
     },
   },
   {
@@ -100,7 +100,7 @@ const concerts = [
     price: '99+',
     venue: {
       name: 'SAP Center',
-      image: 'assets/images/mocks/concertEvent12.png',
+      image: 'images/mocks/concertEvent12.png',
     },
   },
   {
@@ -110,7 +110,7 @@ const concerts = [
     price: '79+',
     venue: {
       name: 'Shoreline Amphitheater',
-      image: 'assets/images/mocks/concertEvent13.png',
+      image: 'images/mocks/concertEvent13.png',
     },
   },
   {
@@ -120,7 +120,7 @@ const concerts = [
     price: '43+',
     venue: {
       name: 'SAP Center',
-      image: 'assets/images/mocks/concertEvent14.png',
+      image: 'images/mocks/concertEvent14.png',
     },
   },
   {
@@ -130,7 +130,7 @@ const concerts = [
     price: '56+',
     venue: {
       name: 'Oracle Park',
-      image: 'assets/images/mocks/concertEvent11.png',
+      image: 'images/mocks/concertEvent11.png',
     },
   },
   {
@@ -140,7 +140,7 @@ const concerts = [
     price: '99+',
     venue: {
       name: 'SAP Center',
-      image: 'assets/images/mocks/concertEvent12.png',
+      image: 'images/mocks/concertEvent12.png',
     },
   },
   {
@@ -150,7 +150,7 @@ const concerts = [
     price: '79+',
     venue: {
       name: 'Shoreline Amphitheater',
-      image: 'assets/images/mocks/concertEvent13.png',
+      image: 'images/mocks/concertEvent13.png',
     },
   },
   {
@@ -160,7 +160,7 @@ const concerts = [
     price: '43+',
     venue: {
       name: 'SAP Center',
-      image: 'assets/images/mocks/concertEvent14.png',
+      image: 'images/mocks/concertEvent14.png',
     },
   },
 ];
@@ -173,7 +173,7 @@ const comedies = [
     price: '56+',
     venue: {
       name: 'Paramount Theatre Oakland',
-      image: 'assets/images/mocks/comedyEvent11.png',
+      image: 'images/mocks/comedyEvent11.png',
     },
   },
   {
@@ -183,7 +183,7 @@ const comedies = [
     price: '99+',
     venue: {
       name: 'Golden 1 Center',
-      image: 'assets/images/mocks/comedyEvent12.png',
+      image: 'images/mocks/comedyEvent12.png',
     },
   },
   {
@@ -193,7 +193,7 @@ const comedies = [
     price: '79+',
     venue: {
       name: 'Cobbs Comedy Club',
-      image: 'assets/images/mocks/comedyEvent13.png',
+      image: 'images/mocks/comedyEvent13.png',
     },
   },
   {
@@ -203,7 +203,7 @@ const comedies = [
     price: '43+',
     venue: {
       name: 'Chase Center',
-      image: 'assets/images/mocks/comedyEvent14.png',
+      image: 'images/mocks/comedyEvent14.png',
     },
   },
   {
@@ -213,7 +213,7 @@ const comedies = [
     price: '56+',
     venue: {
       name: 'Paramount Theatre Oakland',
-      image: 'assets/images/mocks/comedyEvent11.png',
+      image: 'images/mocks/comedyEvent11.png',
     },
   },
   {
@@ -223,7 +223,7 @@ const comedies = [
     price: '99+',
     venue: {
       name: 'Golden 1 Center',
-      image: 'assets/images/mocks/comedyEvent12.png',
+      image: 'images/mocks/comedyEvent12.png',
     },
   },
   {
@@ -233,7 +233,7 @@ const comedies = [
     price: '79+',
     venue: {
       name: 'Cobbs Comedy Club',
-      image: 'assets/images/mocks/comedyEvent13.png',
+      image: 'images/mocks/comedyEvent13.png',
     },
   },
   {
@@ -243,7 +243,7 @@ const comedies = [
     price: '43+',
     venue: {
       name: 'Chase Center',
-      image: 'assets/images/mocks/comedyEvent14.png',
+      image: 'images/mocks/comedyEvent14.png',
     },
   },
 ];
@@ -256,7 +256,7 @@ const broadways = [
     price: '56+',
     venue: {
       name: 'San Jose Center for the Performance',
-      image: 'assets/images/mocks/broadwayEvent11.png',
+      image: 'images/mocks/broadwayEvent11.png',
     },
   },
   {
@@ -266,7 +266,7 @@ const broadways = [
     price: '99+',
     venue: {
       name: 'San Jose Center for the Performance',
-      image: 'assets/images/mocks/broadwayEvent12.png',
+      image: 'images/mocks/broadwayEvent12.png',
     },
   },
   {
@@ -276,7 +276,7 @@ const broadways = [
     price: '79+',
     venue: {
       name: 'San Jose Center for the Performance',
-      image: 'assets/images/mocks/broadwayEvent13.png',
+      image: 'images/mocks/broadwayEvent13.png',
     },
   },
   {
@@ -286,7 +286,7 @@ const broadways = [
     price: '43+',
     venue: {
       name: 'Chase Center',
-      image: 'assets/images/mocks/broadwayEvent14.png',
+      image: 'images/mocks/broadwayEvent14.png',
     },
   },
   {
@@ -296,7 +296,7 @@ const broadways = [
     price: '56+',
     venue: {
       name: 'San Jose Center for the Performance',
-      image: 'assets/images/mocks/broadwayEvent11.png',
+      image: 'images/mocks/broadwayEvent11.png',
     },
   },
   {
@@ -306,7 +306,7 @@ const broadways = [
     price: '99+',
     venue: {
       name: 'San Jose Center for the Performance',
-      image: 'assets/images/mocks/broadwayEvent12.png',
+      image: 'images/mocks/broadwayEvent12.png',
     },
   },
   {
@@ -316,7 +316,7 @@ const broadways = [
     price: '79+',
     venue: {
       name: 'San Jose Center for the Performance',
-      image: 'assets/images/mocks/broadwayEvent13.png',
+      image: 'images/mocks/broadwayEvent13.png',
     },
   },
   {
@@ -326,7 +326,7 @@ const broadways = [
     price: '43+',
     venue: {
       name: 'Chase Center',
-      image: 'assets/images/mocks/broadwayEvent14.png',
+      image: 'images/mocks/broadwayEvent14.png',
     },
   },
 ];
@@ -340,7 +340,7 @@ export const trendingEvents = [
     timestamp: '2020-11-05T18:49:56.995Z',
     venue: {
       name: 'State Farm Arena',
-      image: 'assets/images/mocks/trendingEvent0.png',
+      image: 'images/mocks/trendingEvent0.png',
     },
   },
   {
@@ -349,7 +349,7 @@ export const trendingEvents = [
     timestamp: '2020-10-28T18:49:56.995Z',
     venue: {
       name: 'Oracle Park',
-      image: 'assets/images/mocks/trendingEvent1.png',
+      image: 'images/mocks/trendingEvent1.png',
     },
   },
   {
@@ -358,7 +358,7 @@ export const trendingEvents = [
     timestamp: '2020-10-23T18:49:56.995Z',
     venue: {
       name: 'State Farm Arena',
-      image: 'assets/images/mocks/trendingEvent2.png',
+      image: 'images/mocks/trendingEvent2.png',
     },
   },
   {
@@ -367,7 +367,7 @@ export const trendingEvents = [
     timestamp: '2020-08-05T18:49:56.995Z',
     venue: {
       name: 'Oracle Park',
-      image: 'assets/images/mocks/trendingEvent3.png',
+      image: 'images/mocks/trendingEvent3.png',
     },
   },
   {
@@ -376,7 +376,7 @@ export const trendingEvents = [
     timestamp: '2020-10-23T18:49:56.995Z',
     venue: {
       name: 'State Farm Arena',
-      image: 'assets/images/mocks/trendingEvent4.png',
+      image: 'images/mocks/trendingEvent4.png',
     },
   },
   {
@@ -385,7 +385,7 @@ export const trendingEvents = [
     timestamp: '2020-11-21T18:49:56.995Z',
     venue: {
       name: 'Chase Center',
-      image: 'assets/images/mocks/trendingEvent5.png',
+      image: 'images/mocks/trendingEvent5.png',
     },
   },
 ];

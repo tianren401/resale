@@ -21,7 +21,7 @@ justify-content: space-between;
 const StyledCarouselIndicator = styled.div`
   height: 10px;
   width: 10px;
-  background-color: gray;
+  background-color: ${({ active }) => active ? "white" : "gray"};
   border-radius: 50%;
   display: inline-block;
   position: relative;
