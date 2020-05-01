@@ -11,7 +11,7 @@ export const colors = {
   orange: '#fa3',
   purple: '#a3f',
   neonBlue: '#3af',
-  gray: '#667',
+  gray: '#8D8D94',
   lightGray: '#ddd',
   whiteSmoke: '#f5f5f5',
 };

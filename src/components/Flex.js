@@ -43,6 +43,7 @@ export const FlexItem = withBoxModelProps(styled.div`
   width: ${(props) => props.width};
   align-self: ${(props) => props.alignSelf};
   overflow: ${(props) => props.overflow};
+  position: ${(props) => props.position};
 `);
 
 Flex.displayName = 'Flex';

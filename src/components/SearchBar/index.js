@@ -3,21 +3,33 @@ import PropTypes from 'prop-types';
 import Autocomplete from './Autocomplete';
 import DayPicker from 'components/DayPicker';
 import { Flex } from 'components';
-const SearchBar = ({ value, placeholder, onChange, ...rest }) => (
-  <Flex position="relative">
-    <Autocomplete
-      {...rest}
-      value={value || null}
-      placeholder={placeholder}
-      onChange={(_, value) => onChange(value)}
-    />
-    <DayPicker />
-  </Flex>
+import { SearchContainer } from './StyledComponents';
+const SearchBar = ({ value, onChange, ...rest }) => (
+  <SearchContainer>
+    <Flex flex={3}>
+      <Autocomplete
+        {...rest}
+        value={value || null}
+        placeholder="Search by..."
+        onChange={(_, value) => onChange(value)}
+      />
+    </Flex>
+    <Flex flex={1}>
+      <Autocomplete
+        {...rest}
+        value={value || null}
+        placeholder="Anywhere"
+        onChange={(_, value) => onChange(value)}
+      />
+    </Flex>
+    <Flex flex={1}>
+      <DayPicker value="Anytime" />
+    </Flex>
+  </SearchContainer>
 );
 
 SearchBar.propTypes = {
   value: PropTypes.any,
-  placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 

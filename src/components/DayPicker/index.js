@@ -1,9 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
-import ReactDayPicker from 'react-day-picker';
+import PropTypes from 'prop-types';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 
-import { shadows, colors } from 'theme';
-import { Flex, Text } from 'components';
+import styled from 'styled-components';
+import { colors } from 'theme';
+import { Flex } from 'components';
 import { ErrorAlert } from './ErrorAlert';
 
 const DayPickerContainer = styled.div`
@@ -11,94 +13,44 @@ const DayPickerContainer = styled.div`
   align-items: center;
   align-content: space-between;
   flex-direction: column;
-  border: 1px solid ${colors.blue};
-  border-left: none;
   background: ${colors.white};
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.1s ease-in-out;
+  z-index: 2;
+  padding-left: 24px;
+  padding-right: 24px;
+  border-radius: 10.0801px;
 
-  ${(props) =>
-    props.show &&
-    `
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    box-shadow: ${shadows.SMALL};
-    border-radius: 0 4px 4px 0;
-  `};
+  > .DayPickerInput {
+    height: 100% !important;
+    display: flex;
+    aligin-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    input {
+      &:focus {
+        outline: none;
+      }
+      font-size: 1rem;
+      border: none;
+    }
+  }
 `;
-DayPickerContainer.displayName = 'DropdownMenu';
 
-export default ({
-  dateRangePickerOpen,
-  from,
-  to,
-  fromIsOpen,
-  toIsOpen,
-  fromError,
-  toError,
-  handleFromChange,
-  handleToChange,
-  modifiers,
-  disabledDays,
-}) => {
-  const generateDisabledStartDates = () => {
-    return {
-      ...disabledDays,
-    };
-  };
-
-  const generateDisabledEndDates = () => {
-    return {
-      ...disabledDays,
-      before: from,
-    };
-  };
-
+const DayPicker = ({ value, dateError, handleDateChange }) => {
   return (
-    <DayPickerContainer show={dateRangePickerOpen}>
-      {fromIsOpen && (
-        <>
-          <Flex height="40px" width="100%">
-            {fromError ? (
-              <ErrorAlert msg="Start Date Required" />
-            ) : (
-              <Text color={colors.gray} margin="20px" size={12} height="20px">
-                Start Date
-              </Text>
-            )}
-          </Flex>
-          <ReactDayPicker
-            month={from}
-            disabledDays={generateDisabledStartDates()}
-            modifiers={modifiers}
-            onDayClick={handleFromChange}
-            selectedDays={[from, { from, to }]}
-          />
-        </>
-      )}
-
-      {toIsOpen && (
-        <>
-          <Flex height="40px" width="100%">
-            {toError ? (
-              <ErrorAlert msg="End Date Required" />
-            ) : (
-              <Text color={colors.gray} margin="20px" size={12} height="20px">
-                End Date
-              </Text>
-            )}
-          </Flex>
-          <ReactDayPicker
-            month={from}
-            disabledDays={generateDisabledEndDates()}
-            modifiers={modifiers}
-            onDayClick={handleToChange}
-            selectedDays={[from, { from, to }]}
-          />
-        </>
-      )}
-    </DayPickerContainer>
+    <Flex height="60px" width="100%">
+      <DayPickerContainer show>
+        {dateError && <ErrorAlert msg="Date is required" />}
+        <DayPickerInput value={value} onDayChange={handleDateChange} />
+      </DayPickerContainer>
+    </Flex>
   );
 };
+
+DayPicker.propTypes = {
+  value: PropTypes.any,
+  dateError: PropTypes.string,
+  handleDateChange: PropTypes.func,
+};
+
+export default DayPicker;

@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import throttle from 'lodash/throttle';
 /* Styled Components */
 import {
-  SearchContainer,
   SearchInput,
-  SubmitButton,
   AutoCompletItem,
   AutocompleteList,
   EmptyListContainer,
 } from './StyledComponents';
-import { Flex } from 'components/Flex';
+
+import { FlexItem } from 'components';
 
 const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
   const [loading, setLoading] = useState(false);
@@ -104,20 +104,22 @@ const Autocomplete = ({ fetchData, placeholder, ...rest }) => {
     }
   }
   return (
-    <Flex position="relative">
-      <SearchContainer>
-        <SearchInput
-          type="text"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          value={inputValue}
-          placeholder={placeholder}
-        />
-        <SubmitButton type="submit" value="" />
-      </SearchContainer>
+    <FlexItem position="relative">
+      <SearchInput
+        type="text"
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        value={inputValue}
+        placeholder={placeholder}
+      />
       {optionList}
-    </Flex>
+    </FlexItem>
   );
+};
+
+Autocomplete.propTypes = {
+  placeholder: PropTypes.string,
+  fetchData: PropTypes.func.isRequired,
 };
 
 export default Autocomplete;
