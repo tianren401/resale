@@ -12,7 +12,7 @@ const Container = styled.div`
   max-width: 940px;
 
   @media (min-width: ${deviceSize.tablet}) {
-    width: calc(100% - 60px);
+    width: 100%;
     padding: 30px;
   }
 
