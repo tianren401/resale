@@ -30,7 +30,7 @@ export const Hero = () => {
       setEvents(events);
       console.log(events);
     });
-  }, []);
+  }, [testImages]);
 
   return (
     <Carousel events={events} />
