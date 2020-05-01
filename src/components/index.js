@@ -4,3 +4,6 @@ export * from './navigation';
 export * from './form';
 export * from './StyledTags';
 export * from './Flex';
+export * from './eventTile';
+export * from './tieldSection';
+export * from './eventCarousel';

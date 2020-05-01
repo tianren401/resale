@@ -7,7 +7,7 @@ import { Navigation } from 'components';
 import { Home } from 'containers';
 
 const MainContent = styled.div`
-  padding: 25px;
+  //Todo:
 `;
 
 const Routes = () => (
