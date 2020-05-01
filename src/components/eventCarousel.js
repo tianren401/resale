@@ -19,7 +19,7 @@ const StyledCarousel = styled(Carousel)`
 `;
 
 const CarouselItem = styled.div`
-  width: calc(100% - 20px);
+  width: 100%;
   height: 172px;
   display: inline-block;
   cursor: pointer;
@@ -145,6 +145,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
         onPrevEnd={handleButtonVisible}
         onNextEnd={handleButtonVisible}
         breakPoints={breakPoints}
+        itemPadding={[0, 10]}
       >
         {events.map((item) => {
           let imgUri = item.venue.image || '';

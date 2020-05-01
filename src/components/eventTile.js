@@ -10,8 +10,8 @@ const Tile = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  height: 280px;
-  background-position: center;
+  height: 200px;
+  background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -24,6 +24,7 @@ const Tile = styled.div`
     width: ${(props) => props.width};
     margin: ${(props) => props.margin};
     border-radius: 5px;
+    height: 280px;
   }
 `;
 

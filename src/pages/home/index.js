@@ -1,11 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import { UpcomingSection } from './upcomingSection';
 import { EventsGroup } from './eventsGroupSection';
 import { Hero } from './components/hero';
-import { upcomingEvents, trendingEvents } from '../../mocks/events';
+import { upcomingEvents, trendingEvents } from 'mocks/events';
 import { setEventTypeAction } from 'store/homepage';
+import { CTASection } from './ctaSection';
+
+const Container = styled.div`
+  width: 100%;
+  background: linear-gradient(197.56deg, #455fe5 -5.72%, #8245e5 37.62%, #ffffff 78.06%);
+`;
 
 export const Home = () => {
   const eventType = useSelector(({ homepageReducer }) => homepageReducer.eventType);
@@ -16,11 +23,7 @@ export const Home = () => {
   };
 
   return (
-    <div
-      style={{
-        background: 'linear-gradient(197.56deg, #455FE5 -5.72%, #8245E5 37.62%, #FFFFFF 78.06%)',
-      }}
-    >
+    <Container>
       <Hero />
       <EventsGroup
         events={trendingEvents}
@@ -29,7 +32,8 @@ export const Home = () => {
         eventType={eventType}
       />
       <UpcomingSection events={upcomingEvents} />
-    </div>
+      <CTASection />
+    </Container>
   );
 };
 
