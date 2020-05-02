@@ -1,3 +1,4 @@
+export const navigationHeight = 75;
 export const deviceSize = {
   mobileS: '320px',
   mobileM: '375px',
