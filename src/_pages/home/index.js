@@ -11,6 +11,7 @@ import { upcomingEvents, trendingEvents } from '_mocks/events';
 import { setEventTypeAction } from '_store/homepage';
 import { CTASection } from './ctaSection';
 
+import { Container as RowContainer } from '_components';
 const Container = styled.div`
   width: 100%;
   background: linear-gradient(
@@ -34,7 +35,9 @@ export const Home = () => {
   return (
     <Container>
       <Hero />
-      <SearchBar fetchLocation={fetchSearch} fetchQuery={fetchSearch} />
+      <RowContainer>
+        <SearchBar fetchLocation={fetchSearch} fetchQuery={fetchSearch} />
+      </RowContainer>
       <EventsGroup
         events={trendingEvents}
         gutter={20}
