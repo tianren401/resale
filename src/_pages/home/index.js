@@ -1,5 +1,4 @@
 import React from 'react';
-import { fetchSearch } from '_services/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SearchBar from '_components/SearchBar';
@@ -36,7 +35,7 @@ export const Home = () => {
     <Container>
       <Hero />
       <RowContainer>
-        <SearchBar fetchLocation={fetchSearch} fetchQuery={fetchSearch} />
+        <SearchBar />
       </RowContainer>
       <EventsGroup
         events={trendingEvents}

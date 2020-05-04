@@ -1,41 +1,58 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from './Autocomplete';
 import DayPicker from '_components/DayPicker';
 import { Flex } from '_components';
 import { SearchContainer } from './StyledComponents';
+import { setDate, setQuery, setLocation } from '_store/search';
+import { searchService } from '_services';
 
-const SearchBar = ({ value, fetchQuery, fetchLocation, ...rest }) => {
-  const [query, setQuery] = useState('');
-  const [location, setLocation] = useState('');
-  const [date, setDate] = useState(null);
+const SearchBar = ({ ...rest }) => {
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    // fetch elastic api
-  }, [query, date, location]);
+  const handleSetDate = (date) => {
+    dispatch(setDate(date));
+  };
 
+  const handleSetQuery = (query) => {
+    dispatch(setQuery(query));
+  };
+
+  const handleSetLocation = (location) => {
+    dispatch(setLocation(location));
+  };
+
+  const searchQuery = useSelector(({ searchReducer }) => searchReducer.query);
+  const searchLocation = useSelector(
+    ({ searchReducer }) => searchReducer.location
+  );
+  const searchDate = useSelector(({ searchReducer }) => searchReducer.date);
   return (
     <SearchContainer>
       <Flex flex={3}>
         <Autocomplete
           {...rest}
-          fetchData={fetchQuery}
-          value={value || null}
+          fetchData={searchService.searchQuery}
+          value={searchQuery}
           placeholder="Search by..."
-          onChange={(value) => setQuery(value)}
+          onChange={(value) => handleSetQuery(value)}
         />
       </Flex>
       <Flex flex={1}>
         <Autocomplete
           {...rest}
-          fetchData={fetchLocation}
-          value={value || null}
+          fetchData={searchService.searchLocation}
+          value={searchLocation}
           placeholder="Anywhere"
-          onChange={(value) => setLocation(value)}
+          onChange={(value) => handleSetLocation(value)}
         />
       </Flex>
       <Flex flex={1}>
-        <DayPicker value="Anytime" onDateChange={(value) => setDate(value)} />
+        <DayPicker
+          value={'Anytime' || searchDate}
+          onDateChange={(value) => handleSetDate(value)}
+        />
       </Flex>
     </SearchContainer>
   );
