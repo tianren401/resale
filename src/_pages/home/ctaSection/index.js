@@ -97,16 +97,31 @@ const CheckImg = styled.div`
   left: 4px;
 `;
 
+const TriangleOverlay = styled.div`
+  position absolute;
+  z-index: 1;
+  width: 100%;
+  height: 25vh;
+  background: linear-gradient(to top left, rgba(202, 151, 153, 0) 0%, rgba(108, 81, 153, 0) 50%, rgba(202, 151, 240, .5) 50%, rgba(78, 80, 156, 0.5) 100%);
+
+  @media (min-width: ${deviceSize.tablet}) {
+    height: 590px;
+  }
+`;
+
 export const CTASection = () => {
   return (
-    <Container>
-      <Check>
-        <CheckImg />
-      </Check>
-      <Comment>
-        <CommentTitle>Verified and secured tickets everytime</CommentTitle>
-        <CommentContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CommentContent>
-      </Comment>
-    </Container>
+    <div>
+      <TriangleOverlay />
+      <Container>
+        <Check>
+          <CheckImg />
+        </Check>
+        <Comment>
+          <CommentTitle>Verified and secured tickets everytime</CommentTitle>
+          <CommentContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CommentContent>
+        </Comment>
+      </Container>
+    </div>
   );
 };

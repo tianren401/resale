@@ -31,6 +31,8 @@ const Logo = styled(Link)`
 const UserItems = styled.span`
   padding: 5px;
   font-size: 15px;
+  cursor: pointer;
+
   &:not(:last-of-type) {
     margin-right: 10px;
   }

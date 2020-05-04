@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import leftArrow from '_images/leftArrow.svg'
-import rightArrow from '_images/rightArrow.svg'
-
 const StyledCarouselItem = styled.div`
   display: flex;
   width: 100%;
@@ -24,6 +21,8 @@ const EventInfo = styled.div`
 
 const Artist = styled.div`
   padding: 5px;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 const EventLocation = styled.div`
@@ -41,18 +40,14 @@ const StyledButton = styled.button`
   padding: 10px;
   `;
 
-const Arrow = styled.img``;
-
-export const CarouselItem = ({ backgroundImage, title, desc, slidePrev, slideNext }) => (
+export const CarouselItem = ({ backgroundImage, title, desc }) => (
   <StyledCarouselItem backgroundImage={backgroundImage}>
 
-      <Arrow src={leftArrow} onClick={slidePrev} />
       <EventInfo>
         <Artist>{title}</Artist>
         <EventLocation>{desc}</EventLocation>
         <StyledButton>Buy Tickets</StyledButton>
       </EventInfo>
-      <Arrow src={rightArrow} onClick={slideNext} />
 
   </StyledCarouselItem>
 );

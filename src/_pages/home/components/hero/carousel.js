@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import ReactElasticCarousel from 'react-elastic-carousel';
 
 import { CarouselItem } from './carouselItem';
+import leftArrow from '_images/leftArrow.svg'
+import rightArrow from '_images/rightArrow.svg'
 
 const StyledCarouselIndicatorContainer = styled.div`
   display: flex;
@@ -24,9 +26,27 @@ const StyledCarouselIndicator = styled.div`
   }
 `;
 
+const LeftArrow = styled.img`
+position: absolute;
+top: 20%;
+left: 15%;
+`;
+
+const RightArrow = styled.img`
+position: absolute;
+top: 20%;
+right: 20%;
+`;
+
+const CarouselArrowGroup = styled.div`
+display: flex;
+top: 100px;
+`;
+
 export const Carousel = ({ events }) => {
   let carouselRef = useRef();
   return (
+    <CarouselArrowGroup>
     <ReactElasticCarousel ref={ref => (carouselRef = ref)}
       renderPagination={({ pages, activePage, onClick }) => {
         return (
@@ -46,7 +66,7 @@ export const Carousel = ({ events }) => {
       }}
       renderArrow={() => <></>}
     >
-
+      
       {events.map((event) => {
         return (
           <CarouselItem key={event.id}
@@ -59,5 +79,8 @@ export const Carousel = ({ events }) => {
         );
       })}
     </ReactElasticCarousel>
+    <LeftArrow src={leftArrow} onClick={() => carouselRef.slidePrev()} />
+      <RightArrow src={rightArrow} onClick={() => carouselRef.slideNext()} />
+      </CarouselArrowGroup>
   )
 }
