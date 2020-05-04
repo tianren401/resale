@@ -25,7 +25,7 @@ const Logo = styled(Link)`
   color: white;
   font-style: normal;
   font-weight: bold;
-  color: #FBFBFB;
+  color: #fbfbfb;
 `;
 
 const UserItems = styled.span`
@@ -38,7 +38,7 @@ const UserItems = styled.span`
   }
   font-style: normal;
   font-weight: 500;
-  color: #FBFBFB;
+  color: #fbfbfb;
 `;
 
 export const Navigation = () => {
@@ -71,10 +71,10 @@ export const Navigation = () => {
           </Modal>
         </div>
       ) : (
-          <div>
-            <UserItems onClick={handlelogout}>Log Out</UserItems>
-          </div>
-        )}
+        <div>
+          <UserItems onClick={handlelogout}>Log Out</UserItems>
+        </div>
+      )}
     </StyledNavigation>
   );
 };
