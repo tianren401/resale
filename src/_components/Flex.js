@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { withBoxModelProps } from '_helpers/style-utils';
-import type { ComponentType } from 'react';
 
 function generateFlexDirection(props) {
   const { column, reverse, direction } = props;
@@ -38,7 +37,7 @@ export const Flex = withBoxModelProps(styled.div`
 `);
 
 export const FlexItem = withBoxModelProps(styled.div`
-  flex: ${(props) => props.flex || 1};
+  flex: ${(props) => (props.flex !== undefined ? props.flex : 1)};
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   align-self: ${(props) => props.alignSelf};

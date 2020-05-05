@@ -1,7 +1,7 @@
 /* color reference here: https://www.dropbox.com/s/c59shyz4rhyufkk/color%20palette.xd?dl=0 */
 
 export const colors = {
-  black: '#002',
+  black: '#000',
   white: '#fff',
   blue: '#007',
   darkBlue: '#004',
@@ -13,6 +13,7 @@ export const colors = {
   neonBlue: '#3af',
   gray: '#8D8D94',
   lightGray: '#ddd',
+  darkGray: '#c4c4c4',
   whiteSmoke: '#f5f5f5',
 };
 

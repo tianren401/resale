@@ -10,13 +10,12 @@ import {
 const LocationsDropdown = ({ results, ...rest }) => {
   // map data
   const options = _.chain(results).get('hits.hits', []).slice(0, 10).value();
-  const { activeOption, dropdownEl, handleItemClick } = rest;
-
+  const { activeOption, handleItemClick } = rest;
   let optionList = null;
 
   if (options.length) {
     optionList = (
-      <AutocompleteList ref={dropdownEl}>
+      <AutocompleteList>
         {options.map((hit, index) => {
           let className;
           if (index === activeOption) {
