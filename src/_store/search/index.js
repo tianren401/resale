@@ -37,7 +37,7 @@ const searchSlice = createSlice({
       state.date = action.payload;
     },
     setResults(state, action) {
-      const { params, results } = action.payload;
+      const { results } = action.payload;
       state.results = results;
     },
   },

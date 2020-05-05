@@ -14,6 +14,7 @@ const Autocomplete = ({
   renderList,
   ...rest
 }) => {
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
@@ -79,7 +80,7 @@ const Autocomplete = ({
   const fetch = useMemo(() => throttle(fetchData, 200), [fetchData]);
 
   useEffect(() => {
-    let active = true;
+    const active = true;
 
     if (inputValue.length <= 1) {
       setOptions([]);
@@ -96,14 +97,15 @@ const Autocomplete = ({
         setOptions(results || []);
       }
     });
+  }, [inputValue, fetch]);
 
+  useEffect(() => {
     document.addEventListener('click', handleDocumentClick);
 
     return () => {
-      active = false;
       document.removeEventListener('click', handleDocumentClick);
     };
-  }, [inputValue, fetch]);
+  });
 
   return (
     <FlexItem position="relative">
