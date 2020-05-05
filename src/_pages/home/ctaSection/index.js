@@ -7,13 +7,8 @@ import checkImageDesktop from '_images/checkImageDesktop.png';
 
 const Container = styled.div`
   width: 100%;
-  height: 25vh;
-  background: linear-gradient(
-      116deg,
-      rgba(255, 255, 255, 0.64) 16.44%,
-      rgba(255, 255, 255, 0) 97.46%
-    ),
-    url(${ctaSectionBackground});
+  height: 65vh;
+  background: url(${ctaSectionBackground});
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;
@@ -22,9 +17,11 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 
   @media (min-width: ${deviceSize.tablet}) {
-    height: 590px;
+    height: 65vh;
+    min-height: 500px;
     justify-content: flex-end;
     align-items: flex-end;
     padding-bottom: 5%;
@@ -32,9 +29,23 @@ const Container = styled.div`
   }
 `;
 
+const TriangleOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0% 0%, 0% 100%, 100% 0%);
+  background: linear-gradient(
+    277.05deg,
+    rgba(0, 40, 247, 0.4) 8.08%,
+    rgba(105, 27, 236, 0.4) 99.19%
+  );
+`;
+
 const Comment = styled.div`
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
   width: 70%;
 
   @media (min-width: ${deviceSize.tablet}) {
@@ -97,31 +108,17 @@ const CheckImg = styled.div`
   left: 4px;
 `;
 
-const TriangleOverlay = styled.div`
-  position absolute;
-  z-index: 1;
-  width: 100%;
-  height: 25vh;
-  background: linear-gradient(to top left, rgba(202, 151, 153, 0) 0%, rgba(108, 81, 153, 0) 50%, rgba(202, 151, 240, .5) 50%, rgba(78, 80, 156, 0.5) 100%);
-
-  @media (min-width: ${deviceSize.tablet}) {
-    height: 590px;
-  }
-`;
-
 export const CTASection = () => {
   return (
-    <div>
+    <Container>
       <TriangleOverlay />
-      <Container>
-        <Check>
-          <CheckImg />
-        </Check>
-        <Comment>
-          <CommentTitle>Verified and secured tickets everytime</CommentTitle>
-          <CommentContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CommentContent>
-        </Comment>
-      </Container>
-    </div>
+      <Check>
+        <CheckImg />
+      </Check>
+      <Comment>
+        <CommentTitle>Verified and secured tickets everytime</CommentTitle>
+        <CommentContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CommentContent>
+      </Comment>
+    </Container>
   );
 };

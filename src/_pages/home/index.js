@@ -4,15 +4,14 @@ import styled from 'styled-components';
 
 import { UpcomingSection } from './upcomingSection';
 import { EventsGroup } from './eventsGroupSection';
-import { Hero } from './components/hero';
-import { upcomingEvents, trendingEvents } from '_mocks/events';
+import { Hero } from './hero';
+import { upcomingEvents, trendingEvents, headerEvents } from '_mocks/events';
 import { setEventTypeAction } from '_store/homepage';
 import { CTASection } from './ctaSection';
-import { Footer } from './components/footer';
+import { Footer } from './footer';
 
 const Container = styled.div`
   width: 100%;
-  background: linear-gradient(197.56deg, #455fe5 -5.72%, #8245e5 37.62%, #ffffff 78.06%);
 `;
 
 export const Home = () => {
@@ -25,7 +24,7 @@ export const Home = () => {
 
   return (
     <Container>
-      <Hero />
+      <Hero events={headerEvents} />
       <EventsGroup
         events={trendingEvents}
         gutter={20}

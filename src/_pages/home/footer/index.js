@@ -13,14 +13,17 @@ const FlexRow = styled.div`
 `;
 
 const StyledFooter = styled(FlexColumn)`
-  height: 25vh;
-  padding-top: 50px;
-  width: 60%;
-  margin: 0 auto;
+  height: 55vh;
+  min-height: 450px;
+  background: #e5e5e5;
+  width: 100%;
+  padding: 5% 20%;
+  color: #3e3e3e;
 `;
 
 const TopInfoRow = styled(FlexRow)`
   width: 50%;
+  margin-top: 50px;
   justify-content: space-between;
   align-items: center;
   flex: 1;
@@ -31,11 +34,13 @@ const BottomInfoRow = styled(FlexRow)`
   align-items: center;
   flex: 1;
 `;
+
 const BottomLeftHalfInfoRow = styled(FlexRow)`
   width: 100%;
   align-items: center;
   flex: 1;
 `;
+
 const BottomRightHalfInfoRow = styled(FlexRow)`
   width: 100%;
   justify-content: flex-end;
@@ -49,6 +54,8 @@ const StyledLink = styled(Link)`
   font-style: normal;
   font-size: 14px;
   line-height: 20px;
+  font-weight: 400;
+  color: #3e3e3e;
 `;
 
 const HeaderLink = styled(StyledLink)`
@@ -59,28 +66,28 @@ export const Footer = () => (
   <StyledFooter>
     <TopInfoRow>
       <FlexColumn>
-        <HeaderLink>Learn More</HeaderLink>
-        <StyledLink>About</StyledLink>
-        <StyledLink>SelectSeats Enterprise</StyledLink>
-        <StyledLink>MLS Partnership</StyledLink>
-        <StyledLink>Sell on SelectSeats</StyledLink>
-        <StyledLink>Event News</StyledLink>
+        <HeaderLink to="/">Learn More</HeaderLink>
+        <StyledLink to="/">About</StyledLink>
+        <StyledLink to="/">SelectSeats Enterprise</StyledLink>
+        <StyledLink to="/">MLS Partnership</StyledLink>
+        <StyledLink to="/">Sell on SelectSeats</StyledLink>
+        <StyledLink to="/">Event News</StyledLink>
       </FlexColumn>
       <FlexColumn>
-        <HeaderLink>Platform</HeaderLink>
-        <StyledLink>Platform</StyledLink>
-        <StyledLink>API Docs</StyledLink>
-        <StyledLink>Dev Blog</StyledLink>
-        <StyledLink>Dev Community</StyledLink>
-        <StyledLink>Partner Program</StyledLink>
+        <HeaderLink to="/">Platform</HeaderLink>
+        <StyledLink to="/">Platform</StyledLink>
+        <StyledLink to="/">API Docs</StyledLink>
+        <StyledLink to="/">Dev Blog</StyledLink>
+        <StyledLink to="/">Dev Community</StyledLink>
+        <StyledLink to="/">Partner Program</StyledLink>
       </FlexColumn>
       <FlexColumn>
-        <HeaderLink>Community</HeaderLink>
-        <StyledLink>Help & Support</StyledLink>
-        <StyledLink>Press</StyledLink>
-        <StyledLink>Jobs</StyledLink>
-        <StyledLink>Twitter</StyledLink>
-        <StyledLink>Instagram</StyledLink>
+        <HeaderLink to="/">Community</HeaderLink>
+        <StyledLink to="/">Help & Support</StyledLink>
+        <StyledLink to="/">Press</StyledLink>
+        <StyledLink to="/">Jobs</StyledLink>
+        <StyledLink to="/">Twitter</StyledLink>
+        <StyledLink to="/">Instagram</StyledLink>
       </FlexColumn>
     </TopInfoRow>
     <BottomInfoRow>
@@ -88,9 +95,9 @@ export const Footer = () => (
         © 2020 SelectSeats. All rights reserved. Made in Dallas
       </BottomLeftHalfInfoRow>
       <BottomRightHalfInfoRow>
-        <StyledLink>Privacy Policy</StyledLink>
-        <StyledLink>Terms of use</StyledLink>
-        <StyledLink>Site map</StyledLink>
+        <StyledLink to="/">Privacy Policy</StyledLink>
+        <StyledLink to="/">Terms of use</StyledLink>
+        <StyledLink to="/">Site map</StyledLink>
       </BottomRightHalfInfoRow>
     </BottomInfoRow>
   </StyledFooter>
