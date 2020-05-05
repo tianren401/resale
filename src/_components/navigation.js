@@ -25,18 +25,20 @@ const Logo = styled(Link)`
   color: white;
   font-style: normal;
   font-weight: bold;
-  color: #FBFBFB;
+  color: #fbfbfb;
 `;
 
 const UserItems = styled.span`
   padding: 5px;
   font-size: 15px;
+  cursor: pointer;
+
   &:not(:last-of-type) {
     margin-right: 10px;
   }
   font-style: normal;
   font-weight: 500;
-  color: #FBFBFB;
+  color: #fbfbfb;
 `;
 
 export const Navigation = () => {
@@ -69,10 +71,10 @@ export const Navigation = () => {
           </Modal>
         </div>
       ) : (
-          <div>
-            <UserItems onClick={handlelogout}>Log Out</UserItems>
-          </div>
-        )}
+        <div>
+          <UserItems onClick={handlelogout}>Log Out</UserItems>
+        </div>
+      )}
     </StyledNavigation>
   );
 };

@@ -9,6 +9,7 @@ import { Hero } from './components/hero';
 import { upcomingEvents, trendingEvents } from '_mocks/events';
 import { setEventTypeAction } from '_store/homepage';
 import { CTASection } from './ctaSection';
+import { Footer } from './components/footer';
 
 import { Container as RowContainer } from '_components';
 const Container = styled.div`
@@ -46,6 +47,7 @@ export const Home = () => {
 
       <UpcomingSection events={upcomingEvents} />
       <CTASection />
+      <Footer />
     </Container>
   );
 };

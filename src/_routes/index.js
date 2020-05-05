@@ -9,10 +9,10 @@ const Routes = () => (
   <Router>
     <GlobalStyles />
     <Navigation />
-      <Switch>
-        <Route exact path="/home" component={Home} />
-        <Redirect to="/home" />
-      </Switch>
+    <Switch>
+      <Route exact path="/home" component={Home} />
+      <Redirect to="/home" />
+    </Switch>
   </Router>
 );
 
