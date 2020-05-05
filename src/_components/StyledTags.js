@@ -115,6 +115,7 @@ export const Container = styled.div`
   margin: auto;
   padding: 30px 0;
   max-width: 940px;
+  margin-top: 10rem;
 
   @media (min-width: ${deviceSize.tablet}) {
     width: calc(100% - 60px);

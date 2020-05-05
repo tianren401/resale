@@ -2,16 +2,17 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import throttle from 'lodash/throttle';
 /* Styled Components */
-import {
-  SearchInput,
-  AutoCompletItem,
-  AutocompleteList,
-  EmptyListContainer,
-} from './StyledComponents';
+import { SearchInput } from './StyledComponents';
 
 import { FlexItem } from '_components';
 
-const Autocomplete = ({ fetchData, placeholder, onChange, ...rest }) => {
+const Autocomplete = ({
+  fetchData,
+  placeholder,
+  onChange,
+  renderList,
+  ...rest
+}) => {
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
@@ -103,36 +104,6 @@ const Autocomplete = ({ fetchData, placeholder, onChange, ...rest }) => {
     };
   }, [inputValue, fetch]);
 
-  let optionList;
-  if (showOptions && inputValue) {
-    if (options.length) {
-      optionList = (
-        <AutocompleteList ref={dropdownEl}>
-          {options.map((optionName, index) => {
-            let className;
-            if (index === activeOption) {
-              className = 'active';
-            }
-            return (
-              <AutoCompletItem
-                className={className}
-                key={optionName}
-                onClick={handleItemClick}
-              >
-                {optionName}
-              </AutoCompletItem>
-            );
-          })}
-        </AutocompleteList>
-      );
-    } else {
-      optionList = (
-        <EmptyListContainer>
-          <em>No Results...</em>
-        </EmptyListContainer>
-      );
-    }
-  }
   return (
     <FlexItem position="relative">
       <SearchInput
@@ -143,7 +114,9 @@ const Autocomplete = ({ fetchData, placeholder, onChange, ...rest }) => {
         placeholder={placeholder}
         ref={inputEl}
       />
-      {optionList}
+      {showOptions &&
+        inputValue &&
+        renderList(options, dropdownEl, handleItemClick)}
     </FlexItem>
   );
 };

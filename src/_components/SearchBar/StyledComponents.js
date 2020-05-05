@@ -55,7 +55,7 @@ export const AutocompleteList = styled.ul`
   ${dropdownPosition}
 `;
 
-export const AutoCompletItem = styled.li`
+export const AutocompleteItem = styled.li`
   display: block;
   background: white;
   padding: 10px;

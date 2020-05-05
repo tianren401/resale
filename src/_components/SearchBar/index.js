@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from './Autocomplete';
+import LocationsDropdown from './LocationsDropdown';
+import EventsDropdown from './EventsDropdown';
 import DayPicker from '_components/DayPicker';
 import { Flex } from '_components';
 import { SearchContainer } from './StyledComponents';
@@ -37,6 +39,9 @@ const SearchBar = ({ ...rest }) => {
           value={searchQuery}
           placeholder="Search by..."
           onChange={(value) => handleSetQuery(value)}
+          renderList={(results) => (
+            <EventsDropdown {...rest} results={results} />
+          )}
         />
       </Flex>
       <Flex flex={1}>
@@ -46,6 +51,9 @@ const SearchBar = ({ ...rest }) => {
           value={searchLocation}
           placeholder="Anywhere"
           onChange={(value) => handleSetLocation(value)}
+          renderList={(results) => (
+            <LocationsDropdown {...rest} results={results} />
+          )}
         />
       </Flex>
       <Flex flex={1}>
