@@ -7,15 +7,16 @@ import {
   EmptyListContainer,
 } from './StyledComponents';
 
-const LocationsDropdown = ({ results, ...rest }) => {
+const LocationsDropdown = React.forwardRef((props, ref) => {
+  const { activeOption, handleItemClick, results } = props;
   // map data
   const options = _.chain(results).get('hits.hits', []).slice(0, 10).value();
-  const { activeOption, handleItemClick } = rest;
+
   let optionList = null;
 
   if (options.length) {
     optionList = (
-      <AutocompleteList>
+      <AutocompleteList ref={ref}>
         {options.map((hit, index) => {
           let className;
           if (index === activeOption) {
@@ -38,13 +39,19 @@ const LocationsDropdown = ({ results, ...rest }) => {
     );
   } else {
     optionList = (
-      <EmptyListContainer>
-        <em>No Results...</em>
-      </EmptyListContainer>
+      <AutocompleteList ref={ref}>
+        <AutocompleteItem>
+          <EmptyListContainer>
+            <em>No Results...</em>
+          </EmptyListContainer>
+        </AutocompleteItem>
+      </AutocompleteList>
     );
   }
 
   return optionList;
-};
+});
+
+LocationsDropdown.displayName = 'LocationsDropdown';
 
 export default LocationsDropdown;

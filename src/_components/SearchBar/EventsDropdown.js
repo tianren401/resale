@@ -77,7 +77,8 @@ const ListItem = ({ data, ...rest }) => {
   );
 };
 
-const EventsDropdown = ({ results, ...rest }) => {
+const EventsDropdown = React.forwardRef((props, ref) => {
+  const { results, activeOption, handleItemClick } = props;
   // map data
   const options = _.chain(results)
     .get('hits.hits', [])
@@ -86,7 +87,7 @@ const EventsDropdown = ({ results, ...rest }) => {
     .value();
 
   let optionList = null;
-  const { activeOption, handleItemClick } = rest;
+
   const orders = ['performers', 'events', 'venues'];
   const categories = Object.keys(options).sort(
     (a, b) => orders.indexOf(a) - orders.indexOf(b)
@@ -95,7 +96,7 @@ const EventsDropdown = ({ results, ...rest }) => {
     const topResult = _.chain(results).get('hits.hits', []).head().value();
     let className = '';
     optionList = (
-      <AutocompleteList>
+      <AutocompleteList ref={ref}>
         <SectionHeader>
           <h1>Top Result</h1>
         </SectionHeader>
@@ -132,13 +133,18 @@ const EventsDropdown = ({ results, ...rest }) => {
     );
   } else {
     optionList = (
-      <EmptyListContainer>
-        <em>No Results...</em>
-      </EmptyListContainer>
+      <AutocompleteList ref={ref}>
+        <AutocompleteItem>
+          <EmptyListContainer>
+            <em>No Results...</em>
+          </EmptyListContainer>
+        </AutocompleteItem>
+      </AutocompleteList>
     );
   }
 
   return optionList;
-};
+});
 
+EventsDropdown.displayName = 'EventsDropdown';
 export default EventsDropdown;

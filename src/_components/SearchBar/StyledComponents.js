@@ -85,8 +85,8 @@ export const AutocompleteItem = styled.li`
 `;
 
 export const EmptyListContainer = styled.div`
-  color: white;
-  ${dropdownPosition}
+  color: ${colors.black};
+  background-color: ${colors.white};
 `;
 
 export const SectionHeader = styled(Flex)`
