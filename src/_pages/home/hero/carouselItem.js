@@ -52,8 +52,8 @@ const StyledButton = styled.button`
 `;
 
 export const CarouselItem = ({ backgroundImage, title, desc, time }) => {
-  let date = format(new Date(time), 'MMMM do');
-  let timeDate = format(new Date(time), 'h:mm a');
+  const date = format(new Date(time), 'MMMM do');
+  const timeDate = format(new Date(time), 'h:mm a');
 
   return (
     <StyledCarouselItem backgroundImage={backgroundImage}>

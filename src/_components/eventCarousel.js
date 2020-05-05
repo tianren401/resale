@@ -153,7 +153,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
           if (!imgUri.startsWith('http')) {
             imgUri = require(`../${imgUri}`);
           }
-          let date = format(new Date(item.timestamp), 'MMM d');
+          const date = format(new Date(item.timestamp), 'MMM d');
 
           return (
             <CarouselItem key={item.id}>

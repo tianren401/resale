@@ -49,7 +49,7 @@ export const EventTile = ({ event, width, margin }) => {
   if (!imgUri.startsWith('http')) {
     imgUri = require(`../${imgUri}`);
   }
-  let date = format(new Date(event.timestamp), 'MMM d');
+  const date = format(new Date(event.timestamp), 'MMM d');
   return (
     <Tile style={{ backgroundImage: `url(${imgUri})` }} width={width} margin={margin}>
       <Title>{event.name}</Title>
