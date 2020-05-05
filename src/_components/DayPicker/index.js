@@ -30,8 +30,14 @@ const DayPickerContainer = styled.div`
       &:focus {
         outline: none;
       }
+      color: ${colors.gray};
       font-size: 1rem;
       border: none;
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 1.125rem;
+      line-height: 22px;
     }
   }
 `;

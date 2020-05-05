@@ -39,8 +39,8 @@ const SearchBar = ({ ...rest }) => {
           value={searchQuery}
           placeholder="Search by..."
           onChange={(value) => handleSetQuery(value)}
-          renderList={(results, dropdownEl) => (
-            <EventsDropdown ref={dropdownEl} results={results} />
+          renderList={({ results, dropdownEl, ...rest }) => (
+            <EventsDropdown ref={dropdownEl} results={results} {...rest} />
           )}
         />
       </Flex>
@@ -51,8 +51,13 @@ const SearchBar = ({ ...rest }) => {
           value={searchLocation}
           placeholder="Anywhere"
           onChange={(value) => handleSetLocation(value)}
-          renderList={(results, dropdownEl) => (
-            <LocationsDropdown ref={dropdownEl} results={results} />
+          renderList={({ results, dropdownEl, onChange, ...rest }) => (
+            <LocationsDropdown
+              ref={dropdownEl}
+              results={results}
+              onChange={onChange}
+              {...rest}
+            />
           )}
         />
       </Flex>

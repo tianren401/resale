@@ -7,6 +7,7 @@ import { SearchInput } from './StyledComponents';
 import { FlexItem } from '_components';
 
 const Autocomplete = ({
+  value,
   fetchData,
   placeholder,
   onChange,
@@ -37,7 +38,7 @@ const Autocomplete = ({
   const handleItemClick = (event) => {
     setActiveOption(0);
     setShowOptions(false);
-    setInputValue(options[activeOption]);
+    // setInputValue(options[activeOption]);
   };
 
   const handleKeyDown = (event) => {
@@ -116,7 +117,15 @@ const Autocomplete = ({
       />
       {showOptions &&
         inputValue &&
-        renderList(options, dropdownEl, handleItemClick)}
+        renderList({
+          results: options,
+          dropdownEl,
+          handleItemClick,
+          onChange: (value) => {
+            setInputValue(value);
+            onChange(value);
+          },
+        })}
     </FlexItem>
   );
 };

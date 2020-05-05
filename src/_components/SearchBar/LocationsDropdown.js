@@ -8,10 +8,14 @@ import {
 } from './StyledComponents';
 
 const LocationsDropdown = React.forwardRef((props, ref) => {
-  const { activeOption, handleItemClick, results } = props;
+  const { activeOption, handleItemClick, results, onChange } = props;
+
+  const handleLocationClick = (event, data) => {
+    handleItemClick(event);
+    onChange(data._source.name);
+  };
   // map data
   const options = _.chain(results).get('hits.hits', []).slice(0, 10).value();
-
   let optionList = null;
 
   if (options.length) {
@@ -29,7 +33,7 @@ const LocationsDropdown = React.forwardRef((props, ref) => {
             <AutocompleteItem
               className={className}
               key={hit._id}
-              onClick={handleItemClick}
+              onClick={(e) => handleLocationClick(e, hit)}
             >
               {venueName}
             </AutocompleteItem>
