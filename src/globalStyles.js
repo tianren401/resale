@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     font-style: normal;
     font-weight: normal;
     box-sizing: border-box !important;
-    background: #E5E5E5;
+    background: white;
   }
 
   a {
@@ -18,5 +18,9 @@ export const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     outline: none;
+  }
+
+  .rec-slider-container {
+    margin: 0px;
   }
 `;

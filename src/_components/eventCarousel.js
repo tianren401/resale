@@ -28,7 +28,7 @@ const CarouselItem = styled.div`
 `;
 
 const CarouselTitle = styled.div`
-  font-weight: 600;
+  font-weight: 500;
   font-size: 18px;
   line-height: 24px;
   margin-left: 21px;
@@ -46,7 +46,7 @@ const CarouselItemImage = styled.div`
 
 const CarouselItemTitle = styled.span`
   display: block;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   text-overflow: ellipsis;
@@ -70,7 +70,7 @@ const CarouselItemPrice = styled.span`
   position: absolute;
   top: 8px;
   right: 6px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 12px;
   line-height: 24px;
   color: white;
@@ -127,6 +127,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
     if (direction < 0) carousel.current.slidePrev();
     else carousel.current.slideNext();
   };
+
   const handleButtonVisible = (currentItem) => {
     if (currentItem.index === events.length - itemCount) setShowNextBtn(false);
     else setShowNextBtn(true);
@@ -152,7 +153,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
           if (!imgUri.startsWith('http')) {
             imgUri = require(`../${imgUri}`);
           }
-          let date = format(new Date(item.timestamp), 'MMM d');
+          const date = format(new Date(item.timestamp), 'MMM d');
 
           return (
             <CarouselItem key={item.id}>

@@ -10,35 +10,34 @@ import { Modal } from './modal';
 
 const StyledNavigation = styled.div`
   height: ${navigationHeight}px;
+  padding: 20px 0;
   position: absolute;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  left: 150px;
-  width: 80%;
+  width: 60%;
+  left: 20%;
+  margin: auto;
   z-index: 1;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
 `;
 
 const Logo = styled(Link)`
-  font-size: 24px;
   color: white;
-  font-style: normal;
-  font-weight: bold;
-  color: #fbfbfb;
+  float: left;
+`;
+
+const MenuContainer = styled.div`
+  float: right;
 `;
 
 const UserItems = styled.span`
   padding: 5px;
-  font-size: 15px;
   cursor: pointer;
 
   &:not(:last-of-type) {
     margin-right: 10px;
   }
-  font-style: normal;
-  font-weight: 500;
-  color: #fbfbfb;
+  color: white;
 `;
 
 export const Navigation = () => {
@@ -58,7 +57,7 @@ export const Navigation = () => {
     <StyledNavigation>
       <Logo to="/">SelectSeats</Logo>
       {!isAuthorised ? (
-        <div>
+        <MenuContainer>
           <UserItems>Sports</UserItems>
           <UserItems>Music</UserItems>
           <UserItems>More</UserItems>
@@ -69,7 +68,7 @@ export const Navigation = () => {
           <Modal isOpen={isOpenModal} onRequestClose={closeModal}>
             <Login />
           </Modal>
-        </div>
+        </MenuContainer>
       ) : (
         <div>
           <UserItems onClick={handlelogout}>Log Out</UserItems>

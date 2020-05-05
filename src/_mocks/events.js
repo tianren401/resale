@@ -389,3 +389,42 @@ export const trendingEvents = [
     },
   },
 ];
+
+export const headerEvents = [
+  {
+    id: 1,
+    name: 'Billie Eilish',
+    timestamp: '2020-09-06T18:00:56.995Z',
+    venue: {
+      name: 'Georgia Dome',
+      image: '_images/mocks/headerImage.jpg',
+    },
+  },
+  {
+    id: 2,
+    name: 'Billie Eilish2',
+    timestamp: '2020-09-07T18:00:56.995Z',
+    venue: {
+      name: 'Georgia Dome2',
+      image: '_images/mocks/headerImage.jpg',
+    },
+  },
+  {
+    id: 3,
+    name: 'Billie Eilish3',
+    timestamp: '2020-09-08T18:00:56.995Z',
+    venue: {
+      name: 'Georgia Dome3',
+      image: '_images/mocks/headerImage.jpg',
+    },
+  },
+  {
+    id: 4,
+    name: 'Billie Eilish4',
+    timestamp: '2020-09-09T18:00:56.995Z',
+    venue: {
+      name: 'Georgia Dome4',
+      image: '_images/mocks/headerImage.jpg',
+    },
+  },
+];
