@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from './Autocomplete';
 import LocationsDropdown from './LocationsDropdown';
 import EventsDropdown from './EventsDropdown';
-import DayPicker from '_components/DayPicker';
-import { Flex } from '_components';
+import { DayPicker, Flex } from '_components';
 import { SearchContainer } from './StyledComponents';
 import { setDate, setQuery, setLocation } from '_store/search';
 import { searchService } from '_services';
 
-const SearchBar = ({ ...rest }) => {
+export const SearchBar = ({ ...rest }) => {
   const dispatch = useDispatch();
 
   const handleSetDate = (date) => {
@@ -74,5 +73,3 @@ const SearchBar = ({ ...rest }) => {
 SearchBar.propTypes = {
   value: PropTypes.any,
 };
-
-export default SearchBar;

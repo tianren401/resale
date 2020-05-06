@@ -39,7 +39,6 @@ const Autocomplete = ({
   const handleItemClick = (event) => {
     setActiveOption(0);
     setShowOptions(false);
-    // setInputValue(options[activeOption]);
   };
 
   const handleKeyDown = (event) => {

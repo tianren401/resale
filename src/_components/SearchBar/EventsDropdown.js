@@ -144,6 +144,6 @@ const EventsDropdown = React.forwardRef((props, ref) => {
 
   return optionList;
 });
-
 EventsDropdown.displayName = 'EventsDropdown';
+
 export default EventsDropdown;

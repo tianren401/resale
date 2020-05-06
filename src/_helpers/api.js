@@ -1,5 +1,5 @@
 import { stringify } from 'querystring';
-import { baseURL, ESURL } from '../_constants';
+import { baseUrl, esUrl } from '../_constants';
 /**
  * API Error - compatible with instanceof
  */
@@ -44,7 +44,7 @@ export async function handleResponse(response) {
  * @param {Object} opts - options passed on to the fetch request
  */
 export function request(path, opts = {}, rootURL = '') {
-  return fetch(`${rootURL || baseURL}/${path}`, {
+  return fetch(`${rootURL || baseUrl}/${path}`, {
     credentials: 'include',
     mode: 'cors',
     headers: {
@@ -84,7 +84,7 @@ export function getESResults(path, params = {}, opts = {}) {
       method: 'GET',
       ...opts,
     },
-    ESURL
+    esUrl
   );
 }
 

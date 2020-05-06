@@ -17,7 +17,7 @@ const DayPickerContainer = styled.div`
   z-index: 2;
   padding-left: 24px;
   padding-right: 24px;
-  border-radius: 10.0801px;
+  border-radius: 10px;
 
   > .DayPickerInput {
     height: 100% !important;
@@ -42,7 +42,7 @@ const DayPickerContainer = styled.div`
   }
 `;
 
-const DayPicker = ({ value, dateError, onDateChange }) => {
+export const DayPicker = ({ value, dateError, onDateChange }) => {
   return (
     <Flex height="60px" width="100%">
       <DayPickerContainer show>
@@ -58,5 +58,3 @@ DayPicker.propTypes = {
   dateError: PropTypes.string,
   onDateChange: PropTypes.func,
 };
-
-export default DayPicker;

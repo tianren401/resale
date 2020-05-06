@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import SearchBar from '_components/SearchBar';
 
 import { UpcomingSection } from './upcomingSection';
 import { EventsGroup } from './eventsGroupSection';
@@ -11,7 +10,7 @@ import { setEventTypeAction } from '_store/homepage';
 import { CTASection } from './ctaSection';
 import { Footer } from './footer';
 
-import { Container as RowContainer } from '_components';
+import { Container as RowContainer, SearchBar } from '_components';
 const Container = styled.div`
   width: 100%;
 `;

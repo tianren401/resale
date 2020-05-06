@@ -7,3 +7,5 @@ export * from './Flex';
 export * from './eventTile';
 export * from './tieldSection';
 export * from './eventCarousel';
+export * from './DayPicker';
+export * from './SearchBar';
