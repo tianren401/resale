@@ -3,13 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/plugin-proposal-pipeline-operator": "^7.8.3",
     "@reduxjs/toolkit": "^1.3.5",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.2",
     "@testing-library/user-event": "^10.0.1",
     "connected-react-router": "^6.8.0",
-    "customize-cra": "^0.9.1",
     "date-fns": "^2.12.0",
     "formik": "^2.1.4",
     "history": "^4.10.1",
@@ -17,7 +15,6 @@
     "npm-check-updates": "^4.1.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-app-rewired": "^2.1.6",
     "react-day-picker": "^7.4.8",
     "react-dom": "^16.13.1",
     "react-elastic-carousel": "^0.4.1",
@@ -30,12 +27,12 @@
     "yup": "^0.28.4"
   },
   "scripts": {
-    "start": "env-cmd -e dev react-app-rewired start",
-    "build": "react-app-rewired build",
-    "build-nonprod": "env-cmd -e nonprod react-app-rewired build",
-    "build-prod": "env-cmd -e prod react-app-rewired build",
+    "start": "env-cmd -e dev react-scripts start",
+    "build": "react-scripts build",
+    "build-nonprod": "env-cmd -e nonprod react-scripts build",
+    "build-prod": "env-cmd -e prod react-scripts build",
     "eslint": "eslint src",
-    "test": "react-app-rewired test",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -54,7 +51,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "cross-env": "^7.0.2",
     "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
