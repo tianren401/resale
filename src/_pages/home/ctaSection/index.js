@@ -117,7 +117,9 @@ export const CTASection = () => {
       </Check>
       <Comment>
         <CommentTitle>Verified and secured tickets everytime</CommentTitle>
-        <CommentContent>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CommentContent>
+        <CommentContent>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </CommentContent>
       </Comment>
     </Container>
   );

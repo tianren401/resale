@@ -17,11 +17,20 @@ export const TiledSection = ({ events, gutter }) => {
         const marginVal = (gutter || 20) / 2;
         let width = '';
         let margin = '';
-        if (index % 4 === 0 || index % 4 === 3) width = `calc(66% - ${marginVal}px)`;
+        if (index % 4 === 0 || index % 4 === 3)
+          width = `calc(66% - ${marginVal}px)`;
         else width = `calc(34% - ${marginVal}px)`;
-        if (index % 2 === 0) margin = `${marginVal}px ${marginVal}px ${marginVal}px 0`;
+        if (index % 2 === 0)
+          margin = `${marginVal}px ${marginVal}px ${marginVal}px 0`;
         else margin = `${marginVal}px 0 ${marginVal}px ${marginVal}px`;
-        return <EventTile key={event.id} event={event} width={width} margin={margin} />;
+        return (
+          <EventTile
+            key={event.id}
+            event={event}
+            width={width}
+            margin={margin}
+          />
+        );
       })}
     </Container>
   );

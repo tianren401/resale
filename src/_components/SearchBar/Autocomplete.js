@@ -6,14 +6,7 @@ import { SearchInput } from './StyledComponents';
 
 import { FlexItem } from '_components';
 
-const Autocomplete = ({
-  value,
-  fetchData,
-  placeholder,
-  onChange,
-  renderList,
-  ...rest
-}) => {
+const Autocomplete = ({ fetchData, placeholder, onChange, renderList }) => {
   // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
@@ -36,7 +29,7 @@ const Autocomplete = ({
     setLoading(false);
   };
 
-  const handleItemClick = (event) => {
+  const handleItemClick = () => {
     setActiveOption(0);
     setShowOptions(false);
   };

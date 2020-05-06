@@ -16,7 +16,12 @@ const TriangleOverlay = styled.div`
   right: 0;
   left: 0;
   bottom: 0;
-  background-image: linear-gradient(184.56deg, #6751da -37.72%, #8245e5 30.62%, #ffffff 88.06%);
+  background-image: linear-gradient(
+    184.56deg,
+    #6751da -37.72%,
+    #8245e5 30.62%,
+    #ffffff 88.06%
+  );
   transform: matrix(-1, 0.12, 0, 1.22, 0, 0);
   z-index: -1;
 `;
@@ -127,17 +132,23 @@ export const EventsGroup = ({ events, gutter, changeType, eventType }) => {
           {eventType === 0 ? (
             <SelectedTypeBtn>Trending events</SelectedTypeBtn>
           ) : (
-            <UnselectedTypeBtn onClick={() => changeType(0)}>Trending events</UnselectedTypeBtn>
+            <UnselectedTypeBtn onClick={() => changeType(0)}>
+              Trending events
+            </UnselectedTypeBtn>
           )}
           {eventType === 1 ? (
             <SelectedTypeBtn>Best Priced Tickets</SelectedTypeBtn>
           ) : (
-            <UnselectedTypeBtn onClick={() => changeType(1)}>Best Priced Tickets</UnselectedTypeBtn>
+            <UnselectedTypeBtn onClick={() => changeType(1)}>
+              Best Priced Tickets
+            </UnselectedTypeBtn>
           )}
           {eventType === 2 ? (
             <SelectedTypeBtn>Trending Artists</SelectedTypeBtn>
           ) : (
-            <UnselectedTypeBtn onClick={() => changeType(2)}>Trending Artists</UnselectedTypeBtn>
+            <UnselectedTypeBtn onClick={() => changeType(2)}>
+              Trending Artists
+            </UnselectedTypeBtn>
           )}
         </EventTypeNavigation>
         <TiledSection events={events} gutter={gutter} />
