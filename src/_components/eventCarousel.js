@@ -87,8 +87,8 @@ const SlideButton = styled.div`
   height: 45px;
   border-radius: 50%;
   background: white;
-  box-shadow: 0px 7px 40px rgba(0, 0, 0, 0.15), 0px 0px 4px rgba(130, 136, 148, 0.16),
-    0px 0px 2px rgba(130, 136, 148, 0.08);
+  box-shadow: 0px 7px 40px rgba(0, 0, 0, 0.15),
+    0px 0px 4px rgba(130, 136, 148, 0.16), 0px 0px 2px rgba(130, 136, 148, 0.08);
   cursor: pointer;
 
   &.prev {
@@ -157,7 +157,9 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
 
           return (
             <CarouselItem key={item.id}>
-              <CarouselItemImage style={{ backgroundImage: `url(${imgUri})` }} />
+              <CarouselItemImage
+                style={{ backgroundImage: `url(${imgUri})` }}
+              />
               <CarouselItemTitle>{item.name}</CarouselItemTitle>
               <CarouselItemDesc>
                 {date} · {item.venue.name}
