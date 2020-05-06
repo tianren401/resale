@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { FlexItem } from '_components';
@@ -76,6 +77,10 @@ const ListItem = ({ data, ...rest }) => {
   );
 };
 
+ListItem.propTypes = {
+  data: PropTypes.any,
+};
+
 const EventsDropdown = React.forwardRef((props, ref) => {
   const { results, activeOption, handleItemClick } = props;
   // map data
@@ -144,6 +149,14 @@ const EventsDropdown = React.forwardRef((props, ref) => {
 
   return optionList;
 });
+
 EventsDropdown.displayName = 'EventsDropdown';
+
+EventsDropdown.propTypes = {
+  data: PropTypes.any,
+  results: PropTypes.arrayOf(PropTypes.any),
+  activeOption: PropTypes.number,
+  handleItemClick: PropTypes.func,
+};
 
 export default EventsDropdown;

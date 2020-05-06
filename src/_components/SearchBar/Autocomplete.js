@@ -126,6 +126,7 @@ Autocomplete.propTypes = {
   placeholder: PropTypes.string,
   fetchData: PropTypes.func.isRequired,
   onChange: PropTypes.func,
+  renderList: PropTypes.func,
 };
 
 export default Autocomplete;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import {
   AutocompleteItem,
@@ -56,5 +57,12 @@ const LocationsDropdown = React.forwardRef((props, ref) => {
 });
 
 LocationsDropdown.displayName = 'LocationsDropdown';
+
+LocationsDropdown.propTypes = {
+  onChange: PropTypes.func,
+  activeOption: PropTypes.number,
+  handleItemClick: PropTypes.func,
+  results: PropTypes.any,
+};
 
 export default LocationsDropdown;

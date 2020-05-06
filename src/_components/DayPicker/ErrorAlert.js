@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { Flex, Text } from '_components';
 import { colors } from 'theme';
 
@@ -12,4 +12,8 @@ export const ErrorAlert = (props) => {
       </Text>
     </Flex>
   );
+};
+
+ErrorAlert.propTypes = {
+  msg: PropTypes.string,
 };
