@@ -8,14 +8,21 @@ const StyledForm = styled.form`
   text-align: center;
 `;
 
-export const Form = ({ initialValues, handleSubmit, validationSchema, children }) => {
+export const Form = ({
+  initialValues,
+  handleSubmit,
+  validationSchema,
+  children,
+}) => {
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {(props) => <StyledForm onSubmit={props.handleSubmit}>{children(props)}</StyledForm>}
+      {(props) => (
+        <StyledForm onSubmit={props.handleSubmit}>{children(props)}</StyledForm>
+      )}
     </Formik>
   );
 };

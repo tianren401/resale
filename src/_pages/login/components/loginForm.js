@@ -41,7 +41,13 @@ const LoginForm = (props) => {
       >
         {(props) => (
           <>
-            <Field id="email" type="text" placeholder="Email" component={InputText} {...props} />
+            <Field
+              id="email"
+              type="text"
+              placeholder="Email"
+              component={InputText}
+              {...props}
+            />
             <Field
               id="password"
               type="password"

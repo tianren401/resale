@@ -55,7 +55,8 @@ export const Hero = ({ events }) => {
   const scroll = (direction) => {
     if (!carouselRef.current) return;
     if (direction < 0 && !leftEnd) carouselRef.current.slidePrev();
-    else if (direction < 0 && leftEnd) carouselRef.current.goTo(events.length - 1);
+    else if (direction < 0 && leftEnd)
+      carouselRef.current.goTo(events.length - 1);
     else if (direction > 0 && rightEnd) carouselRef.current.goTo(0);
     else if (direction > 0 && !rightEnd) carouselRef.current.slideNext();
   };

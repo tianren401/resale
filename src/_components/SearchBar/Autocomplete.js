@@ -67,10 +67,8 @@ const Autocomplete = ({
     const searchInput = inputEl.current;
 
     if (
-      dropdownArea &&
-      !dropdownArea.contains(event.target) &&
-      searchInput &&
-      !searchInput.contains(event.target)
+      !dropdownArea?.contains(event.target) &&
+      !searchInput?.contains(event.target)
     ) {
       resetSearch();
     }
