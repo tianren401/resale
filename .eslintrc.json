@@ -7,7 +7,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "prettier/react"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -20,7 +21,8 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier"],
+  "parser": "babel-eslint",
+  "plugins": ["react", "prettier", "babel"],
   "rules": {
     "env": 0,
     "experimentalDecorators": 0,

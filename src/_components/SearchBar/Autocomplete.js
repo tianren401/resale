@@ -60,10 +60,8 @@ const Autocomplete = ({ fetchData, placeholder, onChange, renderList }) => {
     const searchInput = inputEl.current;
 
     if (
-      dropdownArea &&
-      !dropdownArea.contains(event.target) &&
-      searchInput &&
-      !searchInput.contains(event.target)
+      !dropdownArea?.contains(event.target) &&
+      !searchInput?.contains(event.target)
     ) {
       resetSearch();
     }
@@ -128,6 +126,7 @@ Autocomplete.propTypes = {
   placeholder: PropTypes.string,
   fetchData: PropTypes.func.isRequired,
   onChange: PropTypes.func,
+  renderList: PropTypes.func,
 };
 
 export default Autocomplete;
