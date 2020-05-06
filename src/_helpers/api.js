@@ -1,5 +1,5 @@
 import { stringify } from 'querystring';
-import { baseURL } from '_constants';
+import { baseUrl, esUrl } from '../_constants';
 /**
  * API Error - compatible with instanceof
  */
@@ -43,8 +43,8 @@ export async function handleResponse(response) {
  * @param {string} path - request path (no leading "/")
  * @param {Object} opts - options passed on to the fetch request
  */
-export function request(path, opts = {}) {
-  return fetch(`${baseURL}/${path}`, {
+export function request(path, opts = {}, rootURL = '') {
+  return fetch(`${rootURL || baseUrl}/${path}`, {
     credentials: 'include',
     mode: 'cors',
     headers: {
@@ -67,6 +67,25 @@ export function get(path, params = {}, opts = {}) {
     method: 'GET',
     ...opts,
   });
+}
+
+/**
+ * GET search events
+ *
+ * @param {string} path - request path (no leading "/")
+ * @param {Object} params - request params in object form
+ * @param {Object} opts - options passed on to the fetch request
+ */
+export function getESResults(path, params = {}, opts = {}) {
+  const search = stringify(params);
+  return request(
+    `${path}?${search}`,
+    {
+      method: 'GET',
+      ...opts,
+    },
+    esUrl
+  );
 }
 
 /**
