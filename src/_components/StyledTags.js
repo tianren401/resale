@@ -110,6 +110,11 @@ export const Text = withBoxModelProps(styled.p`
   ${ellipsis};
 `);
 
+export const ContentImage = styled.img`
+  vertical-align: middle;
+  src: ${(props) => props.src};
+`;
+
 export const Container = styled.div`
   width: 100%;
   margin: auto;
@@ -119,10 +124,12 @@ export const Container = styled.div`
   top: 70%;
   left: 0;
   right: 0;
+  display: none;
 
   @media (min-width: ${deviceSize.tablet}) {
     width: calc(100% - 60px);
     padding: 30px;
+    display: block;
   }
 
   @media (min-width: ${deviceSize.laptop}) {

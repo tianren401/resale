@@ -1,43 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { UpcomingSection } from './upcomingSection';
 import { EventsGroup } from './eventsGroupSection';
 import { Hero } from './hero';
-import { upcomingEvents, trendingEvents, headerEvents } from '_mocks/events';
-import { setEventTypeAction } from '_store/homepage';
+import { setEventTypeAction, getEventsAction } from '_store/events';
 import { CTASection } from './ctaSection';
 import { Footer } from './footer';
-
 import { Container as RowContainer, SearchBar } from '_components';
+
 const Container = styled.div`
   width: 100%;
 `;
 
 export const Home = () => {
-  const eventType = useSelector(
-    ({ homepageReducer }) => homepageReducer.eventType
+  const { heroEvents, eventsGroup, upcomingEvents, eventType } = useSelector(
+    (state) => state.eventsReducer
   );
 
   const dispatch = useDispatch();
-  const changeType = (type) => {
+  const handleChangeType = (type) => {
+    if (eventType === type) return;
     dispatch(setEventTypeAction(type));
   };
 
+  useEffect(() => {
+    dispatch(getEventsAction({ page: 0, size: 20 }));
+  }, [dispatch]);
   return (
     <Container>
-      <Hero events={headerEvents} />
+      {heroEvents.length && <Hero events={heroEvents} />}
       <RowContainer>
         <SearchBar />
       </RowContainer>
-      <EventsGroup
-        events={trendingEvents}
-        gutter={20}
-        changeType={changeType}
-        eventType={eventType}
-      />
-
+      {Object.prototype.hasOwnProperty.call(eventsGroup, `${eventType}`) && (
+        <EventsGroup
+          events={eventsGroup[`${eventType}`]}
+          gutter={20}
+          onChangeType={handleChangeType}
+          eventType={eventType}
+        />
+      )}
       <UpcomingSection events={upcomingEvents} />
       <CTASection />
       <Footer />

@@ -1,51 +1,17 @@
 import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Carousel from 'react-elastic-carousel';
 
 import { CarouselItem } from './carouselItem';
+import {
+  Container,
+  StyledCarouselIndicatorContainer,
+  StyledCarouselIndicator,
+  LeftArrow,
+  RightArrow,
+} from './styledComponents';
 import leftArrow from '_images/leftArrow.svg';
 import rightArrow from '_images/rightArrow.svg';
-
-const StyledCarouselIndicatorContainer = styled.div`
-  text-align: center;
-  position: absolute;
-  bottom: 30%;
-`;
-
-const StyledCarouselIndicator = styled.div`
-  height: 8px;
-  width: 8px;
-  background-color: ${({ active }) =>
-    active ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.24)'};
-  border-radius: 50%;
-  display: inline-block;
-  margin: 0 4px;
-  cursor: pointer;
-
-  &:active {
-    background-color: white;
-  }
-`;
-
-const LeftArrow = styled.img`
-  position: absolute;
-  top: 40%;
-  left: 15%;
-  cursor: pointer;
-`;
-
-const RightArrow = styled.img`
-  position: absolute;
-  top: 40%;
-  right: 20%;
-  cursor: pointer;
-`;
-
-const Container = styled.div`
-  display: flex;
-  position: relative;
-`;
 
 export const Hero = ({ events }) => {
   const carouselRef = useRef(null);
@@ -94,14 +60,14 @@ export const Hero = ({ events }) => {
         style={{ margin: 0 }}
       >
         {events.map((event) => {
-          let imgUri = event.venue.image || '';
+          let imgUri = event.image || '';
           if (!imgUri.startsWith('http')) {
             imgUri = require(`../../../${imgUri}`);
           }
           return (
             <CarouselItem
               key={event.id}
-              title={event.name}
+              title={event.performers[0].name}
               desc={event.venue.name}
               backgroundImage={imgUri}
               time={event.timestamp}

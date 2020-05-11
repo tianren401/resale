@@ -14,6 +14,7 @@ const Tile = styled.div`
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
+  background-image: ${(props) => props.backgroundImage};
   position: relative;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1),
     0px 0px 2px rgba(130, 136, 148, 0.16);
@@ -46,17 +47,13 @@ const Description = styled.div`
 `;
 
 export const EventTile = ({ event, width, margin }) => {
-  let imgUri = event.venue.image || '';
+  let imgUri = event.image || '';
   if (!imgUri.startsWith('http')) {
     imgUri = require(`../${imgUri}`);
   }
   const date = format(new Date(event.timestamp), 'MMM d');
   return (
-    <Tile
-      style={{ backgroundImage: `url(${imgUri})` }}
-      width={width}
-      margin={margin}
-    >
+    <Tile backgroundImage={`url(${imgUri})`} width={width} margin={margin}>
       <Title>{event.name}</Title>
       <Description>
         {date} · {event.venue.name}

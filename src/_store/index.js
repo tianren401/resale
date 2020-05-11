@@ -3,8 +3,8 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { routerMiddleware, connectRouter } from 'connected-react-router';
 
 import authReducer from './auth';
-import homepageReducer from './homepage';
 import searchReducer from './search';
+import eventsReducer from './events';
 import { history } from '_helpers';
 
 const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
@@ -12,8 +12,8 @@ const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
 const rootReducer = combineReducers({
   router: connectRouter(history),
   authReducer,
-  homepageReducer,
   searchReducer,
+  eventsReducer,
 });
 
 const store = configureStore({

@@ -1,48 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 import { EventCarousel } from '_components';
-
-const Container = styled.div`
-  width: 100%;
-  margin: auto;
-  padding: 30px 0;
-  max-width: 980px;
-
-  > div {
-    margin-bottom: 38px;
-  }
-`;
-
-const Header = styled.span`
-  margin-bottom: 28px;
-  margin-left: 20px;
-  display: block;
-`;
-
-const Title = styled.div`
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 32px;
-`;
-
-const Filter = styled.div`
-  font-size: 12px;
-  line-height: 16px;
-  color: #5a5a5a;
-  margin-bottom: 3px;
-
-  > span {
-    font-size: 14px;
-    line-height: 20px;
-    color: #6726f1;
-    font-weight: 500;
-  }
-`;
+import { Container, Header, Filter, Title } from './styledComponents';
+import { upcomingEventOptions } from '_constants';
 
 export const UpcomingSection = ({ events }) => {
-  const { sports, concerts, comedies, broadways } = events;
   return (
     <Container>
       <Header>
@@ -51,10 +14,16 @@ export const UpcomingSection = ({ events }) => {
         </Filter>
         <Title>Upcoming events near you</Title>
       </Header>
-      <EventCarousel title="Sports" events={sports}></EventCarousel>
-      <EventCarousel title="Concerts" events={concerts}></EventCarousel>
-      <EventCarousel title="Comedy" events={comedies}></EventCarousel>
-      <EventCarousel title="Broadway" events={broadways}></EventCarousel>
+      {upcomingEventOptions.map((item) => (
+        <React.Fragment key={item.value}>
+          {Object.prototype.hasOwnProperty.call(events, `${item.value}`) && (
+            <EventCarousel
+              title={item.label}
+              events={events[`${item.value}`]}
+            ></EventCarousel>
+          )}
+        </React.Fragment>
+      ))}
     </Container>
   );
 };

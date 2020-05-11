@@ -5,6 +5,8 @@ import Carousel from 'react-elastic-carousel';
 import { format } from 'date-fns';
 
 import arrowImage from '_images/arrowImage.png';
+import { deviceSize } from '_constants';
+import { Flex } from '_components';
 
 const Container = styled.div`
   display: block;
@@ -16,6 +18,19 @@ const Container = styled.div`
 const StyledCarousel = styled(Carousel)`
   padding: 0;
   margin: 0;
+  display: none;
+
+  @media (min-width: ${deviceSize.tablet}) {
+    display: block;
+  }
+`;
+
+const StyledSnapchat = styled(Flex)`
+  display: flex;
+  padding: 7px;
+  @media (min-width: ${deviceSize.tablet}) {
+    display: none;
+  }
 `;
 
 const CarouselItem = styled.div`
@@ -25,6 +40,26 @@ const CarouselItem = styled.div`
   cursor: pointer;
   position: relative;
   max-width: 220px;
+`;
+
+const SnapchatItem = styled(Flex)`
+  width: 100%;
+  height: 214px;
+  cursor: pointer;
+  margin: 8px;
+  padding: 8px;
+  position: relative;
+  max-width: 164px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(
+      180deg,
+      rgba(55, 55, 55, 0.08) 0%,
+      rgba(0, 0, 0, 0.62) 100%
+    ),
+    ${(props) => props.backgroundImage};
 `;
 
 const CarouselTitle = styled.div`
@@ -42,6 +77,7 @@ const CarouselItemImage = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-image: ${(props) => props.backgroundImage};
 `;
 
 const CarouselItemTitle = styled.span`
@@ -54,6 +90,28 @@ const CarouselItemTitle = styled.span`
   margin-top: 12px;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+const SnapchatItemTitle = styled.div`
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #fff;
+
+  & > span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+  }
+`;
+
+const SnapchatItemDate = styled.div`
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
 `;
 
 const CarouselItemDesc = styled.span`
@@ -97,6 +155,12 @@ const SlideButton = styled.div`
   }
   &.next {
     right: -7px;
+  }
+
+  display: none;
+
+  @media (min-width: ${deviceSize.tablet}) {
+    display: block;
   }
 `;
 
@@ -149,7 +213,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
         itemPadding={[0, 10]}
       >
         {events.map((item) => {
-          let imgUri = item.venue.image || '';
+          let imgUri = item.image || '';
           if (!imgUri.startsWith('http')) {
             imgUri = require(`../${imgUri}`);
           }
@@ -157,9 +221,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
 
           return (
             <CarouselItem key={item.id}>
-              <CarouselItemImage
-                style={{ backgroundImage: `url(${imgUri})` }}
-              />
+              <CarouselItemImage backgroundImage={`url(${imgUri})`} />
               <CarouselItemTitle>{item.name}</CarouselItemTitle>
               <CarouselItemDesc>
                 {date} · {item.venue.name}
@@ -183,6 +245,32 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
       ) : (
         <></>
       )}
+      <StyledSnapchat flexWrap="wrap">
+        {events.map((item) => {
+          let imgUri = item.image || '';
+          if (!imgUri.startsWith('http')) {
+            imgUri = require(`../${imgUri}`);
+          }
+          const date = format(new Date(item.timestamp), 'MMM d');
+
+          return (
+            <SnapchatItem
+              key={item.id}
+              direction="column"
+              justify="space-between"
+              backgroundImage={`url(${imgUri})`}
+            >
+              <SnapchatItemDate>
+                {date} <CarouselItemPrice>${item.price}</CarouselItemPrice>
+              </SnapchatItemDate>
+              <SnapchatItemTitle>
+                {item.name}
+                <span>{item.venue.name}</span>
+              </SnapchatItemTitle>
+            </SnapchatItem>
+          );
+        })}
+      </StyledSnapchat>
     </Container>
   );
 };
