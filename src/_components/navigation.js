@@ -7,7 +7,7 @@ import { navigationHeight, deviceSize, colors } from '_constants';
 import { Login } from '_pages';
 import { logout } from '_store/auth';
 import { Modal } from './modal';
-import { ContentImage } from '_components';
+import { ContentImage } from '_components/styledTags';
 import mobileNavigationIcon from '_images/mobileNavigationIcon.png';
 
 const StyledNavigation = styled.div`

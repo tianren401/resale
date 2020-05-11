@@ -8,7 +8,7 @@ import { Hero } from './hero';
 import { setEventTypeAction, getEventsAction } from '_store/events';
 import { CTASection } from './ctaSection';
 import { Footer } from './footer';
-import { Container as RowContainer, SearchBar } from '_components';
+import { RowContainer, SearchBar } from '_components';
 
 const Container = styled.div`
   width: 100%;

@@ -14,8 +14,9 @@ export const colors = {
   brandHover: '#6726f1a6',
   lightBrand: 'rgba(103, 38, 241, 0.16)',
   lightBrandHover: 'rgba(103, 38, 241, 0.24)',
-  drakGray: '#8d8d94',
+  darkGray: '#8d8d94',
   gray: '#babbc2',
+  avatarColor: '#c4c4c4',
   lightGray: '#e6e6eb',
   mLightGray: '#f0f0f5',
   black: '#272729',
@@ -24,6 +25,13 @@ export const colors = {
   whiteSmoke: '#f5f5f5',
   gradientVioletBlue:
     'inear-gradient(97.6deg, #455FE5 -14.65%, #9545E5 79.56%)',
+  blue: '#007',
+  darkBlue: '#004',
+  lightBlue: '#44b',
+  red: '#b44',
+  green: '#3a3',
+  orange: '#fa3',
+  purple: '#a3f',
 };
 
 export const shadows = {
@@ -33,4 +41,15 @@ export const shadows = {
     '0px 4px 20px rgba(0, 0, 0, 0.1), 0px 0px 2px rgba(130, 136, 148, 0.16)',
   large:
     '0px 7px 40px rgba(0, 0, 0, 0.15), 0px 0px 4px rgba(130, 136, 148, 0.16), 0px 0px 2px rgba(130, 136, 148, 0.08)',
+};
+
+const BASE = 1000;
+const OVERLAY = BASE + 100;
+
+export const zIndexes = {
+  BASE,
+  DROPDOWN_FILTER: BASE + 1,
+  POPOVER: BASE + 2,
+  OVERLAY,
+  DROPDOWN_CLIENT_HEADER: OVERLAY + 1,
 };

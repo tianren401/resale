@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Flex } from '_components/Flex';
+import { Flex } from '_components/flex';
 import { colors, deviceSize } from '_constants';
+import { fontInter } from '_constants/fonts';
 
 export const StyledFooter = styled(Flex)`
   min-height: 450px;
@@ -27,8 +28,7 @@ export const TopInfoRow = styled(Flex)`
 export const StyledNavigationGroup = styled(Flex)`
   width: 200px;
   height: 200px;
-  font-family: Inter;
-  font-style: normal;
+  ${fontInter};
   font-size: 14px;
   line-height: 22px;
   font-weight: 400;
@@ -49,7 +49,7 @@ export const NavigationItem = styled(Link)`
 `;
 
 export const BottomNavigationItem = styled(Link)`
-  color: ${colors.drakGray};
+  color: ${colors.darkGray};
   margin-right: 16px;
 
   &:hover {
@@ -67,7 +67,7 @@ export const BottomInfo = styled(Flex)`
   padding: 24px 16px;
   font-size: 12px;
   line-height: 16px;
-  color: ${colors.drakGray};
+  color: ${colors.darkGray};
 
   @media (min-width: ${deviceSize.tablet}) {
     background: none;

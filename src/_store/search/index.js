@@ -20,7 +20,7 @@ export const searchQueryAction = createAsyncThunk(
 const searchSlice = createSlice({
   name: 'search',
   initialState: {
-    query: null,
+    query: '',
     location: null,
     date: null,
     results: [],
