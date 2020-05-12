@@ -4,8 +4,11 @@ import { connectAutoComplete } from 'react-instantsearch-dom';
 import throttle from 'lodash/throttle';
 
 /* Styled Components */
-import { SearchInput } from './styledComponents';
+import { SearchInput, SearechInputContainer } from './styledComponents';
 import { FlexItem } from '_components';
+import { Icon } from '_components/icon';
+import { colors } from '_constants';
+const SearchIcon = <Icon size={24} color={colors.brand} name="search" />;
 
 export const Autocomplete = connectAutoComplete(
   ({ placeholder, onChange, renderList, hits, refine, ...rest }) => {
@@ -102,27 +105,34 @@ export const Autocomplete = connectAutoComplete(
     });
 
     return (
-      <FlexItem position="relative">
-        <SearchInput
-          type="text"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          value={inputValue}
-          placeholder={placeholder}
-          ref={inputEl}
-          {...rest}
-        />
-        {showOptions &&
-          inputValue?.length >= 3 &&
-          renderList({
-            results: options,
-            dropdownEl,
-            handleItemClick,
-            onChange: (value) => {
-              setInputValue(value);
-              onChange(value);
-            },
-          })}
+      <FlexItem>
+        <SearechInputContainer
+          position="relative"
+          align="center"
+          justify="flex-start"
+        >
+          {SearchIcon}
+          <SearchInput
+            type="text"
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            value={inputValue}
+            placeholder={placeholder}
+            ref={inputEl}
+            {...rest}
+          />
+          {showOptions &&
+            inputValue?.length >= 3 &&
+            renderList({
+              results: options,
+              dropdownEl,
+              handleItemClick,
+              onChange: (value) => {
+                setInputValue(value);
+                onChange(value);
+              },
+            })}
+        </SearechInputContainer>
       </FlexItem>
     );
   }

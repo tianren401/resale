@@ -8,6 +8,7 @@ import { LocationsDropdown } from './locationsDropdown';
 import { EventsDropdown } from './eventsDropdown';
 import { DayPicker, Flex } from '_components';
 import { SearchContainer } from './styledComponents';
+
 import { setDate, setQuery, setLocation } from '_store/search';
 
 const searchClient = algoliasearch(

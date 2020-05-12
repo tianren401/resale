@@ -117,7 +117,6 @@ export const RowContainer = styled.div`
   top: 70%;
   left: 0;
   right: 0;
-  display: none;
   z-index: 100;
   @media (min-width: ${deviceSize.tablet}px) {
     width: calc(100% - 60px);

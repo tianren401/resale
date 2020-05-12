@@ -25,11 +25,15 @@ export const SearchContainer = styled.div`
   }
 `;
 
+export const SearechInputContainer = styled(Flex)`
+  padding-left: 1.5rem;
+`;
+
 export const SearchInput = styled.input`
-  border: 4px solid transparent;
+  border: 0;
   width: 100%;
   box-sizing: border-box;
-  padding: 4px;
+  padding: 1px;
   transition: width 0.3s;
   padding-left: 26px;
   padding-right: 26px;
@@ -49,11 +53,11 @@ export const SearchInput = styled.input`
 
 const dropdownPosition = css`
   position: absolute;
-  left: 2px;
-  top: 49px;
+  left: -10px;
+  top: 34px;
   padding-left: 0;
   z-index: 1;
-  padding: 10px 30px;
+  padding: 20px 20px 0 20px;
 `;
 
 export const AutocompleteList = styled.ul`
@@ -63,18 +67,21 @@ export const AutocompleteList = styled.ul`
   transition: width 0.3s;
   background-color: ${colors.white};
   margin: auto;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1),
-    0px 0px 2px rgba(130, 136, 148, 0.16);
-  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(130, 136, 148, 0.16);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top: 3px solid rgba(103, 38, 241, 0.16);
   ${dropdownPosition}
 
   @media (max-width: ${deviceSize.tablet}px) {
-    max-width: 100%;
-    width: 100%;
+    max-width: 100vh;
+    width: calc(100% + 20px);
   }
 
   @media (min-width: ${deviceSize.tablet}px) {
-    width: 100%;
+    width: calc(100% + 20px);
     min-width: 30rem;
   }
 `;
@@ -106,6 +113,8 @@ export const AutocompleteItem = styled.li`
 export const EmptyListContainer = styled.div`
   color: ${colors.black};
   background-color: ${colors.white};
+  margin-top: -20px;
+  margin-bottom: 10px;
 `;
 
 export const SectionHeader = styled(Flex)`
@@ -138,6 +147,10 @@ export const SectionContainer = styled(Flex)`
     line-height: 22px;
     color: ${colors.darkGray};
     margin: 0;
+
+    &.brand-color {
+      color: ${colors.brand};
+    }
   }
 
   &:hover {
@@ -147,6 +160,10 @@ export const SectionContainer = styled(Flex)`
 
     h3 {
       color: ${colors.black};
+
+      &.brand-color {
+        color: ${colors.brand};
+      }
     }
   }
 `;
@@ -165,11 +182,14 @@ export const ShowAllResults = styled(Flex)`
   font-size: 18px;
   line-height: 22px;
   /* identical to box height */
-  border-radius: 8px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   color: ${colors.brand};
-  width: calc(100% + 60px);
-  margin-left: -30px;
-  margin-bottom: -10px;
+  width: calc(100% + 40px);
+  margin-left: -20px;
+  margin-bottom: 0px;
   margin-top: 10px;
   height: 52px;
   background-color: ${colors.mLightGray};

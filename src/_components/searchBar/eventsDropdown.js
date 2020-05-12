@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
-import { FlexItem } from '_components';
+import { Flex, FlexItem } from '_components';
 import { formatTimeStamp } from '_helpers';
 import {
   AutocompleteItem,
@@ -21,7 +21,8 @@ const ListItem = ({ data, indexName, ...rest }) => {
   }
   const { className, handleItemClick } = rest;
   let child = null;
-
+  const venueLocation = `${data?.city}, ${data?.state}`;
+  const eventMeta = `${formatTimeStamp(data?.timestamp)},  ${data?.venue}`;
   switch (indexName) {
     case 'events':
       child = (
@@ -31,9 +32,7 @@ const ListItem = ({ data, indexName, ...rest }) => {
               <h2>{data.name}</h2>
             </FlexItem>
             <FlexItem>
-              <h3>
-                {formatTimeStamp(data.timestamp)} {data.venue}
-              </h3>
+              <h3>{eventMeta}</h3>
             </FlexItem>
           </SectionContainer>
         </Link>
@@ -42,12 +41,23 @@ const ListItem = ({ data, indexName, ...rest }) => {
     case 'venues':
       child = (
         <Link to={`/venues/${data.objectID}`}>
-          <SectionContainer column>
-            <FlexItem>
-              <h2>{data.name}</h2>
+          <SectionContainer>
+            <FlexItem flex={3}>
+              <Flex column>
+                <FlexItem>
+                  <h2>{data.name}</h2>
+                </FlexItem>
+                <FlexItem>
+                  <h3>{venueLocation}</h3>
+                </FlexItem>
+              </Flex>
             </FlexItem>
             <FlexItem>
-              <h3>Next: {formatTimeStamp(Date.now())}</h3>
+              <Flex justify="flex-end">
+                <h3 className="brand-color">
+                  Next: {formatTimeStamp(Date.now())}
+                </h3>
+              </Flex>
             </FlexItem>
           </SectionContainer>
         </Link>
@@ -98,7 +108,11 @@ export const EventsDropdown = React.forwardRef((props, ref) => {
     (a, b) => orders.indexOf(a) - orders.indexOf(b)
   );
 
-  if (categories.length > 0) {
+  const total = Object.keys(options).reduce((total, category) => {
+    return total + options[category][0]?.hits.length;
+  }, 0);
+
+  if (total > 0) {
     let className = '';
     optionList = (
       <AutocompleteList ref={ref}>
@@ -133,7 +147,7 @@ export const EventsDropdown = React.forwardRef((props, ref) => {
     );
   } else {
     optionList = (
-      <AutocompleteList ref={ref}>
+      <AutocompleteList ref={ref} empty>
         <AutocompleteItem>
           <EmptyListContainer>
             <em>No Results...</em>
