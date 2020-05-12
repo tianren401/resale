@@ -16,11 +16,11 @@ export const SearchContainer = styled.div`
   padding-left: 10px;
   padding-right: 10px;
 
-  @media (max-width: ${deviceSize.laptop}) {
+  @media (max-width: ${deviceSize.laptop}px) {
     width: 100%;
   }
 
-  @media (min-width: ${deviceSize.laptop}) {
+  @media (min-width: ${deviceSize.laptop}px) {
     width: 846px;
   }
 `;
@@ -68,12 +68,12 @@ export const AutocompleteList = styled.ul`
   border-radius: 8px;
   ${dropdownPosition}
 
-  @media (max-width: ${deviceSize.tablet}) {
+  @media (max-width: ${deviceSize.tablet}px) {
     max-width: 100%;
     width: 100%;
   }
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     width: 100%;
     min-width: 30rem;
   }

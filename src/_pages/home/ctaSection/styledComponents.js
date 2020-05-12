@@ -19,7 +19,7 @@ export const Container = styled.div`
   align-items: center;
   position: relative;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     height: 65vh;
     min-height: 500px;
     justify-content: flex-end;
@@ -42,7 +42,7 @@ export const TriangleOverlay = styled.div`
   );
   clip-path: none;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     clip-path: polygon(0% 0%, 0% 100%, 100% 0%);
   }
 `;
@@ -53,12 +53,12 @@ export const Comment = styled.div`
   width: 70%;
   z-index: 1;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     text-align: right;
     width: 100%;
   }
 
-  @media (min-width: ${deviceSize.laptop}) {
+  @media (min-width: ${deviceSize.laptop}px) {
     text-align: right;
   }
 `;
@@ -68,13 +68,13 @@ export const CommentTitle = styled.div`
   line-height: 32px;
   color: #fff;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     font-size: 28px;
     line-height: 42px;
     color: #000;
   }
 
-  @media (min-width: ${deviceSize.laptop}) {
+  @media (min-width: ${deviceSize.laptop}px) {
     font-size: 36px;
   }
 `;
@@ -85,13 +85,13 @@ export const CommentContent = styled.div`
   color: #fff;
   margin-top: 12px;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     color: #787878;
     font-size: 18px;
     line-height: 32px;
   }
 
-  @media (min-width: ${deviceSize.laptop}) {
+  @media (min-width: ${deviceSize.laptop}px) {
     font-size: 24px;
   }
 `;
@@ -105,7 +105,7 @@ export const Check = styled.div`
   margin-right: 24px;
   position: relative;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     border: 5px solid #404040;
   }
 `;
@@ -118,7 +118,7 @@ export const CheckImg = styled.div`
   bottom: 9px;
   left: 4px;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     background: url(${checkImageDesktop});
   }
 `;

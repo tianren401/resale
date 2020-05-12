@@ -8,7 +8,7 @@ export const StyledCarouselIndicatorContainer = styled.div`
   position: absolute;
   bottom: 10%;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     bottom: 27%;
   }
 `;
@@ -34,7 +34,7 @@ export const LeftArrow = styled.img`
   left: 2%;
   cursor: pointer;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     top: 40%;
     left: 15%;
   }
@@ -46,7 +46,7 @@ export const RightArrow = styled.img`
   right: 2%;
   cursor: pointer;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     top: 40%;
     right: 15%;
   }
@@ -57,7 +57,7 @@ export const Container = styled.div`
   height: 50%;
   max-height: 420px;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     height: 70%;
     min-height: 800px;
   }
@@ -73,7 +73,7 @@ export const StyledCarouselItem = styled.div`
   font-size: 4em;
   position: relative;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     min-height: 800px;
     padding: 0 20%;
   }
@@ -97,7 +97,7 @@ export const EventInfo = styled.div`
   top: 60%;
   z-index: 0;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     top: calc(40% - 10px);
     z-index: 0;
   }
@@ -108,7 +108,7 @@ export const Artist = styled.div`
   font-size: 36px;
   line-height: 42px;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     font-weight: bold;
     font-size: 48px;
     line-height: 56px;
@@ -127,7 +127,7 @@ export const BuyTicketBtn = styled.div`
     color: #8049f3;
   }
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     display: none;
   }
 `;
@@ -138,7 +138,7 @@ export const EventLocation = styled.div`
   line-height: 24px;
   padding: 0;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     font-size: 18px;
     line-height: 24px;
     padding: 12px 0;
@@ -150,7 +150,7 @@ export const StyledButton = styled(PrimaryButton)`
   margin-top: 32px;
   display: none;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     display: block;
   }
 `;

@@ -22,7 +22,7 @@ const StyledNavigation = styled.div`
   font-size: 14px;
   line-height: 20px;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     padding: 20px 0;
     width: 60%;
     left: 20%;
@@ -42,7 +42,7 @@ const Logo = styled(Link)`
     color: ${colors.brandHover};
   }
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
@@ -67,7 +67,7 @@ const UserItems = styled(Link)`
   }
   color: white;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     display: inline-block;
   }
 `;
@@ -86,7 +86,7 @@ const UserItemsMobile = styled.span`
   }
   color: white;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     display: none;
   }
 `;

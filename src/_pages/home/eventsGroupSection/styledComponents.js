@@ -17,7 +17,7 @@ export const TriangleOverlay = styled.div`
   transform: matrix(1, -0.35, 0, 0.75, 0, 70);
   z-index: -1;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     background-image: linear-gradient(
       184.56deg,
       #6751da -37.72%,
@@ -34,12 +34,12 @@ export const Container = styled.div`
   padding: 80px 0 30px;
   max-width: 940px;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     width: 100%;
     padding: 30px;
   }
 
-  @media (min-width: ${deviceSize.laptop}) {
+  @media (min-width: ${deviceSize.laptop}px) {
     width: 100%;
     padding: 30px 0;
   }
@@ -60,7 +60,7 @@ export const Title = styled.div`
     color: #6726f1;
   }
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     & {
       color: #ebebeb;
       margin: 0px;
@@ -91,7 +91,7 @@ export const EventTypeNavigation = styled.div`
     border-radius: 100px;
   }
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     font-size: 19px;
     line-height: 32px;
     margin: 0 0px 10px;
@@ -106,7 +106,7 @@ export const EventTypeNavigation = styled.div`
     }
   }
 
-  @media (min-width: ${deviceSize.laptop}) {
+  @media (min-width: ${deviceSize.laptop}px) {
     font-size: 24px;
     line-height: 32px;
   }
@@ -116,7 +116,7 @@ export const SelectedTypeBtn = styled.div`
   color: #ffffff;
   background: #6726f1;
   border: 1px solid #8245e5;
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     border-bottom: 4px solid #ffffff;
   }
 `;
@@ -126,7 +126,7 @@ export const UnselectedTypeBtn = styled.div`
   background: #fff;
   cursor: pointer;
   border: 1px solid #8245e5;
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     color: #d3bef7;
     border: none;
   }

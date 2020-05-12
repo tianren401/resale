@@ -20,7 +20,7 @@ const StyledCarousel = styled(Carousel)`
   margin: 0;
   display: none;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     display: block;
   }
 `;
@@ -28,7 +28,7 @@ const StyledCarousel = styled(Carousel)`
 const StyledSnapchat = styled(Flex)`
   display: flex;
   padding: 7px;
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     display: none;
   }
 `;
@@ -159,7 +159,7 @@ const SlideButton = styled.div`
 
   display: none;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     display: block;
   }
 `;

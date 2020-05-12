@@ -12,7 +12,7 @@ export const StyledFooter = styled(Flex)`
   padding: 0;
   color: ${colors.black};
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     padding: 5% 20%;
   }
 `;
@@ -20,7 +20,7 @@ export const StyledFooter = styled(Flex)`
 export const TopInfoRow = styled(Flex)`
   margin: 70px 0;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     margin: 0 0 50px;
   }
 `;
@@ -56,7 +56,7 @@ export const BottomNavigationItem = styled(Link)`
     color: ${colors.brandHover};
   }
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     color: ${colors.black1};
   }
 `;
@@ -69,7 +69,7 @@ export const BottomInfo = styled(Flex)`
   line-height: 16px;
   color: ${colors.darkGray};
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     background: none;
     min-height: 0;
     font-size: 14px;
@@ -81,7 +81,7 @@ export const BottomInfo = styled(Flex)`
 export const BrandGroup = styled(Flex)`
   display: flex;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     display: none;
   }
 `;

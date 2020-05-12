@@ -119,13 +119,13 @@ export const RowContainer = styled.div`
   right: 0;
   display: none;
   z-index: 100;
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     width: calc(100% - 60px);
     padding: 30px;
     display: block;
   }
 
-  @media (min-width: ${deviceSize.laptop}) {
+  @media (min-width: ${deviceSize.laptop}px) {
     width: 100%;
     padding: 30px 0;
   }
