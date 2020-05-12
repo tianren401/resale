@@ -89,6 +89,19 @@ export function getESResults(path, params = {}, opts = {}) {
 }
 
 /**
+ * Ajax GET request
+ *
+ * @param {string} path - request path (no leading "/")
+ * @param {string} dataType - expected response content-type
+ */
+export function ajaxGet(path, dataType) {
+  return window.jQuery.ajax({
+    url: `${baseUrl}/${path}`,
+    dataType: dataType,
+  });
+}
+
+/**
  * POST request
  *
  * @param {string} path - request path (no leading "/")
