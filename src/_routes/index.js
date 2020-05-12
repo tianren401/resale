@@ -8,7 +8,7 @@ import {
 
 import { GlobalStyles } from '../globalStyles';
 import { Navigation } from '_components';
-import { Home } from '_pages';
+import { Home, Performer } from '_pages';
 
 const Routes = () => (
   <Router>
@@ -16,6 +16,7 @@ const Routes = () => (
     <Navigation />
     <Switch>
       <Route exact path="/home" component={Home} />
+      <Route exact path="/performer" component={Performer} />
       <Redirect to="/home" />
     </Switch>
   </Router>

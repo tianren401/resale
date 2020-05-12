@@ -22,7 +22,7 @@ const Tile = styled.div`
   margin: 8px 16px;
   border-radius: 12px;
 
-  @media (min-width: ${deviceSize.tablet}) {
+  @media (min-width: ${deviceSize.tablet}px) {
     width: ${(props) => props.width};
     margin: ${(props) => props.margin};
     border-radius: 5px;
