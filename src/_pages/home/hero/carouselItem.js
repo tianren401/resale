@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 
@@ -12,7 +13,7 @@ import {
   EventBackground,
 } from './styledComponents';
 
-export const CarouselItem = ({ backgroundImage, title, desc, time }) => {
+export const CarouselItem = ({ backgroundImage, title, desc, time, id }) => {
   const date = format(new Date(time), 'MMMM do');
   const timeDate = format(new Date(time), 'h:mm a');
 
@@ -24,15 +25,17 @@ export const CarouselItem = ({ backgroundImage, title, desc, time }) => {
         <EventLocation>
           {date} · {timeDate} · {desc}
         </EventLocation>
-        <StyledButton
-          fontSize="14px"
-          fontWeight="500"
-          textAlign="center"
-          minWidth="160px"
-        >
-          Buy Tickets
-        </StyledButton>
-        <BuyTicketBtn>Buy now from $99 →</BuyTicketBtn>
+        <Link to={`event/${id}`}>
+          <StyledButton
+            fontSize="14px"
+            fontWeight="500"
+            textAlign="center"
+            minWidth="160px"
+          >
+            Buy Tickets
+          </StyledButton>
+          <BuyTicketBtn>Buy now from $99 →</BuyTicketBtn>
+        </Link>
       </EventInfo>
     </StyledCarouselItem>
   );
@@ -43,4 +46,5 @@ CarouselItem.propTypes = {
   title: PropTypes.string,
   desc: PropTypes.string,
   time: PropTypes.string,
+  id: PropTypes.number,
 };

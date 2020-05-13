@@ -71,6 +71,7 @@ export const Hero = ({ events }) => {
               desc={event.venue.name}
               backgroundImage={imgUri}
               time={event.timestamp}
+              id={event.id}
             />
           );
         })}
