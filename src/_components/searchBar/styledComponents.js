@@ -17,7 +17,11 @@ export const SearchContainer = styled.div`
   padding-right: 10px;
 
   @media (max-width: ${deviceSize.laptop}px) {
-    width: 100%;
+    width: calc(100% - 2rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
   }
 
   @media (min-width: ${deviceSize.laptop}px) {
@@ -27,6 +31,9 @@ export const SearchContainer = styled.div`
 
 export const SearechInputContainer = styled(Flex)`
   padding-left: 1.5rem;
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding-left: 10px;
+  }
 `;
 
 export const SearchInput = styled.input`
@@ -48,6 +55,11 @@ export const SearchInput = styled.input`
   &:focus {
     width: 100%;
     outline: none;
+  }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding-right: 20px;
+    padding-left: 20px;
   }
 `;
 

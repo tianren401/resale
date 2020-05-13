@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, Configure, Index } from 'react-instantsearch-dom';
-import { Autocomplete } from './autocomplete';
+import { connectedAutocomplete as Autocomplete } from './autocomplete';
 import { LocationsDropdown } from './locationsDropdown';
 import { EventsDropdown } from './eventsDropdown';
 import { DayPicker, Flex } from '_components';

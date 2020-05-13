@@ -117,7 +117,7 @@ export const EventsDropdown = React.forwardRef((props, ref) => {
     optionList = (
       <AutocompleteList ref={ref}>
         {categories.map((category) => (
-          <>
+          <React.Fragment key={category}>
             <SectionHeader>
               <h1>{category}</h1>
             </SectionHeader>
@@ -138,7 +138,7 @@ export const EventsDropdown = React.forwardRef((props, ref) => {
                   />
                 );
               })}
-          </>
+          </React.Fragment>
         ))}
         <Link to={'/results'}>
           <ShowAllResults>Show All Results</ShowAllResults>

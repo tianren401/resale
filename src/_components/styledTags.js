@@ -108,7 +108,7 @@ export const ContentImage = styled.img`
   src: ${(props) => props.src};
 `;
 
-export const RowContainer = styled.div`
+export const SearchRowContainer = styled.div`
   width: 100%;
   margin: auto;
   padding: 30px 0;
@@ -127,5 +127,11 @@ export const RowContainer = styled.div`
   @media (min-width: ${deviceSize.laptop}px) {
     width: 100%;
     padding: 30px 0;
+  }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    position: relative !important;
+    padding: 0;
+    margin-top: -30px !important;
   }
 `;

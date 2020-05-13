@@ -8,7 +8,7 @@ import { Hero } from './hero';
 import { setEventTypeAction, getEventsAction } from '_store/events';
 import { CTASection } from './ctaSection';
 import { Footer } from './footer';
-import { RowContainer, SearchBar } from '_components';
+import { SearchRowContainer, SearchBar } from '_components';
 
 const Container = styled.div`
   width: 100%;
@@ -31,9 +31,9 @@ export const Home = () => {
   return (
     <Container>
       {heroEvents.length && <Hero events={heroEvents} />}
-      <RowContainer>
+      <SearchRowContainer>
         <SearchBar />
-      </RowContainer>
+      </SearchRowContainer>
       {Object.prototype.hasOwnProperty.call(eventsGroup, `${eventType}`) && (
         <EventsGroup
           events={eventsGroup[`${eventType}`]}
