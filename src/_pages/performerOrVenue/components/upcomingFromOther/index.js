@@ -3,33 +3,17 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { deviceSize } from '_constants';
-import { PerformerEventCard } from '../performerEventCard';
+import { EventCard, EventList } from '_components';
 
 const ComponentContainer = styled.div`
   width: 100%;
   transform: skewY(6deg);
   transform-origin: top left;
-  background-color: #f0f0f5;
+  background: linear-gradient(96.1deg, #455fe5 -14.65%, #9545e5 79.56%);
+  padding: 50px;
 
   @media (max-width: ${deviceSize.tablet}px) {
     background-color: white;
-  }
-`;
-
-const Container = styled.div`
-  dislpay: flex;
-  justify-content: space-around;
-  width: 35%;
-  text-align: center;
-  transform: skewY(-6deg);
-  padding-top: calc(50% * ${Math.tan(0.10472)});
-  padding-bottom: calc(50% * ${Math.tan(0.10472)});
-  margin: 0 auto;
-
-  @media (max-width: ${deviceSize.tablet}px) {
-    width: 100%;
-    padding: calc(50% * ${Math.tan(6)}) 10px;
-    padding-bottom: 5%;
   }
 `;
 
@@ -47,7 +31,7 @@ const LoadMoreButton = styled.button`
   font-weight: 500;
   font-size: 14px;
   text-align: center;
-  color: #9c9c9c;
+  color: #6726f1;
   background-color: #f0f0f5;
   padding: 5px 10px;
 
@@ -56,16 +40,16 @@ const LoadMoreButton = styled.button`
   }
 `;
 
-export const UpcomingFromSimilar = ({ events }) => {
+export const UpcomingFromOther = ({ events }) => {
   return (
     <ComponentContainer>
-      <Container>
+      <EventList skew={true}>
         <MoreEventsText>Upcoming Concerts from Similar Artists</MoreEventsText>
 
         {events &&
           events.map((event) => {
             return (
-              <PerformerEventCard
+              <EventCard
                 event={event}
                 key={event.id}
                 timestamp={event.timestamp}
@@ -77,11 +61,11 @@ export const UpcomingFromSimilar = ({ events }) => {
           })}
 
         <LoadMoreButton>Load More</LoadMoreButton>
-      </Container>
+      </EventList>
     </ComponentContainer>
   );
 };
 
-UpcomingFromSimilar.propTypes = {
+UpcomingFromOther.propTypes = {
   events: PropTypes.array,
 };

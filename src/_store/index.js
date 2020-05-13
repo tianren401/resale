@@ -5,6 +5,8 @@ import { routerMiddleware, connectRouter } from 'connected-react-router';
 import authReducer from './auth';
 import searchReducer from './search';
 import eventsReducer from './events';
+import performerReducer from './performer';
+import venueReducer from './venue';
 import { history } from '_helpers';
 
 const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
   authReducer,
   searchReducer,
   eventsReducer,
+  performerReducer,
+  venueReducer,
 });
 
 const store = configureStore({

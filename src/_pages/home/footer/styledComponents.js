@@ -6,6 +6,7 @@ import { colors, deviceSize } from '_constants';
 import { fontInter } from '_constants/fonts';
 
 export const StyledFooter = styled(Flex)`
+  position: absolute;
   min-height: 450px;
   background: #e5e5e5;
   width: 100%;

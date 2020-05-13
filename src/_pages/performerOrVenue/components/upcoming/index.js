@@ -5,29 +5,13 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 
 import downArrow from '_images/downArrow.svg';
-import { deviceSize } from '_constants';
 import { TabbedContent } from '_components/tabbedContent';
-import { PerformerEventCard } from '../performerEventCard';
-import { PerformerFaq } from '../performerFaq';
+import { EventCard, EventList } from '_components';
+import { Faq } from '../faq';
 
 const ComponentContainer = styled.div`
   width: 100%;
   background-color: white;
-`;
-
-const Container = styled.div`
-  dislpay: flex;
-  justify-content: space-around;
-  width: 35%;
-  text-align: center;
-  margin: 0 auto;
-  padding: calc(50% * ${Math.tan(6)});
-
-  @media (max-width: ${deviceSize.tablet}px) {
-    width: 100%;
-    padding: calc(50% * ${Math.tan(6)}) 10px;
-    padding-bottom: 5%;
-  }
 `;
 
 const DayPickerRow = styled.div`
@@ -82,7 +66,7 @@ const DayPickerContainer = styled.div`
   }
 `;
 
-export const UpcomingFromPerformer = ({ events }) => {
+export const Upcoming = ({ events }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [dayPicked, setDayPicked] = useState({
     selectedDay: null,
@@ -108,10 +92,10 @@ export const UpcomingFromPerformer = ({ events }) => {
 
   return (
     <ComponentContainer>
-      <Container>
+      <EventList>
         <TabbedContent sendToPerformerSection={getSelectedTab} />
         {selectedTab === 1 ? (
-          <PerformerFaq />
+          <Faq />
         ) : (
           <>
             <DayPickerRow>
@@ -133,7 +117,7 @@ export const UpcomingFromPerformer = ({ events }) => {
             {events &&
               events.map((event) => {
                 return (
-                  <PerformerEventCard
+                  <EventCard
                     event={event}
                     key={event.id}
                     timestamp={event.timestamp}
@@ -149,7 +133,7 @@ export const UpcomingFromPerformer = ({ events }) => {
             {events &&
               events.map((event) => {
                 return (
-                  <PerformerEventCard
+                  <EventCard
                     event={event}
                     key={event.id}
                     timestamp={event.timestamp}
@@ -161,11 +145,11 @@ export const UpcomingFromPerformer = ({ events }) => {
               })}
           </>
         )}
-      </Container>
+      </EventList>
     </ComponentContainer>
   );
 };
 
-UpcomingFromPerformer.propTypes = {
+Upcoming.propTypes = {
   events: PropTypes.array,
 };

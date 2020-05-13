@@ -41,24 +41,7 @@ const Answer = styled.div`
   line-height: 20px;
 `;
 
-const LoadMoreButton = styled.button`
-  border: 1px solid #9c9c9c;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 14px;
-  text-align: center;
-  color: #9c9c9c;
-  padding: 5px 10px;
-  margin: 15px auto 50px auto;
-  display: none;
-
-  @media (max-width: ${deviceSize.tablet}px) {
-    background-color: white;
-    display: block;
-  }
-`;
-
-export const PerformerFaq = () => {
+export const Faq = () => {
   return (
     <Container>
       <Title>{isMobileDevice ? 'FAQ' : 'Frequently Asked Questions'}</Title>
@@ -74,7 +57,6 @@ export const PerformerFaq = () => {
         number of factors. Typically, Billie Eilish tickets can be found for as
         low as $96.00, with an average price of $234.00.
       </Answer>
-      <LoadMoreButton>Load More</LoadMoreButton>
     </Container>
   );
 };

@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 
 import { deviceSize } from '_constants';
 
-const Tile = styled.div`
+const Tile = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -53,7 +54,12 @@ export const EventTile = ({ event, width, margin }) => {
   }
   const date = format(new Date(event.timestamp), 'MMM d');
   return (
-    <Tile backgroundImage={`url(${imgUri})`} width={width} margin={margin}>
+    <Tile
+      to={`event/${event.id}`}
+      backgroundImage={`url(${imgUri})`}
+      width={width}
+      margin={margin}
+    >
       <Title>{event.name}</Title>
       <Description>
         {date} · {event.venue.name}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Carousel from 'react-elastic-carousel';
@@ -33,7 +34,7 @@ const StyledSnapchat = styled(Flex)`
   }
 `;
 
-const CarouselItem = styled.div`
+const CarouselItem = styled(Link)`
   width: 100%;
   height: 172px;
   display: inline-block;
@@ -220,7 +221,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
           const date = format(new Date(item.timestamp), 'MMM d');
 
           return (
-            <CarouselItem key={item.id}>
+            <CarouselItem key={item.id} to={`event/${item.id}`}>
               <CarouselItemImage backgroundImage={`url(${imgUri})`} />
               <CarouselItemTitle>{item.name}</CarouselItemTitle>
               <CarouselItemDesc>

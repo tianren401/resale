@@ -10,4 +10,6 @@ export * from './eventCarousel';
 export * from './dayPicker';
 export * from './searchBar';
 export * from './button';
+export * from './eventList';
+export * from './eventCard';
 export * from './icon';

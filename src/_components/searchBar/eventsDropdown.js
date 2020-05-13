@@ -26,7 +26,7 @@ const ListItem = ({ data, indexName, ...rest }) => {
   switch (indexName) {
     case 'events':
       child = (
-        <Link to={`/events/${data.objectID}`}>
+        <Link to={`/event/${data.objectID}`}>
           <SectionContainer column>
             <FlexItem>
               <h2>{data.name}</h2>
@@ -40,7 +40,7 @@ const ListItem = ({ data, indexName, ...rest }) => {
       break;
     case 'venues':
       child = (
-        <Link to={`/venues/${data.objectID}`}>
+        <Link to={`/venue/${data.objectID}`}>
           <SectionContainer>
             <FlexItem flex={3}>
               <Flex column>
@@ -66,7 +66,7 @@ const ListItem = ({ data, indexName, ...rest }) => {
     case 'performers':
     default:
       child = (
-        <Link to={`/performers/${data.objectID}`}>
+        <Link to={`/performer/${data.objectID}`}>
           <SectionContainer align="center">
             <FlexItem flex={0}>
               <AvatarImage />
