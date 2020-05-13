@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ajaxGet } from '../../_helpers/api';
 import { TicketList } from './components/ticketList';
@@ -33,7 +33,19 @@ export const SeatSelection = (props) => {
     return formattedTicketData;
   };
 
-  const buildMap = () => {
+  useEffect(() => {
+    const getData = async () => {
+      const seaticsData = await ajaxGet(`maps/${eventId}`, 'jsonp');
+      const ticketData = await ajaxGet(`ticketgroups/${eventId}`, 'json');
+
+      setEventData(await seaticsData[0]);
+      setMapData(await seaticsData[1]);
+      setTicketData(await formatTicketData(ticketData));
+    };
+    getData();
+  }, [eventId]);
+
+  useEffect(() => {
     if (mapData && eventData && mapContainerRef?.current && ticketData) {
       window.Seatics.MapComponent.create({
         imgSrc: eventData.mapImage,
@@ -56,24 +68,7 @@ export const SeatSelection = (props) => {
 
       window.Seatics.MapComponent.onTicketListDrawn();
     }
-  };
-
-  const getData = async () => {
-    const seaticsData = await ajaxGet(`maps/${eventId}`, 'jsonp');
-    const ticketData = await ajaxGet(`ticketgroups/${eventId}`, 'json');
-
-    setEventData(await seaticsData[0]);
-    setMapData(await seaticsData[1]);
-    setTicketData(await formatTicketData(ticketData));
-  };
-
-  React.useEffect(() => {
-    getData();
-  }, []);
-
-  React.useEffect(() => {
-    buildMap();
-  }, [getData]);
+  }, [eventData, mapData, ticketData]);
 
   return (
     <div>
