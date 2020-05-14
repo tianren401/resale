@@ -57,7 +57,12 @@ const Check = styled.img`
 export const Header = ({ events }) => {
   return (
     <StyledHeader>
-      <Performer>{events && events[0].performers[0].name}</Performer>
+      <Performer>
+        {/* TODO: Populate text based on performer info instead of event info */}
+        {events?.length
+          ? events[0].performers[0].name
+          : 'No upcoming events found'}
+      </Performer>
       <Subtitle>
         {isMobileDevice ? (
           'Here is a message that will be in several lines, so we see the text as it wraps.'
