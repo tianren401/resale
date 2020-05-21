@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { deviceSize } from '_constants';
 import { isMobileDevice } from '_helpers';
+import { LoadMoreButton } from '_components';
 
 const Container = styled.div`
 @media (max-width: ${deviceSize.tablet}px) {
@@ -57,6 +58,7 @@ export const Faq = () => {
         number of factors. Typically, Billie Eilish tickets can be found for as
         low as $96.00, with an average price of $234.00.
       </Answer>
+      {isMobileDevice && <LoadMoreButton />}
     </Container>
   );
 };

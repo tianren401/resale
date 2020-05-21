@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { deviceSize } from '_constants';
-import { EventCard, EventList } from '_components';
+import { EventCard, EventList, LoadMoreButton } from '_components';
 
 const ComponentContainer = styled.div`
   width: 100%;
@@ -13,7 +13,8 @@ const ComponentContainer = styled.div`
   padding: 50px;
 
   @media (max-width: ${deviceSize.tablet}px) {
-    background-color: white;
+    background: white;
+    padding: 0;
   }
 `;
 
@@ -22,21 +23,11 @@ const MoreEventsText = styled.div`
   font-size: 18px;
   line-height: 20px;
   text-align: left;
-`;
-
-const LoadMoreButton = styled.button`
-  margin-top: 15px;
-  border: 1px solid #9c9c9c;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 14px;
-  text-align: center;
-  color: #6726f1;
-  background-color: #f0f0f5;
-  padding: 5px 10px;
+  padding-left: 10px;
+  color: white;
 
   @media (max-width: ${deviceSize.tablet}px) {
-    background-color: white;
+    color: black;
   }
 `;
 
@@ -44,7 +35,7 @@ export const UpcomingFromOther = ({ events }) => {
   return (
     <ComponentContainer>
       <EventList skew={true}>
-        <MoreEventsText>Upcoming Concerts from Similar Artists</MoreEventsText>
+        <MoreEventsText>Similar Artists</MoreEventsText>
 
         {events &&
           events.map((event) => {
@@ -60,7 +51,7 @@ export const UpcomingFromOther = ({ events }) => {
             );
           })}
 
-        <LoadMoreButton>Load More</LoadMoreButton>
+        <LoadMoreButton />
       </EventList>
     </ComponentContainer>
   );

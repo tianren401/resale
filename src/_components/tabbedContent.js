@@ -36,7 +36,7 @@ const Tab = styled.li`
   margin-bottom: -3px;
   ${({ selected }) =>
     selected
-      ? 'border-bottom: 3px solid #6726f1;'
+      ? 'border-bottom: 3px solid #6726f1; > span { color: #6726F1; }'
       : 'cursor: pointer; color: #d02027;'};
 `;
 

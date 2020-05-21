@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -8,7 +8,6 @@ import { getPerformerEventsAction } from '_store/performer';
 import { getVenueEventsAction } from '_store/venue';
 import { Header } from './components/header';
 import { Upcoming } from './components/upcoming';
-import { UpcomingFromOther } from './components/upcomingFromOther';
 import { Faq } from './components/faq';
 import { Footer } from '_pages/home/footer';
 
@@ -33,14 +32,23 @@ export const PerformerOrVenue = ({ performerId, venueId }) => {
     }
   }, [dispatch, performerId, venueId]);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const getModalState = (state) => {
+    setModalOpen(state);
+  };
+
   return (
     <Container>
-      <Header events={events.content} />
-      <Upcoming events={events.content} />
-      <UpcomingFromOther events={events.content} />
-
-      {isMobileDevice && <Faq />}
-      <Footer />
+      {!modalOpen && <Header events={events.content} />}
+      <Upcoming
+        events={events.content}
+        sendToPage={getModalState}
+        venueId={venueId}
+        performerId={performerId}
+      />
+      {isMobileDevice && !modalOpen && <Faq />}
+      {!modalOpen && <Footer />}
     </Container>
   );
 };
