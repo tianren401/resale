@@ -1,5 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import { TicketGroup } from './ticketGroup';
+
+const Container = styled.div`
+  width: 20%;
+  height: 100%;
+`;
+
+const StyledTicketList = styled.table`
+  width: 100%;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.15);
+  overflow: auto;
+`;
 
 export const TicketList = React.forwardRef((props, ref) => {
   const [ticketDataSegmented, setTicketDataSegmentd] = React.useState([]);
@@ -33,7 +46,17 @@ export const TicketList = React.forwardRef((props, ref) => {
     }
   });
 
-  return <table ref={ref}>{renderSegments}</table>;
+  return (
+    <Container>
+      <StyledTicketList ref={ref}>
+        <colgroup>
+          <col span={'1'} style={{ width: '70%' }} />
+          <col span={'1'} style={{ width: '30%' }} />
+        </colgroup>
+        {renderSegments}
+      </StyledTicketList>
+    </Container>
+  );
 });
 
 TicketList.propTypes = {};

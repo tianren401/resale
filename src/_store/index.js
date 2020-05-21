@@ -7,6 +7,9 @@ import searchReducer from './search';
 import eventsReducer from './events';
 import performerReducer from './performer';
 import venueReducer from './venue';
+import seaticsReducer from './seatics';
+import ticketGroupListReducer from './ticketGroupList';
+import checkoutTicketReducer from './checkoutTicket';
 import { history } from '_helpers';
 
 const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
@@ -18,6 +21,9 @@ const rootReducer = combineReducers({
   eventsReducer,
   performerReducer,
   venueReducer,
+  seaticsReducer,
+  ticketGroupListReducer,
+  checkoutTicketReducer,
 });
 
 const store = configureStore({
