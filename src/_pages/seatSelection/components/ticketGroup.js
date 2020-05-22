@@ -46,9 +46,7 @@ export const TicketGroup = (props) => {
 
   const handleBuyButton = () => {
     const fullTicketData = ticketData.ticketGroupListRaw.find((ticketGroup) => {
-      if (ticketGroup.exchangeTicketGroupId === tgData.tgID) {
-        return ticketGroup;
-      }
+      return ticketGroup.exchangeTicketGroupId === tgData.tgID;
     });
 
     dispatch(
