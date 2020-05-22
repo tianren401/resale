@@ -110,6 +110,8 @@ const LocationRow = styled.div`
 `;
 
 export const Upcoming = ({ events, sendToPage, venueId }) => {
+  const allUpcomingEvents = events.allUpcomingEvents;
+  const [sameMonthEvents, setSameMonthEvents] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [count, setCount] = useState(0);
@@ -123,10 +125,24 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
   );
 
   useEffect(() => {
-    if (events && selectedDates) {
+    const getMonth = (eventDate) => {
+      const parsedDate = Date.parse(eventDate);
+      const newDate = new Date(parsedDate);
+      const month = newDate.getMonth();
+      return month;
+    };
+
+    if (allUpcomingEvents) {
+      const currentMonth = new Date().getMonth();
+      const eventsHappeningSoon = allUpcomingEvents.filter(
+        (event) => getMonth(event.timestamp) === currentMonth
+      );
+      setSameMonthEvents(eventsHappeningSoon);
+    }
+    if (allUpcomingEvents && selectedDates) {
       getSelectedDates();
-      for (let i = 0; i < events.length; i++) {
-        const evaluatedEvent = events[i];
+      for (let i = 0; i < allUpcomingEvents.length; i++) {
+        const evaluatedEvent = allUpcomingEvents[i];
         const parsedDate = Date.parse(evaluatedEvent.timestamp);
         const newDate = new Date(parsedDate);
         const day = newDate.getDate();
@@ -144,13 +160,13 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
             selectedMonth === month &&
             selectedYear === year
           ) {
-            filteredEvents.push(events[i]);
+            filteredEvents.push(allUpcomingEvents[i]);
             setFilteredEvents(filteredEvents);
           }
         }
       }
     }
-  }, [events, filteredEvents, getSelectedDates, selectedDates]);
+  }, [allUpcomingEvents, filteredEvents, getSelectedDates, selectedDates]);
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -216,8 +232,8 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
                     />
                   );
                 })
-              ) : events && count < 2 ? (
-                events.map((event) => {
+              ) : sameMonthEvents && count < 2 ? (
+                sameMonthEvents.map((event) => {
                   return (
                     <EventCard
                       event={event}
@@ -238,8 +254,8 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
               {!venueId && <AllEventsText>All events</AllEventsText>}
 
               {!venueId &&
-                events &&
-                events.map((event) => {
+                allUpcomingEvents &&
+                allUpcomingEvents.map((event) => {
                   return (
                     <EventCard
                       event={event}
@@ -256,7 +272,9 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
           {isMobileDevice && <LoadMoreButton />}
         </EventList>
       )}
-      {selectedTab !== 1 && !modalOpen && <UpcomingFromOther events={events} />}
+      {selectedTab !== 1 && !modalOpen && (
+        <UpcomingFromOther events={allUpcomingEvents} />
+      )}
     </ComponentContainer>
   );
 };

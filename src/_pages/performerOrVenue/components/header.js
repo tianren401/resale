@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import headerImage from '_images/mocks/headerImage.jpg';
 import { deviceSize } from '_constants';
 
 const StyledHeader = styled.div`
@@ -11,7 +10,7 @@ const StyledHeader = styled.div`
   width: 100%;
   height: 50vh;
   background-color: #a9a9a9;
-  background-image: url(${headerImage});
+  background-image: url(${({ image }) => image});
   background-size: cover;
   background-position: center;
   background-position-x: center;
@@ -65,27 +64,25 @@ const Address = styled.div`
   }
 `;
 
-export const Header = ({ events }) => {
+export const Header = ({ attractions }) => {
   return (
-    <StyledHeader>
+    <StyledHeader
+      image={
+        attractions?.heroImage?.length && attractions.heroImage[0].imageUrl
+      }
+    >
       <EventInfo>
-        <Performer>
-          {/* TODO: Populate text based on performer info instead of event info */}
-          {events?.length
-            ? events[0].performers[0].name
-            : 'No upcoming events found'}
-        </Performer>
-        <Address>{events?.length && events[0].venue.street}</Address>
-        <Subtitle>
-          Millions of Customers Served • 100% Guaranteed • Low Fees
-        </Subtitle>
+        <Performer>{attractions ? attractions.name : 'No results'}</Performer>
+        <Address>
+          {attractions.allUpcomingEvents?.length &&
+            `${attractions.allUpcomingEvents[0].venue.street} ${attractions.allUpcomingEvents[0].venue.city} ${attractions.allUpcomingEvents[0].venue.state} ${attractions.allUpcomingEvents[0].venue.zip}`}
+        </Address>
+        <Subtitle>{attractions.subtitle}</Subtitle>
       </EventInfo>
     </StyledHeader>
   );
 };
 
 Header.propTypes = {
-  events: PropTypes.array,
-  performerId: PropTypes.number,
-  venueId: PropTypes.number,
+  attractions: PropTypes.object,
 };

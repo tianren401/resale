@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 
 import { EventCarousel } from '_components';
 import { Container, Header, Filter, Title } from './styledComponents';
-import { upcomingEventOptions } from '_constants';
 
 export const UpcomingSection = ({ events }) => {
+  const sports = events?.sports;
+  const concerts = events?.concerts;
+  const theater = events?.theater;
+  const other = events?.other;
+  const upcomingTypes = [sports, concerts, theater, other];
+
   return (
     <Container>
       <Header>
@@ -14,16 +19,20 @@ export const UpcomingSection = ({ events }) => {
         </Filter>
         <Title>Upcoming events near you</Title>
       </Header>
-      {upcomingEventOptions.map((item) => (
-        <React.Fragment key={item.value}>
-          {Object.prototype.hasOwnProperty.call(events, `${item.value}`) && (
+      {events &&
+        upcomingTypes.map((type) => {
+          const typeName = Object.keys(events)[upcomingTypes.indexOf(type)];
+          const capitalTypeName =
+            typeName.charAt(0).toUpperCase() + typeName.slice(1);
+          return (
             <EventCarousel
-              title={item.label}
-              events={events[`${item.value}`]}
+              key={events && upcomingTypes.indexOf(type)}
+              title={events && capitalTypeName}
+              events={events && type}
+              itemsToShow={4}
             ></EventCarousel>
-          )}
-        </React.Fragment>
-      ))}
+          );
+        })}
     </Container>
   );
 };

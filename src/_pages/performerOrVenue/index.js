@@ -40,9 +40,9 @@ export const PerformerOrVenue = ({ performerId, venueId }) => {
 
   return (
     <Container>
-      {!modalOpen && <Header events={events.content} />}
+      {!modalOpen && <Header attractions={events} />}
       <Upcoming
-        events={events.content}
+        events={events}
         sendToPage={getModalState}
         venueId={venueId}
         performerId={performerId}

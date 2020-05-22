@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { performerEventsService } from '_services';
 
 export const getPerformerEventsAction = createAsyncThunk(
-  'events/get',
+  'content/performer/get',
   async (payload) => {
     const response = await performerEventsService.getPerformerEvents(
       payload.id

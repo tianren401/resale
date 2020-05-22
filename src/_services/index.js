@@ -3,6 +3,7 @@ export * from './search';
 export * from './events';
 export * from './performer';
 export * from './venue';
+export * from './home';
 export * from './seatics';
 export * from './ticketGroupList';
 export * from './checkoutTicket';

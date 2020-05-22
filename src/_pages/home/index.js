@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import { UpcomingSection } from './upcomingSection';
 import { EventsGroup } from './eventsGroupSection';
 import { Hero } from './hero';
-import { setEventTypeAction, getEventsAction } from '_store/events';
+
+import { setEventTypeAction } from '_store/events';
+import { getHomeAction } from '_store/home';
 import { CTASection } from './ctaSection';
 import { Footer } from './footer';
 import { SearchRowContainer, SearchBar } from '_components';
@@ -15,34 +17,33 @@ const Container = styled.div`
 `;
 
 export const Home = () => {
-  const { heroEvents, eventsGroup, upcomingEvents, eventType } = useSelector(
-    (state) => state.eventsReducer
-  );
+  const { eventType } = useSelector((state) => state.eventsReducer);
+
+  const { home } = useSelector((state) => state.homeReducer);
 
   const dispatch = useDispatch();
+
   const handleChangeType = (type) => {
     if (eventType === type) return;
     dispatch(setEventTypeAction(type));
   };
 
   useEffect(() => {
-    dispatch(getEventsAction({ page: 0, size: 20 }));
+    dispatch(getHomeAction());
   }, [dispatch]);
   return (
     <Container>
-      {heroEvents.length && <Hero events={heroEvents} />}
+      {home && <Hero events={home.hero} />}
       <SearchRowContainer>
         <SearchBar />
       </SearchRowContainer>
-      {Object.prototype.hasOwnProperty.call(eventsGroup, `${eventType}`) && (
-        <EventsGroup
-          events={eventsGroup[`${eventType}`]}
-          gutter={20}
-          onChangeType={handleChangeType}
-          eventType={eventType}
-        />
-      )}
-      <UpcomingSection events={upcomingEvents} />
+      <EventsGroup
+        events={home}
+        gutter={20}
+        onChangeType={handleChangeType}
+        eventType={eventType}
+      />
+      <UpcomingSection events={home.upcoming} />
       <CTASection />
       <Footer />
     </Container>

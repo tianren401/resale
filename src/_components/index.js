@@ -5,7 +5,7 @@ export * from './form';
 export * from './styledTags';
 export * from './flex';
 export * from './eventTile';
-export * from './tieldSection';
+export * from './tiledSection';
 export * from './eventCarousel';
 export * from './dayPicker';
 export * from './searchBar';

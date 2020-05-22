@@ -48,21 +48,21 @@ const Description = styled.div`
 `;
 
 export const EventTile = ({ event, width, margin }) => {
-  let imgUri = event.image || '';
-  if (!imgUri.startsWith('http')) {
-    imgUri = require(`../${imgUri}`);
-  }
-  const date = format(new Date(event.timestamp), 'MMM d');
   return (
     <Tile
-      to={`event/${event.id}`}
-      backgroundImage={`url(${imgUri})`}
+      to={
+        event.event
+          ? `event/${event.event.id}`
+          : `performer/${event.performer.id}`
+      }
+      backgroundImage={`url(${event.images[0].imageUrl})`}
       width={width}
       margin={margin}
     >
-      <Title>{event.name}</Title>
+      <Title>{event.event ? event.event.name : event.performer.name}</Title>
       <Description>
-        {date} · {event.venue.name}
+        {event.event ? format(new Date(event.event.timestamp), 'MMM d') : ''} ·{' '}
+        {event.event ? event.event.venue.name : ''}
       </Description>
     </Tile>
   );

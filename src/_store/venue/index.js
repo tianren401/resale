@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { venueEventsService } from '_services';
 
 export const getVenueEventsAction = createAsyncThunk(
-  'events/get',
+  'content/venue/get',
   async (payload) => {
     const response = await venueEventsService.getVenueEvents(payload.id);
     return response;

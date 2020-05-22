@@ -6,7 +6,6 @@ export const getTicketGroupListAction = createAsyncThunk(
   'ticketGroupList/get',
   async (eventId) => {
     const response = await ticketGroupListService.getTicketGroupList(eventId);
-    console.log(response);
     return response;
   }
 );

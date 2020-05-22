@@ -10,6 +10,7 @@ import {
 import { GlobalStyles } from '../globalStyles';
 import { Navigation } from '_components';
 import { Home, SeatSelection, PerformerOrVenue } from '_pages';
+import { DateRangePicker } from '_components/dateRangePicker/dateRangePicker';
 
 const DynamicPerformer = () => {
   const { performerId } = useParams();
@@ -27,6 +28,7 @@ const Routes = () => (
     <Navigation />
     <Switch>
       <Route exact path="/home" component={Home} />
+      <Route exact path="/daypicker" component={DateRangePicker} />
       <Route path="/performer/:performerId">
         <DynamicPerformer />
       </Route>

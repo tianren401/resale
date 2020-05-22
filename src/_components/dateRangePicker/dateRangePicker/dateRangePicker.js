@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ReactDayPicker, { DateUtils } from 'react-day-picker';
+import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 import { shadows, colors, deviceSize } from '_constants';
@@ -169,7 +169,7 @@ export const DateRangePicker = ({ sendToContainer, weekendFilter }) => {
 
   return (
     <StyledDayPicker>
-      <ReactDayPicker
+      <DayPicker
         navbarElement={<Navbar />}
         className={isMobileDevice ? 'Selectable' : 'Range'}
         fromMonth={from}

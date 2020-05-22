@@ -7,6 +7,7 @@ import searchReducer from './search';
 import eventsReducer from './events';
 import performerReducer from './performer';
 import venueReducer from './venue';
+import homeReducer from './home';
 import seaticsReducer from './seatics';
 import ticketGroupListReducer from './ticketGroupList';
 import checkoutTicketReducer from './checkoutTicket';
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   eventsReducer,
   performerReducer,
   venueReducer,
+  homeReducer,
   seaticsReducer,
   ticketGroupListReducer,
   checkoutTicketReducer,

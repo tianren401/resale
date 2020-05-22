@@ -22,7 +22,6 @@ const Header = styled.div`
 
 const DayPickerSection = styled.div`
   text-align: center;
-  padding-top: 20px;
 `;
 
 const CloseButton = styled.img``;

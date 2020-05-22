@@ -35,14 +35,21 @@ export const EventsGroup = ({ events, gutter, onChangeType, eventType }) => {
             );
           })}
         </EventTypeNavigation>
-        <TiledSection events={events} gutter={gutter} />
+        <TiledSection
+          events={
+            eventType === 'trendingEvent'
+              ? events.trendingEvents
+              : events.trendingPerformers
+          }
+          gutter={gutter}
+        />
       </Container>
     </StyledGroup>
   );
 };
 
 EventsGroup.propTypes = {
-  events: PropTypes.array.isRequired,
+  events: PropTypes.object.isRequired,
   gutter: PropTypes.number,
   onChangeType: PropTypes.func,
   eventType: PropTypes.string,

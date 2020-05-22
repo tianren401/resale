@@ -125,18 +125,20 @@ const CarouselItemDesc = styled.span`
   overflow: hidden;
 `;
 
-const CarouselItemPrice = styled.span`
-  position: absolute;
-  top: 8px;
-  right: 6px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 24px;
-  color: white;
-  padding: 0 5px;
-  background: rgba(13, 13, 13, 0.8);
-  border-radius: 6px;
-`;
+// Saving for when we get prices
+
+// const CarouselItemPrice = styled.span`
+//   position: absolute;
+//   top: 8px;
+//   right: 6px;
+//   font-weight: 500;
+//   font-size: 12px;
+//   line-height: 24px;
+//   color: white;
+//   padding: 0 5px;
+//   background: rgba(13, 13, 13, 0.8);
+//   border-radius: 6px;
+// `;
 
 const SlideButton = styled.div`
   position: absolute;
@@ -172,7 +174,7 @@ const ButtonImage = styled.img`
 `;
 
 export const EventCarousel = ({ title, itemsToShow, events }) => {
-  const itemCount = itemsToShow || 4;
+  const itemCount = itemsToShow;
   const blankElement = () => <></>;
   const carousel = useRef(null);
   const [showPrevBtn, setShowPrevBtn] = useState(false);
@@ -184,7 +186,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
   ];
 
   useEffect(() => {
-    if (events.length > itemCount) setShowNextBtn(true);
+    if (events?.length > itemCount) setShowNextBtn(true);
   }, [itemCount, events]);
 
   const scroll = (direction) => {
@@ -203,35 +205,39 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
   return (
     <Container>
       {title && <CarouselTitle>{title}</CarouselTitle>}
-      <StyledCarousel
-        itemsToShow={itemCount}
-        renderArrow={blankElement}
-        renderPagination={blankElement}
-        ref={carousel}
-        onPrevEnd={handleButtonVisible}
-        onNextEnd={handleButtonVisible}
-        breakPoints={breakPoints}
-        itemPadding={[0, 10]}
-      >
-        {events.map((item) => {
-          let imgUri = item.image || '';
-          if (!imgUri.startsWith('http')) {
-            imgUri = require(`../${imgUri}`);
-          }
-          const date = format(new Date(item.timestamp), 'MMM d');
-
-          return (
-            <CarouselItem key={item.id} to={`event/${item.id}`}>
-              <CarouselItemImage backgroundImage={`url(${imgUri})`} />
-              <CarouselItemTitle>{item.name}</CarouselItemTitle>
-              <CarouselItemDesc>
-                {date} · {item.venue.name}
-              </CarouselItemDesc>
-              <CarouselItemPrice>${item.price}</CarouselItemPrice>
-            </CarouselItem>
-          );
-        })}
-      </StyledCarousel>
+      {events && (
+        <StyledCarousel
+          itemsToShow={itemCount}
+          renderArrow={blankElement}
+          renderPagination={blankElement}
+          ref={carousel}
+          onPrevEnd={handleButtonVisible}
+          onNextEnd={handleButtonVisible}
+          breakPoints={breakPoints}
+          itemPadding={[0, 10]}
+        >
+          {events &&
+            events.map((event) => {
+              const date = format(new Date(event.event.timestamp), 'MMM d');
+              return (
+                <CarouselItem
+                  key={event.event.id}
+                  to={`event/${event.event.id}`}
+                >
+                  <CarouselItemImage
+                    backgroundImage={`url(${event.images[0].imageUrl})`}
+                  />
+                  <CarouselItemTitle>{event.event.name}</CarouselItemTitle>
+                  <CarouselItemDesc>
+                    {date} · {event.event.venue.name}
+                  </CarouselItemDesc>
+                  {/* // Saving for when we get prices */}
+                  {/* <CarouselItemPrice>${event.event.price}</CarouselItemPrice> */}
+                </CarouselItem>
+              );
+            })}
+        </StyledCarousel>
+      )}
       {showPrevBtn ? (
         <SlideButton className="prev" onClick={() => scroll(-1)}>
           <ButtonImage src={arrowImage} alt="Next" />
@@ -247,30 +253,29 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
         <></>
       )}
       <StyledSnapchat flexWrap="wrap">
-        {events.map((item) => {
-          let imgUri = item.image || '';
-          if (!imgUri.startsWith('http')) {
-            imgUri = require(`../${imgUri}`);
-          }
-          const date = format(new Date(item.timestamp), 'MMM d');
+        {events &&
+          events.map((event) => {
+            const date = format(new Date(event.event.timestamp), 'MMM d');
 
-          return (
-            <SnapchatItem
-              key={item.id}
-              direction="column"
-              justify="space-between"
-              backgroundImage={`url(${imgUri})`}
-            >
-              <SnapchatItemDate>
-                {date} <CarouselItemPrice>${item.price}</CarouselItemPrice>
-              </SnapchatItemDate>
-              <SnapchatItemTitle>
-                {item.name}
-                <span>{item.venue.name}</span>
-              </SnapchatItemTitle>
-            </SnapchatItem>
-          );
-        })}
+            return (
+              <SnapchatItem
+                key={event.event.id}
+                direction="column"
+                justify="space-between"
+                backgroundImage={`url(${event.images[0].imageUrl})`}
+              >
+                <SnapchatItemDate>
+                  {date}
+                  {/* // Saving for when we get prices */}
+                  {/* <CarouselItemPrice>${event.event.price}</CarouselItemPrice> */}
+                </SnapchatItemDate>
+                <SnapchatItemTitle>
+                  {event.event.name}
+                  <span>{event.event.venue.name}</span>
+                </SnapchatItemTitle>
+              </SnapchatItem>
+            );
+          })}
       </StyledSnapchat>
     </Container>
   );

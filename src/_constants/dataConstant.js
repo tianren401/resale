@@ -114,8 +114,7 @@ export const footerBrands = [
 ];
 
 export const groupEventTypeOptions = [
-  { label: 'Trending events', value: 'trendingEvent' },
-  { label: 'Best Priced Tickets', value: 'bestPricedTicket' },
+  { label: 'Trending Events', value: 'trendingEvent' },
   { label: 'Trending Artists', value: 'trendingArtists' },
 ];
 
