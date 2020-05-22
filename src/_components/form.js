@@ -6,6 +6,9 @@ import styled from 'styled-components';
 const StyledForm = styled.form`
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 export const Form = ({

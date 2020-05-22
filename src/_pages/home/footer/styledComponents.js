@@ -45,7 +45,9 @@ export const NavigationItem = styled(Link)`
   margin-right: 16px;
 
   &:hover {
-    color: ${colors.brandHover};
+    background: ${colors.brandHover};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 `;
 
@@ -54,7 +56,9 @@ export const BottomNavigationItem = styled(Link)`
   margin-right: 16px;
 
   &:hover {
-    color: ${colors.brandHover};
+    background: ${colors.brandHover};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   @media (min-width: ${deviceSize.tablet}px) {

@@ -10,9 +10,9 @@ import { setEventTypeAction } from '_store/events';
 import { getHomeAction } from '_store/home';
 import { CTASection } from './ctaSection';
 import { Footer } from './footer';
-import { SearchRowContainer, SearchBar } from '_components';
+import { SearchRowContainer, SearchBar, HomeLayout } from '_components';
 
-const Container = styled.div`
+const Container = styled(HomeLayout)`
   width: 100%;
 `;
 

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { ajaxGet } from '../../_helpers/api';
 import { getTicketGroupListAction } from '_store/ticketGroupList';
+import { setCheckoutTicketEventDataAction } from '_store/checkoutTicket';
 import { Header } from './components/header';
 import { TicketList } from './components/ticketList';
 import { FilterOptions } from './components/filterOptions';
@@ -49,6 +50,20 @@ export const SeatSelection = (props) => {
     };
     getData();
   }, [dispatch, eventId]);
+
+  useEffect(() => {
+    if (eventData && eventId) {
+      dispatch(
+        setCheckoutTicketEventDataAction({
+          eventData: {
+            ...eventData,
+            eventDate: eventData.eventDate.toString(),
+          },
+          eventId,
+        })
+      );
+    }
+  }, [dispatch, eventData, eventId]);
 
   useEffect(() => {
     const ticketGroups = ticketData.ticketGroupListFormatted;

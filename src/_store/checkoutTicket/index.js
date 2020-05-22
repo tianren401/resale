@@ -13,24 +13,46 @@ export const getLockRequestIdAction = createAsyncThunk(
 const checkoutTicketSlice = createSlice({
   name: 'checkoutTicket',
   initialState: {
-    ticketGroupID: null,
+    ticketGroupId: null,
     ticketGroupQuantity: null,
     ticketGroupPrice: null,
     deliveryTypeId: null,
     deliveryTypeName: '',
-    eventId: null,
+    ticketNetworkId: null,
+    event: {
+      id: null,
+      name: '',
+      date: null,
+      city: 'City',
+      stateProvince: 'State',
+      venue: 'Venue',
+    },
+    ticketGroupSection: null,
+    ticketGroupRow: null,
     lockRequestId: null,
     vfsURL: null,
   },
   reducers: {
     setCheckoutTicketDataAction(state, action) {
-      state.ticketGroupID = action.payload.ticketGroupID;
+      state.ticketGroupId = action.payload.ticketGroupID;
       state.ticketGroupQuantity = action.payload.ticketGroupQuantity;
       state.ticketGroupPrice = action.payload.ticketGroupPrice;
       state.deliveryTypeId = action.payload.deliveryTypeId;
       state.deliveryTypeName = action.payload.deliveryTypeName;
-      state.eventId = action.payload.eventId;
+      state.ticketNetworkId = action.payload.eventId;
       state.vfsURL = action.payload.vfsURL;
+      state.ticketGroupSection = action.payload.section;
+      state.ticketGroupRow = action.payload.row;
+    },
+    setCheckoutTicketEventDataAction(state, action) {
+      state.event = {
+        id: action.payload.eventId,
+        name: action.payload.eventData.eventName,
+        date: action.payload.eventData.eventDate,
+        city: action.payload.eventData.city,
+        stateProvince: action.payload.eventData.stateProvince,
+        venue: action.payload.eventData.venueName,
+      };
     },
   },
   extraReducers: {
@@ -40,5 +62,8 @@ const checkoutTicketSlice = createSlice({
   },
 });
 
-export const { setCheckoutTicketDataAction } = checkoutTicketSlice.actions;
+export const {
+  setCheckoutTicketDataAction,
+  setCheckoutTicketEventDataAction,
+} = checkoutTicketSlice.actions;
 export default checkoutTicketSlice.reducer;

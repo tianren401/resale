@@ -10,8 +10,9 @@ import { Header } from './components/header';
 import { Upcoming } from './components/upcoming';
 import { Faq } from './components/faq';
 import { Footer } from '_pages/home/footer';
+import { HomeLayout } from '_components';
 
-const Container = styled.div`
+const Container = styled(HomeLayout)`
   width: 100%;
 `;
 

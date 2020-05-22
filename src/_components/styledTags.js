@@ -19,45 +19,46 @@ const ellipsis = (props) =>
   `;
 
 export const H1 = withBoxModelProps(styled.h1`
-  color: ${(props) => (!props.color ? props.color : colors.black)};
-  font-size: ${(props) => (!props.size ? props.size : '36px')};
-  font-weight: ${(props) => (!props.weight ? props.weight : 'normal')};
+  color: ${(props) => (props.color ? props.color : colors.black)};
+  font-size: ${(props) => (props.size ? props.size : '48px')};
+  font-weight: ${(props) => (props.weight ? props.weight : 'bold')};
+  line-height: ${(props) => (props.lineHeight ? props.lineHeight : '56px')};
 `);
 
-export const H2 = styled.h2`
+export const H2 = withBoxModelProps(styled.h2`
   color: ${(props) => (props.color ? props.color : colors.black)};
-  font-size: ${(props) => (props.size ? props.size : '28px')};
+  font-size: ${(props) => (props.size ? props.size : '36px')};
+  font-weight: ${(props) => (props.weight ? props.weight : '600')};
+  line-height: ${(props) => (props.lineHeight ? props.lineHeight : '42px')};
+`);
+
+export const H3 = withBoxModelProps(styled.h3`
+  color: ${(props) => (props.color ? props.color : colors.black)};
+  font-size: ${(props) => (props.size ? props.size : '24px')};
+  font-weight: ${(props) => (props.weight ? props.weight : '600')};
+  line-height: ${(props) => (props.lineHeight ? props.lineHeight : '32px')};
+`);
+
+export const H4 = withBoxModelProps(styled.h4`
+  color: ${(props) => (props.color ? props.color : colors.black)};
+  font-size: ${(props) => (props.size ? props.size : '18px')};
+  font-weight: ${(props) => (props.weight ? props.weight : '600')};
+  line-height: ${(props) => (props.lineHeight ? props.lineHeight : '24px')};
+`);
+
+export const H5 = withBoxModelProps(styled.h5`
+  color: ${(props) => (props.color ? props.color : colors.black)};
+  font-size: ${(props) => (props.size ? props.size : '14px')};
   font-weight: ${(props) => (props.weight ? props.weight : 'normal')};
-`;
+  line-height: ${(props) => (props.lineHeight ? props.lineHeight : '20px')};
+`);
 
-export const H3 = styled.h3.attrs((props) => ({
-  color:
-    (props.type === 'secondary' && colors.blue) ||
-    (props.type === 'tertiary' && colors.black) ||
-    colors.blue,
-}))`
-  color: ${(props) => props.color};
-  font-size: ${(props) => props.size || '22px'};
-  font-weight: ${(props) => WEIGHTS.get(props.weight) || 'normal'};
-`;
-
-export const H4 = withBoxModelProps(
-  styled.h4.attrs((props) => ({
-    color: (props.type === 'secondary' && colors.darkGray) || null,
-  }))`
-    color: ${(props) => props.color};
-    font-size: ${(props) => props.size || '18px'};
-    font-weight: ${(props) => props.weight || 'normal'};
-  `
-);
-
-export const H5 = styled.h5.attrs((props) => ({
-  color: (props.type === 'secondary' && colors.darkGray) || colors.black,
-}))`
-  color: ${(props) => props.color};
-  font-size: ${(props) => props.size || '14px'};
-  font-weight: ${(props) => props.weight || 300};
-`;
+export const H6 = withBoxModelProps(styled.h6`
+  color: ${(props) => (props.color ? props.color : colors.black)};
+  font-size: ${(props) => (props.size ? props.size : '12px')};
+  font-weight: ${(props) => (props.weight ? props.weight : 'normal')};
+  line-height: ${(props) => (props.lineHeight ? props.lineHeight : '16px')};
+`);
 
 export const P1 = styled.p.attrs((props) => ({
   size: props.size === 'small' ? '0.875rem' : props.size,

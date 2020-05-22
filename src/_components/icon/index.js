@@ -18,7 +18,7 @@ const StyledIcon = styled.svg`
   }
 `;
 
-export const Icon = ({ onClick, className, name, size, color }) => {
+export const Icon = ({ onClick, className, name, size, color, viewBox }) => {
   return (
     <StyledIcon
       onClick={onClick}
@@ -26,7 +26,7 @@ export const Icon = ({ onClick, className, name, size, color }) => {
       color={color}
       width={`${size}px`}
       height={`${size}px`}
-      viewBox="0 0 24 24"
+      viewBox={viewBox || '0 0 24 24'}
     >
       {paths[name] && <path d={paths[name]} />}
     </StyledIcon>
@@ -39,4 +39,5 @@ Icon.propTypes = {
   name: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
+  viewBox: PropTypes.string,
 };

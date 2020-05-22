@@ -60,6 +60,8 @@ export const TicketGroup = (props) => {
         eventId: fullTicketData.eventId,
         lockRequestID: null,
         vfsURL: tgData.section?.vfsUrl,
+        section: tgData.tgUserSec,
+        row: tgData.tgUserRow,
       })
     );
 
@@ -74,7 +76,7 @@ export const TicketGroup = (props) => {
 
   const renderRedirect = () => {
     if (checkoutTicket.lockRequestId) {
-      return <Redirect to="/home" />;
+      return <Redirect to="/checkout" />;
     }
   };
 

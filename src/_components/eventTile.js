@@ -15,7 +15,7 @@ const Tile = styled(Link)`
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: ${(props) => props.backgroundImage};
+  background-image: ${(props) => props.image};
   position: relative;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1),
     0px 0px 2px rgba(130, 136, 148, 0.16);
@@ -55,7 +55,7 @@ export const EventTile = ({ event, width, margin }) => {
           ? `event/${event.event.id}`
           : `performer/${event.performer.id}`
       }
-      backgroundImage={`url(${event.images[0].imageUrl})`}
+      image={`url(${event.images[0].imageUrl})`}
       width={width}
       margin={margin}
     >

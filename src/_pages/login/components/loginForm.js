@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import { InputText, Form } from '_components';
+import { InputField, Form } from '_components';
 
 const Button = styled.button`
-  width: 100px;
+  width: 100%;
   padding: 8px 22px;
   background-color: #008affd4;
   border-radius: 3px;
@@ -44,15 +44,17 @@ const LoginForm = (props) => {
             <Field
               id="email"
               type="text"
+              width="380px"
               placeholder="Email"
-              component={InputText}
+              component={InputField}
               {...props}
             />
             <Field
               id="password"
               type="password"
+              width="380px"
               placeholder="Password"
-              component={InputText}
+              component={InputField}
               {...props}
             />
             <Button type="submit">Log In</Button>

@@ -8,6 +8,7 @@
     "@testing-library/react": "^10.0.2",
     "@testing-library/user-event": "^10.0.1",
     "algoliasearch": "^4.2.0",
+    "braintree-web-drop-in-react": "^1.1.1",
     "connected-react-router": "^6.8.0",
     "date-fns": "^2.12.0",
     "formik": "^2.1.4",
@@ -26,7 +27,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "3.4.1",
     "styled-components": "^5.1.0",
-    "yup": "^0.28.4"
+    "yup": "^0.28.5"
   },
   "scripts": {
     "start": "env-cmd -e dev react-scripts start",
