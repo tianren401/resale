@@ -43,7 +43,7 @@ export const Home = () => {
         onChangeType={handleChangeType}
         eventType={eventType}
       />
-      <UpcomingSection events={home.upcoming} />
+      {home.upcoming && <UpcomingSection events={home.upcoming} />}
       <CTASection />
       <Footer />
     </Container>

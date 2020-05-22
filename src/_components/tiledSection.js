@@ -26,7 +26,7 @@ export const TiledSection = ({ events, gutter }) => {
           else margin = `${marginVal}px 0 ${marginVal}px ${marginVal}px`;
           return (
             <EventTile
-              key={event.id}
+              key={event.event.id}
               event={event}
               width={width}
               margin={margin}

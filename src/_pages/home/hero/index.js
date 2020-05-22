@@ -50,48 +50,50 @@ export const Hero = ({ events }) => {
 
   return (
     <Container>
-      <Carousel
-        ref={carouselRef}
-        onPrevEnd={handleButtonVisible}
-        onNextEnd={handleButtonVisible}
-        renderPagination={({ pages, activePage, onClick }) => {
-          return (
-            <StyledCarouselIndicatorContainer>
-              {pages.map((page) => {
-                const isActivePage = activePage === page;
-                return (
-                  <StyledCarouselIndicator
-                    key={page}
-                    onClick={() => onClick(page)}
-                    active={isActivePage}
-                  />
-                );
-              })}
-            </StyledCarouselIndicatorContainer>
-          );
-        }}
-        renderArrow={() => <></>}
-        style={{ margin: 0 }}
-        enableAutoPlay
-        autoPlaySpeed={7000}
-      >
-        {events.map((event) => {
-          let imgUri = event.image || '';
-          if (!imgUri.startsWith('http')) {
-            imgUri = require(`../../../${imgUri}`);
-          }
-          return (
-            <CarouselItem
-              key={event.id}
-              title={event.performers[0].name}
-              desc={event.venue.name}
-              backgroundImage={imgUri}
-              time={event.timestamp}
-              id={event.id}
-            />
-          );
-        })}
-      </Carousel>
+      {events && (
+        <Carousel
+          ref={carouselRef}
+          onPrevEnd={handleButtonVisible}
+          onNextEnd={handleButtonVisible}
+          renderPagination={({ pages, activePage, onClick }) => {
+            return (
+              <StyledCarouselIndicatorContainer>
+                {pages.map((page) => {
+                  const isActivePage = activePage === page;
+                  return (
+                    <StyledCarouselIndicator
+                      key={page}
+                      onClick={() => onClick(page)}
+                      active={isActivePage}
+                    />
+                  );
+                })}
+              </StyledCarouselIndicatorContainer>
+            );
+          }}
+          renderArrow={() => <></>}
+          style={{ margin: 0 }}
+          enableAutoPlay
+          autoPlaySpeed={7000}
+        >
+          {events.map(({ event, images }) => {
+            let imgUri = images[0].imageUrl || '';
+            if (!imgUri.startsWith('http')) {
+              imgUri = require(`../../../${imgUri}`);
+            }
+            return (
+              <CarouselItem
+                key={event.id}
+                title={event.performers ? event.performers[0].name : ''}
+                desc={event.venue?.name}
+                backgroundImage={imgUri}
+                time={event.timestamp}
+                id={event.id}
+              />
+            );
+          })}
+        </Carousel>
+      )}
       <LeftArrow src={leftArrow} onClick={() => scroll(-1)} />
       <RightArrow src={rightArrow} onClick={() => scroll(1)} />
     </Container>
