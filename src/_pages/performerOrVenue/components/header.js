@@ -73,10 +73,12 @@ export const Header = ({ attractions }) => {
     >
       <EventInfo>
         <Performer>{attractions ? attractions.name : 'No results'}</Performer>
-        <Address>
-          {attractions.allUpcomingEvents?.length &&
-            `${attractions.allUpcomingEvents[0].venue.street} ${attractions.allUpcomingEvents[0].venue.city} ${attractions.allUpcomingEvents[0].venue.state} ${attractions.allUpcomingEvents[0].venue.zip}`}
-        </Address>
+        {attractions?.similarVenues && (
+          <Address>
+            {attractions.allUpcomingEvents?.length &&
+              `${attractions.allUpcomingEvents[0].venue.street} ${attractions.allUpcomingEvents[0].venue.city} ${attractions.allUpcomingEvents[0].venue.state} ${attractions.allUpcomingEvents[0].venue.zip}`}
+          </Address>
+        )}
         <Subtitle>{attractions.subtitle}</Subtitle>
       </EventInfo>
     </StyledHeader>

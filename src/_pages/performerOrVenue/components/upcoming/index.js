@@ -110,37 +110,61 @@ const LocationRow = styled.div`
 `;
 
 export const Upcoming = ({ events, sendToPage, venueId }) => {
-  const allUpcomingEvents = events.allUpcomingEvents;
-  const [sameMonthEvents, setSameMonthEvents] = useState([]);
+  const upcomingLocalEvents = events?.upcomingLocalEvents;
+  const allUpcomingEvents = events?.allUpcomingEvents;
+  const similarPerformers = events?.similarPerformers;
+  const similarVenues = events?.similarVenues;
   const [selectedDates, setSelectedDates] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [filteredAllEvents, setFilteredAllEvents] = useState([]);
+  const [filteredLocalEvents, setFilteredLocalEvents] = useState([]);
   const [count, setCount] = useState(0);
   const getSelectedDates = useCallback(
     (dates) => {
-      setFilteredEvents([]);
       setSelectedDates(dates);
       setCount(count + 1);
     },
     [count]
   );
 
-  useEffect(() => {
-    const getMonth = (eventDate) => {
-      const parsedDate = Date.parse(eventDate);
-      const newDate = new Date(parsedDate);
-      const month = newDate.getMonth();
-      return month;
-    };
+  const removeDuplicates = (array) => {
+    return array.filter((item, index) => {
+      return array.indexOf(item) >= index;
+    });
+  };
 
-    if (allUpcomingEvents) {
-      const currentMonth = new Date().getMonth();
-      const eventsHappeningSoon = allUpcomingEvents.filter(
-        (event) => getMonth(event.timestamp) === currentMonth
-      );
-      setSameMonthEvents(eventsHappeningSoon);
+  useEffect(() => {
+    if (upcomingLocalEvents && selectedDates) {
+      getSelectedDates();
+      setFilteredLocalEvents([]);
+      for (let i = 0; i < upcomingLocalEvents.length; i++) {
+        const evaluatedEvent = upcomingLocalEvents[i];
+        const parsedDate = Date.parse(evaluatedEvent.timestamp);
+        const newDate = new Date(parsedDate);
+        const day = newDate.getDate();
+        const month = newDate.getMonth();
+        const year = newDate.getFullYear();
+
+        for (let j = 0; j < selectedDates.length; j++) {
+          const selectedParsedDate = Date.parse(selectedDates[j]);
+          const selectedNewDate = new Date(selectedParsedDate);
+          const selectedDay = selectedNewDate.getDate();
+          const selectedMonth = selectedNewDate.getMonth();
+          const selectedYear = selectedNewDate.getFullYear();
+          if (
+            selectedDay === day &&
+            selectedMonth === month &&
+            selectedYear === year
+          ) {
+            filteredLocalEvents.push(upcomingLocalEvents[i]);
+            setFilteredLocalEvents(filteredLocalEvents);
+          }
+        }
+      }
     }
+
     if (allUpcomingEvents && selectedDates) {
       getSelectedDates();
+      setFilteredAllEvents([]);
       for (let i = 0; i < allUpcomingEvents.length; i++) {
         const evaluatedEvent = allUpcomingEvents[i];
         const parsedDate = Date.parse(evaluatedEvent.timestamp);
@@ -160,13 +184,20 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
             selectedMonth === month &&
             selectedYear === year
           ) {
-            filteredEvents.push(allUpcomingEvents[i]);
-            setFilteredEvents(filteredEvents);
+            filteredAllEvents.push(allUpcomingEvents[i]);
+            setFilteredAllEvents(filteredAllEvents);
           }
         }
       }
     }
-  }, [allUpcomingEvents, filteredEvents, getSelectedDates, selectedDates]);
+  }, [
+    allUpcomingEvents,
+    filteredAllEvents,
+    filteredLocalEvents,
+    upcomingLocalEvents,
+    getSelectedDates,
+    selectedDates,
+  ]);
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -219,42 +250,77 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
                 </LocationText>
               )}
 
-              {filteredEvents.length ? (
-                filteredEvents.map((event) => {
-                  return (
-                    <EventCard
-                      event={event}
-                      key={event.id}
-                      timestamp={event.timestamp}
-                      name={event.name}
-                      venueName={event.venue.name}
-                      venueState={event.venue.state}
-                    />
-                  );
-                })
-              ) : sameMonthEvents && count < 2 ? (
-                sameMonthEvents.map((event) => {
-                  return (
-                    <EventCard
-                      event={event}
-                      key={event.id}
-                      timestamp={event.timestamp}
-                      name={event.name}
-                      venueName={event.venue.name}
-                      venueState={event.venue.state}
-                    />
-                  );
-                })
+              {!venueId ? (
+                upcomingLocalEvents?.length && count < 2 ? (
+                  upcomingLocalEvents.map((event) => {
+                    return (
+                      <EventCard
+                        event={event}
+                        key={event.id}
+                        timestamp={event.timestamp}
+                        name={event.name}
+                        venueName={event.venue.name}
+                        venueState={event.venue.state}
+                      />
+                    );
+                  })
+                ) : removeDuplicates(filteredLocalEvents)?.length &&
+                  count >= 2 ? (
+                  removeDuplicates(filteredLocalEvents).map((event) => {
+                    return (
+                      <EventCard
+                        event={event}
+                        key={event.id}
+                        timestamp={event.timestamp}
+                        name={event.name}
+                        venueName={event.venue.name}
+                        venueState={event.venue.state}
+                      />
+                    );
+                  })
+                ) : upcomingLocalEvents?.length === 0 ? (
+                  <NoEventsFound>No upcoming local events found</NoEventsFound>
+                ) : (
+                  <NoEventsFound>No events found</NoEventsFound>
+                )
               ) : (
-                <NoEventsFound>
-                  No events found for selected dates
-                </NoEventsFound>
+                venueId &&
+                (allUpcomingEvents?.length && count < 2 ? (
+                  allUpcomingEvents.map((event) => {
+                    return (
+                      <EventCard
+                        event={event}
+                        key={event.id}
+                        timestamp={event.timestamp}
+                        name={event.name}
+                        venueName={event.venue.name}
+                        venueState={event.venue.state}
+                      />
+                    );
+                  })
+                ) : venueId && count > 0 && filteredAllEvents?.length ? (
+                  removeDuplicates(filteredAllEvents).map((event) => {
+                    return (
+                      <EventCard
+                        event={event}
+                        key={event.id}
+                        timestamp={event.timestamp}
+                        name={event.name}
+                        venueName={event.venue.name}
+                        venueState={event.venue.state}
+                      />
+                    );
+                  })
+                ) : filteredAllEvents?.length === 0 ? (
+                  <NoEventsFound>No events found</NoEventsFound>
+                ) : (
+                  <NoEventsFound>No upcoming events found</NoEventsFound>
+                ))
               )}
 
-              {!venueId && <AllEventsText>All events</AllEventsText>}
+              {!venueId && <AllEventsText>All Events</AllEventsText>}
 
-              {!venueId &&
-                allUpcomingEvents &&
+              {!venueId && allUpcomingEvents && count < 2 ? (
                 allUpcomingEvents.map((event) => {
                   return (
                     <EventCard
@@ -266,21 +332,42 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
                       venueState={event.venue.state}
                     />
                   );
-                })}
+                })
+              ) : filteredAllEvents.length === 0 && !venueId ? (
+                <NoEventsFound>No events found</NoEventsFound>
+              ) : (
+                !venueId &&
+                removeDuplicates(filteredAllEvents).map((event) => {
+                  return (
+                    <EventCard
+                      event={event}
+                      key={event.id}
+                      timestamp={event.timestamp}
+                      name={event.name}
+                      venueName={event.venue.name}
+                      venueState={event.venue.state}
+                    />
+                  );
+                })
+              )}
             </>
           )}
           {isMobileDevice && <LoadMoreButton />}
         </EventList>
       )}
       {selectedTab !== 1 && !modalOpen && (
-        <UpcomingFromOther events={allUpcomingEvents} />
+        <UpcomingFromOther
+          similar={
+            events?.similarPerformers ? similarPerformers : similarVenues
+          }
+        />
       )}
     </ComponentContainer>
   );
 };
 
 Upcoming.propTypes = {
-  events: PropTypes.array,
+  events: PropTypes.object,
   sendToPage: PropTypes.func,
   venueId: PropTypes.number,
 };

@@ -13,7 +13,7 @@ export const getVenueEventsAction = createAsyncThunk(
 const venueSlice = createSlice({
   name: 'venueEvents',
   initialState: {
-    events: [],
+    events: {},
     loading: 'idle',
   },
   reducers: {

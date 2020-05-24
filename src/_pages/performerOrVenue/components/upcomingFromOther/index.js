@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { deviceSize } from '_constants';
-import { EventCard, EventList, LoadMoreButton } from '_components';
+import { EventList } from '_components';
+import { SimilarCarousel } from '../similarCarousel';
 
 const ComponentContainer = styled.div`
   width: 100%;
@@ -31,32 +32,44 @@ const MoreEventsText = styled.div`
   }
 `;
 
-export const UpcomingFromOther = ({ events }) => {
+const NoEventsFound = styled.div`
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+  }
+`;
+
+export const UpcomingFromOther = ({ similar }) => {
+  let similarText;
+  if (similar && similar[0].venue) {
+    similarText = 'Similar Venues';
+  } else if (similar && similar[0].performer) {
+    similarText = 'Similar Performers';
+  }
   return (
     <ComponentContainer>
       <EventList skew={true}>
-        <MoreEventsText>Similar Artists</MoreEventsText>
+        <MoreEventsText>{similarText && similarText}</MoreEventsText>
 
-        {events &&
-          events.map((event) => {
-            return (
-              <EventCard
-                event={event}
-                key={event.id}
-                timestamp={event.timestamp}
-                name={event.name}
-                venueName={event.venue.name}
-                venueState={event.venue.state}
-              />
-            );
-          })}
-
-        <LoadMoreButton />
+        {similar?.length ? (
+          <SimilarCarousel itemsToShow={4} similar={similar} />
+        ) : (
+          <NoEventsFound>Nothing Found.</NoEventsFound>
+        )}
       </EventList>
     </ComponentContainer>
   );
 };
 
 UpcomingFromOther.propTypes = {
-  events: PropTypes.array,
+  similar: PropTypes.array,
 };

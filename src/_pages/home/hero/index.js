@@ -84,7 +84,7 @@ export const Hero = ({ events }) => {
             return (
               <CarouselItem
                 key={event.id}
-                title={event.performers ? event.performers[0].name : ''}
+                title={event.name}
                 desc={event.venue?.name}
                 backgroundImage={imgUri}
                 time={event.timestamp}
