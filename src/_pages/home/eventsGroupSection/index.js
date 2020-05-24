@@ -19,7 +19,7 @@ export const EventsGroup = ({ events, gutter, onChangeType, eventType }) => {
       <TriangleOverlay />
       <Container>
         <Title>
-          Events near <span>Philadelphia, PA</span>
+          Events near <span>Dallas, TX</span>
         </Title>
         <EventTypeNavigation>
           {groupEventTypeOptions.map((item) => {

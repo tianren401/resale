@@ -215,7 +215,7 @@ export const Upcoming = ({ events, sendToPage, venueId }) => {
               {!venueId && (
                 <LocationText>
                   Events near
-                  <ColoredLocationText>Philadelphia, PA</ColoredLocationText>
+                  <ColoredLocationText>Dallas, TX</ColoredLocationText>
                 </LocationText>
               )}
 

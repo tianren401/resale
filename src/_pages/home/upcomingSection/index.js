@@ -15,7 +15,7 @@ export const UpcomingSection = ({ events }) => {
     <Container>
       <Header>
         <Filter>
-          Events near <span>Philadelphia, PA</span>
+          Events near <span>Dallas, TX</span>
         </Filter>
         <Title>Upcoming events near you</Title>
       </Header>
