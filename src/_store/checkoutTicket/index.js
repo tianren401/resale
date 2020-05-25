@@ -29,20 +29,36 @@ const checkoutTicketSlice = createSlice({
     },
     ticketGroupSection: null,
     ticketGroupRow: null,
+    ticketGroupRange: null,
+    ticketGroupSplits: null,
     lockRequestId: null,
     vfsURL: null,
   },
   reducers: {
-    setCheckoutTicketDataAction(state, action) {
+    setPreCheckoutTicketDataAction(state, action) {
       state.ticketGroupId = action.payload.ticketGroupID;
-      state.ticketGroupQuantity = action.payload.ticketGroupQuantity;
       state.ticketGroupPrice = action.payload.ticketGroupPrice;
       state.deliveryTypeId = action.payload.deliveryTypeId;
       state.deliveryTypeName = action.payload.deliveryTypeName;
       state.ticketNetworkId = action.payload.eventId;
       state.vfsURL = action.payload.vfsURL;
-      state.ticketGroupSection = action.payload.section;
-      state.ticketGroupRow = action.payload.row;
+      state.ticketGroupSection = action.payload.ticketGroupSection;
+      state.ticketGroupRow = action.payload.ticketGroupRow;
+      state.ticketGroupRange = action.payload.ticketGroupRange;
+      state.ticketGroupSplits = action.payload.ticketGroupSplits;
+    },
+    clearPreCheckoutTicketDataAction(state) {
+      state.ticketGroupId = null;
+      state.ticketGroupPrice = null;
+      state.deliveryTypeId = null;
+      state.deliveryTypeName = null;
+      state.ticketNetworkId = null;
+      state.vfsURL = null;
+      state.ticketGroupSection = null;
+      state.ticketGroupRow = null;
+    },
+    setCheckoutTicketQuantityAction(state, action) {
+      state.ticketGroupQuantity = action.payload;
     },
     setCheckoutTicketEventDataAction(state, action) {
       state.event = {
@@ -63,7 +79,10 @@ const checkoutTicketSlice = createSlice({
 });
 
 export const {
-  setCheckoutTicketDataAction,
+  setPreCheckoutTicketDataAction,
+  clearPreCheckoutTicketDataAction,
   setCheckoutTicketEventDataAction,
+  setCheckoutTicketQuantityAction,
 } = checkoutTicketSlice.actions;
+
 export default checkoutTicketSlice.reducer;

@@ -21,6 +21,11 @@ const DynamicVenue = () => {
   return <PerformerOrVenue venueId={parseInt(venueId)} />;
 };
 
+const DynamicEvent = () => {
+  const { eventId } = useParams();
+  return <SeatSelection eventId={parseInt(eventId)} />;
+};
+
 const Routes = () => (
   <Router>
     <GlobalStyles />
@@ -33,7 +38,9 @@ const Routes = () => (
       <Route path="/venue/:venueId">
         <DynamicVenue />
       </Route>
-      <Route exact path="/event/:eventId" component={SeatSelection} />
+      <Route exact path="/event/:eventId">
+        <DynamicEvent />
+      </Route>
       <Route path="/checkout" component={Checkout} />
       <Redirect to="/home" />
     </Switch>

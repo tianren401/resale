@@ -1,46 +1,41 @@
 import React from 'react';
-import { Redirect } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import {
-  setCheckoutTicketDataAction,
-  getLockRequestIdAction,
-} from '_store/checkoutTicket';
+import { setPreCheckoutTicketDataAction } from '_store/checkoutTicket';
 
 const StyledTicketGroup = styled.tr`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 10%;
-  outline: 1px solid #e2e2e2;
-  padding: 10px;
+  outline: 1px solid #f0f0f5;
+  height: 50%;
 `;
 
-const TicketSectionRow = styled.td`
+const TicketInformation = styled.td`
+  align-content: center;
+  padding: 5%;
+`;
+
+const TicketSectionRow = styled.p`
   font-size: 14px;
   font-weight: bold;
 `;
 
-const TicketQuantity = styled.td`
+const TicketQuantity = styled.p`
   font-size: 12px;
-  font-weight: bold;
   color: #757575;
 `;
 
 const TicketPrice = styled.button`
-  width: 50%;
-  text-align: center;
-  vertical-align: middle;
-  padding: 1vh 1vh;
-  cursor: pointer;
-  background-color: #c4c4c4;
+  background-color: #6726f1;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  height: 35px;
+  width: 80%;
 `;
 
 export const TicketGroup = (props) => {
   const tgData = props.ticketGroupData;
-  const checkoutTicket = useSelector((state) => state.checkoutTicketReducer);
   const ticketData = useSelector((state) => state.ticketGroupListReducer);
   const dispatch = useDispatch();
 
@@ -50,34 +45,19 @@ export const TicketGroup = (props) => {
     });
 
     dispatch(
-      setCheckoutTicketDataAction({
+      setPreCheckoutTicketDataAction({
         ticketGroupID: tgData.tgID,
-        ticketGroupQuantity: 2, // hardcoded for testing
         ticketGroupPrice: tgData.tgPrice,
+        ticketGroupSection: tgData.tgUserSec,
+        ticketGroupRow: tgData.tgUserRow,
+        ticketGroupRange: tgData.tgRange,
+        ticketGroupSplits: tgData.splits,
         deliveryTypeId: fullTicketData.nearTerm.nearTermDeliveryMethod.id,
         deliveryTypeName:
           fullTicketData.nearTerm.nearTermDeliveryMethod.description,
-        eventId: fullTicketData.eventId,
-        lockRequestID: null,
         vfsURL: tgData.section?.vfsUrl,
-        section: tgData.tgUserSec,
-        row: tgData.tgUserRow,
       })
     );
-
-    dispatch(
-      getLockRequestIdAction({
-        id: tgData.tgID,
-        quantity: 2, // hardcoded for testing
-        price: tgData.tgPrice,
-      })
-    );
-  };
-
-  const renderRedirect = () => {
-    if (checkoutTicket.lockRequestId) {
-      return <Redirect to="/checkout" />;
-    }
   };
 
   return (
@@ -85,18 +65,19 @@ export const TicketGroup = (props) => {
       onMouseEnter={() => window.Seatics.MapComponent.highlightTicket(tgData)}
       onMouseLeave={() => window.Seatics.MapComponent.removeHighlight(tgData)}
     >
-      <TicketSectionRow>
-        {`Section ${tgData.tgUserSec} • Row + ${tgData.tgUserRow}`}
-      </TicketSectionRow>
-      <TicketQuantity>
-        {`${tgData?.tgRange[0]} - ${tgData?.tgRange[1]} Tickets`}
-      </TicketQuantity>
-      <td>
+      <TicketInformation>
+        <TicketSectionRow>
+          {`Section ${tgData.tgUserSec} • Row ${tgData.tgUserRow}`}
+        </TicketSectionRow>
+        <TicketQuantity>
+          {`${tgData?.tgRange[0]} - ${tgData?.tgRange[1]} Tickets`}
+        </TicketQuantity>
+      </TicketInformation>
+      <td style={{ height: '100%' }}>
         <TicketPrice onClick={handleBuyButton}>
-          {`$${tgData.tgPrice}`}
+          {`$${tgData.tgPrice}/ea`}
         </TicketPrice>
       </td>
-      {renderRedirect()}
     </StyledTicketGroup>
   );
 };

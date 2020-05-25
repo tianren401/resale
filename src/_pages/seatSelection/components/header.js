@@ -2,27 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { navigationHeight } from '_constants';
+
 const StyledHeader = styled.div`
+  position: absolute;
+  top: 0;
+  height: ${navigationHeight}px;
   display: flex;
-  width: 100%;
-  height: 10%;
   flex-direction: column;
   align-items: center;
-  background-color: #c4c4c4;
   justify-content: center;
+  width: 100%;
 `;
 
 const Event = styled.div`
-  position: relative;
-  top: 10%;
   font-weight: bold;
   color: white;
-  padding: 10px;
 `;
 
 const Subtitle = styled.div`
   display: flex;
-  color: white;
+  color: #f0f0f5;
 `;
 
 export const Header = ({ event }) => {

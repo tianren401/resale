@@ -3,15 +3,13 @@ import styled from 'styled-components';
 
 import { TicketGroup } from './ticketGroup';
 
-const Container = styled.div`
-  width: 20%;
-  height: 100%;
-`;
-
 const StyledTicketList = styled.table`
   width: 100%;
-  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.15);
-  overflow: auto;
+`;
+
+const StyledTableBody = styled.tbody`
+  width: 100%;
+  height: 100%;
 `;
 
 export const TicketList = React.forwardRef((props, ref) => {
@@ -34,28 +32,30 @@ export const TicketList = React.forwardRef((props, ref) => {
   const renderSegments = ticketDataSegmented.map((segment) => {
     if (segment.title) {
       return (
-        <tbody key={segment.type}>
+        <StyledTableBody key={segment.type}>
           <tr>
             <td>{segment.title}</td>
           </tr>
           {renderTicketGroups(segment.tickets)}
-        </tbody>
+        </StyledTableBody>
       );
     } else {
-      return <tbody key={1}>{renderTicketGroups(segment.tickets)}</tbody>;
+      return (
+        <StyledTableBody key={segment.type ?? 1}>
+          {renderTicketGroups(segment.tickets)}
+        </StyledTableBody>
+      );
     }
   });
 
   return (
-    <Container>
-      <StyledTicketList ref={ref}>
-        <colgroup>
-          <col span={'1'} style={{ width: '70%' }} />
-          <col span={'1'} style={{ width: '30%' }} />
-        </colgroup>
-        {renderSegments}
-      </StyledTicketList>
-    </Container>
+    <StyledTicketList ref={ref}>
+      <colgroup>
+        <col span={'1'} style={{ width: '65%' }} />
+        <col span={'1'} style={{ width: '35%' }} />
+      </colgroup>
+      {renderSegments}
+    </StyledTicketList>
   );
 });
 
