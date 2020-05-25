@@ -140,7 +140,7 @@ export const PreCheckout = () => {
   return (
     <Container>
       <BackButton onClick={handleBackButton}>
-        <img src={purpleArrowLeft} />
+        <img src={purpleArrowLeft} alt={'back arrow'} />
         Back
       </BackButton>
       <TicketTitle>
@@ -151,7 +151,9 @@ export const PreCheckout = () => {
         {`${checkoutTicket.ticketGroupRange?.[0]} - `}
         {`${checkoutTicket.ticketGroupRange?.[1]} Tickets`}
       </TicketSubTitle>
-      {checkoutTicket.vfsURL && <SeatImage src={checkoutTicket.vfsURL} />}
+      {checkoutTicket.vfsURL && (
+        <SeatImage src={checkoutTicket.vfsURL} alt={'view from seat'} />
+      )}
       <Price>{`$${checkoutTicket.ticketGroupPrice}/ea`}</Price>
       <DropDown onChange={handleQuantityChange}>
         {checkoutTicket.ticketGroupSplits.map((split) => (
