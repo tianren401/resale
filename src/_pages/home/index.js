@@ -10,7 +10,7 @@ import { setEventTypeAction } from '_store/events';
 import { getHomeAction } from '_store/home';
 import { CTASection } from './ctaSection';
 import { Footer } from './footer';
-import { SearchRowContainer, SearchBar, HomeLayout } from '_components';
+import { HomeLayout } from '_components';
 
 const Container = styled(HomeLayout)`
   width: 100%;
@@ -34,9 +34,6 @@ export const Home = () => {
   return (
     <Container>
       {home && <Hero events={home.hero} />}
-      <SearchRowContainer>
-        <SearchBar />
-      </SearchRowContainer>
       <EventsGroup
         events={home}
         gutter={20}

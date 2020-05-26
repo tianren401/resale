@@ -8,7 +8,13 @@ import {
 } from 'react-router-dom';
 
 import { GlobalStyles } from '../globalStyles';
-import { Home, SeatSelection, PerformerOrVenue, Checkout } from '_pages';
+import {
+  Home,
+  SeatSelection,
+  PerformerOrVenue,
+  Checkout,
+  Results,
+} from '_pages';
 import { DateRangePicker } from '_components/dateRangePicker/dateRangePicker';
 
 const DynamicPerformer = () => {
@@ -42,6 +48,7 @@ const Routes = () => (
         <DynamicEvent />
       </Route>
       <Route path="/checkout" component={Checkout} />
+      <Route path="/results" component={Results} />
       <Redirect to="/home" />
     </Switch>
   </Router>

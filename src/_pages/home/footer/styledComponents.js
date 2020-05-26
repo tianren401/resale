@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { Flex } from '_components/flex';
 import { colors, deviceSize } from '_constants';
-import { fontInter } from '_constants/fonts';
 
 export const StyledFooter = styled(Flex)`
   position: absolute;
@@ -29,7 +28,6 @@ export const TopInfoRow = styled(Flex)`
 export const StyledNavigationGroup = styled(Flex)`
   width: 200px;
   height: 200px;
-  ${fontInter};
   font-size: 14px;
   line-height: 22px;
   font-weight: 400;

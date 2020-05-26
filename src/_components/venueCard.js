@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 
 import { deviceSize } from '_constants';
+import { isMobileDevice } from '_helpers';
 
 const FlexColumn = styled.div`
   display: flex;
@@ -95,35 +96,26 @@ const Card = styled.div`
   }
 `;
 
-export const EventCard = ({ event, name, venueName, venueState }) => {
-  const [cardClicked, setCardClicked] = useState(false);
-  const timestamp = event.timestamp;
-  const date = format(new Date(timestamp), 'MMMM do');
-  const timeDate = format(new Date(timestamp), 'iii h:mm a');
-
+export const VenueCard = ({ venue }) => {
+  const { name, city, state } = venue;
+  const date = format(new Date(), 'MMMM do');
   return (
-    <Card
-      onMouseDown={() => setCardClicked(true)}
-      onMouseUp={() => setCardClicked(false)}
-    >
+    <Card to={`../venue/${venue.objectID}`}>
       <TimeColumn>
-        <MainInfo>{date}</MainInfo>
-        <Detail>{timeDate}</Detail>
+        <MainInfo>Next Event</MainInfo>
+        <Detail>{date}</Detail>
       </TimeColumn>
       <InfoColumn>
-        <MainInfo cardClicked={cardClicked}>{name}</MainInfo>
+        <MainInfo>{name}</MainInfo>
         <Detail>
-          {venueName} {venueState}
+          {city}, {state}
         </Detail>
       </InfoColumn>
-      <StyledButton to={`../event/${event.id}`}>Buy Now</StyledButton>
+      <StyledButton>{isMobileDevice ? 'All' : 'All Events'}</StyledButton>
     </Card>
   );
 };
 
-EventCard.propTypes = {
-  event: PropTypes.object,
-  name: PropTypes.string,
-  venueName: PropTypes.string,
-  venueState: PropTypes.string,
+VenueCard.propTypes = {
+  venue: PropTypes.object,
 };

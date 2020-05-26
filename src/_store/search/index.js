@@ -21,8 +21,13 @@ const searchSlice = createSlice({
   name: 'search',
   initialState: {
     query: '',
-    location: null,
-    date: null,
+    category: 'any',
+    location: {
+      lat: 32.8203525,
+      lng: -97.011731,
+    },
+    date: 'all',
+    dateRange: null,
     results: [],
     locations: [],
   },
@@ -36,9 +41,14 @@ const searchSlice = createSlice({
     setDate(state, action) {
       state.date = action.payload;
     },
+    setDateRange(state, action) {
+      state.dateRange = action.payload;
+    },
+    setCategory(state, action) {
+      state.category = action.payload;
+    },
     setResults(state, action) {
-      const { results } = action.payload;
-      state.results = results;
+      state.results = action.payload;
     },
   },
 });
@@ -46,7 +56,9 @@ const searchSlice = createSlice({
 export const {
   setQuery,
   setLocation,
+  setCategory,
   setDate,
+  setDateRange,
   setResults,
 } = searchSlice.actions;
 

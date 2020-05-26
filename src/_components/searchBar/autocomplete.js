@@ -1,11 +1,17 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { connectAutoComplete } from 'react-instantsearch-dom';
 import throttle from 'lodash/throttle';
 
 /* Styled Components */
-import { SearchInput, SearechInputContainer } from './styledComponents';
-import { FlexItem } from '_components';
+import { SearchInput, IconContainer } from './styledComponents';
+import { FlexItem, Flex } from '_components';
 import { Icon } from '_components/icon';
 import { colors } from '_constants';
 const SearchIcon = <Icon size={24} color={colors.brand} name="search" />;
@@ -13,6 +19,9 @@ const SearchIcon = <Icon size={24} color={colors.brand} name="search" />;
 const Autocomplete = ({
   placeholder,
   onChange,
+  onChangeResults,
+  showDropdown,
+  showAutocompleteIcon,
   renderList,
   hits,
   refine,
@@ -33,10 +42,19 @@ const Autocomplete = ({
     onChange(event.target.value);
   };
 
+  const handleChangeResults = useCallback(
+    (results) => {
+      setOptions(results);
+      if (onChangeResults) {
+        onChangeResults(results);
+      }
+    },
+    [setOptions, onChangeResults]
+  );
+
   const resetSearch = () => {
     setShowOptions(false);
     setActiveOption(0);
-    setOptions([]);
     setLoading(false);
   };
 
@@ -82,7 +100,7 @@ const Autocomplete = ({
 
   useEffect(() => {
     if (inputValue.length <= 1) {
-      setOptions([]);
+      handleChangeResults([]);
       return undefined;
     }
 
@@ -90,7 +108,7 @@ const Autocomplete = ({
     if (inputValue.length >= 3) {
       fetch(inputValue);
     }
-  }, [inputValue, fetch]);
+  }, [inputValue, fetch, handleChangeResults]);
 
   useEffect(() => {
     const active = true;
@@ -98,9 +116,9 @@ const Autocomplete = ({
     if (active) {
       setShowOptions(true);
       setActiveOption(0);
-      setOptions(hits);
+      handleChangeResults(hits);
     }
-  }, [hits]);
+  }, [hits, handleChangeResults]);
 
   useEffect(() => {
     document.addEventListener('click', handleDocumentClick);
@@ -112,12 +130,8 @@ const Autocomplete = ({
 
   return (
     <FlexItem>
-      <SearechInputContainer
-        position="relative"
-        align="center"
-        justify="flex-start"
-      >
-        {SearchIcon}
+      <Flex position="relative" align="center" justify="flex-start">
+        {showAutocompleteIcon && <IconContainer>{SearchIcon}</IconContainer>}
         <SearchInput
           type="text"
           onChange={handleChange}
@@ -127,7 +141,8 @@ const Autocomplete = ({
           ref={inputEl}
           {...rest}
         />
-        {showOptions &&
+        {showDropdown &&
+          showOptions &&
           inputValue?.length >= 3 &&
           renderList({
             results: options,
@@ -138,14 +153,17 @@ const Autocomplete = ({
               onChange(value);
             },
           })}
-      </SearechInputContainer>
+      </Flex>
     </FlexItem>
   );
 };
 
 Autocomplete.propTypes = {
   placeholder: PropTypes.string,
+  showDropdown: PropTypes.bool.isRequired,
+  showAutocompleteIcon: PropTypes.bool.isRequired,
   onChange: PropTypes.func,
+  onChangeResults: PropTypes.func,
   renderList: PropTypes.func,
   hits: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentRefinement: PropTypes.string,

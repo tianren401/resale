@@ -109,16 +109,29 @@ export const ContentImage = styled.img`
   src: ${(props) => props.src};
 `;
 
+export const absolutePosition = css`
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: -200px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+`;
+
+export const relativePosition = css`
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: -60px;
+`;
+
 export const SearchRowContainer = styled.div`
   width: 100%;
   margin: auto;
   padding: 30px 0;
   max-width: 940px;
-  position: absolute;
-  top: 70%;
-  left: 0;
-  right: 0;
-  z-index: 100;
+  ${(props) => (props.absolute ? absolutePosition : relativePosition)}
   @media (min-width: ${deviceSize.tablet}px) {
     width: calc(100% - 60px);
     padding: 30px;
@@ -134,5 +147,16 @@ export const SearchRowContainer = styled.div`
     position: relative !important;
     padding: 0;
     margin-top: -30px !important;
+  }
+`;
+
+export const MainContainer = styled.div`
+  width: 100%;
+  margin: auto;
+  padding: 30px 0;
+  max-width: 980px;
+
+  > div {
+    margin-bottom: 38px;
   }
 `;

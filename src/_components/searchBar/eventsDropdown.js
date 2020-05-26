@@ -11,7 +11,6 @@ import {
   EmptyListContainer,
   SectionHeader,
   SectionContainer,
-  AvatarImage,
   ShowAllResults,
 } from './styledComponents';
 
@@ -68,9 +67,6 @@ const ListItem = ({ data, indexName, ...rest }) => {
       child = (
         <Link to={`/performer/${data.objectID}`}>
           <SectionContainer align="center">
-            <FlexItem flex={0}>
-              <AvatarImage />
-            </FlexItem>
             <FlexItem>
               <h2>{data.name}</h2>
             </FlexItem>

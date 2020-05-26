@@ -1,15 +1,13 @@
 import styled, { css } from 'styled-components';
-import { colors, fontInter } from '_constants';
+import { colors } from '_constants';
 import { deviceSize } from '_constants';
 import { Flex } from '_components/flex';
 
-export const SearchContainer = styled.div`
+const SeachCommonStyle = css`
   text-align: left;
   position: relative;
-  height: 60px;
+
   background: ${colors.white};
-  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -20,8 +18,6 @@ export const SearchContainer = styled.div`
     width: calc(100% - 2rem);
     margin-left: 1rem;
     margin-right: 1rem;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
   }
 
   @media (min-width: ${deviceSize.laptop}px) {
@@ -29,7 +25,44 @@ export const SearchContainer = styled.div`
   }
 `;
 
-export const SearechInputContainer = styled(Flex)`
+export const SearchContainer = styled.div`
+  ${SeachCommonStyle};
+
+  height: 60px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
+    0px 0px 2px rgba(130, 136, 148, 0.16);
+  border-radius: 10px;
+
+  @media (max-width: ${deviceSize.laptop}px) {
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+  }
+`;
+
+export const FiltersContainer = styled.div`
+  margin-top: 32px;
+  ${SeachCommonStyle};
+  height: 60px;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    flex-direction: column;
+    height: auto;
+
+    > div {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+`;
+
+export const SearchInputContainer = styled(Flex)`
+  padding-left: 1.5rem;
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding-left: 10px;
+  }
+`;
+
+export const IconContainer = styled.div`
   padding-left: 1.5rem;
   @media (max-width: ${deviceSize.tablet}px) {
     padding-left: 10px;
@@ -46,7 +79,6 @@ export const SearchInput = styled.input`
   padding-right: 26px;
   border-right: ${(props) =>
     props.hasNext ? `1px solid ${colors.darkGray}` : 'none'};
-  ${fontInter}
   font-weight: normal;
   font-size: 1.125rem;
   line-height: 22px;
@@ -102,7 +134,6 @@ export const AutocompleteItem = styled.li`
   display: block;
   background: white;
   font-size: 1.2rem;
-  margin-top: 10px;
   width: 100%;
   border-radius: 2px;
 
@@ -131,7 +162,6 @@ export const EmptyListContainer = styled.div`
 
 export const SectionHeader = styled(Flex)`
   h1 {
-    ${fontInter}
     font-weight: 600;
     font-size: 18px;
     line-height: 22px;
@@ -143,8 +173,8 @@ export const SectionHeader = styled(Flex)`
 export const SectionContainer = styled(Flex)`
   border: ${(props) => (props.border ? `1px solid ${colors.black}` : 'none')};
   padding: 10px;
+  height: 80px;
   h2 {
-    ${fontInter}
     font-weight: 600;
     font-size: 18px;
     line-height: 22px;
@@ -153,7 +183,6 @@ export const SectionContainer = styled(Flex)`
   }
 
   h3 {
-    ${fontInter}
     font-weight: normal;
     font-size: 14px;
     line-height: 22px;
@@ -189,7 +218,6 @@ export const AvatarImage = styled.div`
 `;
 
 export const ShowAllResults = styled(Flex)`
-  ${fontInter}
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
@@ -211,5 +239,17 @@ export const ShowAllResults = styled(Flex)`
 
   &:hover {
     background-color: rgba(103, 38, 241, 0.16);
+  }
+`;
+
+export const DatePickerContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 100%;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    left: 0;
+    top: 100%;
+    position: absolute;
   }
 `;

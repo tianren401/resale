@@ -14,6 +14,7 @@ const StyledLoadMoreButton = styled.div`
   color: #6726f1;
   background-color: white;
   padding: 14px 24px;
+  cursor: pointer;
 
   @media (max-width: ${deviceSize.tablet}px) {
     background-color: white;

@@ -7,7 +7,7 @@ import {
   EmptyListContainer,
 } from './styledComponents';
 
-export const LocationsDropdown = React.forwardRef((props, ref) => {
+export const LocationsAutocomplete = React.forwardRef((props, ref) => {
   const { activeOption, handleItemClick, results, onChange } = props;
 
   const handleLocationClick = (event, data) => {
@@ -56,9 +56,9 @@ export const LocationsDropdown = React.forwardRef((props, ref) => {
   return optionList;
 });
 
-LocationsDropdown.displayName = 'LocationsDropdown';
+LocationsAutocomplete.displayName = 'LocationsAutocomplete';
 
-LocationsDropdown.propTypes = {
+LocationsAutocomplete.propTypes = {
   onChange: PropTypes.func,
   activeOption: PropTypes.number,
   handleItemClick: PropTypes.func,

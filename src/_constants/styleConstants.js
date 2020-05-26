@@ -33,7 +33,7 @@ export const colors = {
   dangerHover:
     'linear-gradient(0deg, rgba(39, 39, 41, 0.12), rgba(39, 39, 41, 0.12)), #FF695B',
   gradientVioletBlue:
-    'inear-gradient(97.6deg, #455FE5 -14.65%, #9545E5 79.56%)',
+    'linear-gradient(97.6deg, #455FE5 -14.65%, #9545E5 79.56%)',
   blue: '#007',
   darkBlue: '#004',
   lightBlue: '#44b',

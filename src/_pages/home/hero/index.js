@@ -12,6 +12,7 @@ import {
 } from './styledComponents';
 import leftArrow from '_images/leftArrow.svg';
 import rightArrow from '_images/rightArrow.svg';
+import { SearchRowContainer, connectedSearch as SearchBar } from '_components';
 
 export const Hero = ({ events }) => {
   const carouselRef = useRef(null);
@@ -96,6 +97,9 @@ export const Hero = ({ events }) => {
       )}
       <LeftArrow src={leftArrow} onClick={() => scroll(-1)} />
       <RightArrow src={rightArrow} onClick={() => scroll(1)} />
+      <SearchRowContainer absolute>
+        <SearchBar placeholder="Search by..." />
+      </SearchRowContainer>
     </Container>
   );
 };

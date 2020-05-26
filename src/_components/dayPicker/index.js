@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { colors } from '_constants';
 import { Flex } from '_components';
 import { ErrorAlert } from './errorAlert';
-import { fontInter } from '_constants/fonts';
 
 const DayPickerContainer = styled.div`
   display: flex;
@@ -33,7 +32,6 @@ const DayPickerContainer = styled.div`
       }
       color: ${colors.darkGray};
       border: none;
-      ${fontInter}
       font-weight: normal;
       font-size: 1.125rem;
       line-height: 22px;
