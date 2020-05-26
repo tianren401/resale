@@ -1,0 +1,114 @@
+# CircleCI 2.0 configuration file
+# https://circleci.com/docs/2.0
+
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@1.0.0
+
+jobs:
+  web-tests:
+    docker:
+        - image: circleci/node:10.16.2
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restore NPM Package Cache
+          keys:
+            - v1-npm-packages-{{ checksum "package-lock.json" }}
+
+      - run:
+          name: Install Dependencies
+          command: npm install --frozen-lockfile
+
+      - save_cache:
+          name: Save NPM Package Cache
+          key: v1-npm-packages-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.cache/npm
+            - node_modules
+
+      # - run:
+      #     name: Run Tests
+      #     # command: npm test-ci
+      #     command: npm test
+      #     environment:
+      #       JEST_JUNIT_OUTPUT: "test-results/junit/junit.xml"
+
+      # - store_test_results:
+      #     path: test-results
+
+  web-build:
+    docker:
+      - image: circleci/node:10.16.2
+
+    steps:
+      - checkout
+
+      - set-build-env
+
+      - restore_cache:
+          name: Restore NPM Package Cache
+          keys:
+            - v1-npm-packages-{{ checksum "package-lock.json" }}
+            - v1-npm-packages-
+
+      - run:
+          name: Build
+          command: |
+            npm run-script build-${BUILD_ENV}
+
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/build/*
+
+  web-deploy:
+    docker:
+      - image: circleci/node:10.16.2
+
+    environment:
+      BUILD_DIR: build
+
+    steps:
+      - checkout
+
+      - set-build-env
+
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Deploy Web to S3
+          command: scripts/s3/deploy.sh
+
+commands:
+  set-build-env:
+    description: "Sets a BUILD_ENV environment variable based on the git branch"
+    steps:
+      - run: .circleci/set-build-env.sh
+
+workflows:
+  test_build_deploy:
+    jobs:
+      - web-tests
+      - web-build:
+          requires:
+            - web-tests
+          filters:
+            branches:
+              only:
+                - dev
+                - master
+      - web-deploy:
+          requires:
+            - web-build
+          filters:
+            branches:
+              only:
+                - dev
+                - master
+          pre-steps:
+            - aws-cli/setup
