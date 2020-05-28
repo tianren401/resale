@@ -8,6 +8,13 @@ function getPerformerEvents(id) {
   });
 }
 
+const getPerformerImages = (ids) => {
+  return get(`content/images/performers`, {
+    performerIds: ids,
+  });
+};
+
 export const performerEventsService = {
   getPerformerEvents,
+  getPerformerImages,
 };

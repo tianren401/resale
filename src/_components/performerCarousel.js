@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Carousel from 'react-elastic-carousel';
+import { useDispatch } from 'react-redux';
+
+import { getPerformersInfoAction } from '_store/search';
+import { colors } from '_constants';
 
 import arrowImage from '_images/arrowImage.png';
 import mockPerformerImage from '_images/mocks/broadwayEvent14.png';
@@ -30,9 +34,11 @@ const CarouselItem = styled(Link)`
 `;
 
 const CarouselTitle = styled.div`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 24px;
+  line-height: 22px;
+  color: ${colors.brand};
+  text-transform: capitalize;
   margin-left: 21px;
   margin-bottom: 6px;
 `;
@@ -49,11 +55,11 @@ const CarouselItemImage = styled.div`
 
 const CarouselItemTitle = styled.span`
   display: block;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
   text-overflow: ellipsis;
-  color: #222;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21px;
+  color: ${colors.black};
   margin-top: 12px;
   white-space: nowrap;
   overflow: hidden;
@@ -92,7 +98,12 @@ const ButtonImage = styled.img`
   top: 12px;
 `;
 
-export const PerformerCarousel = ({ title, itemsToShow, performers }) => {
+export const PerformerCarousel = ({
+  title,
+  itemsToShow,
+  performers,
+  performersMeta,
+}) => {
   const itemCount = itemsToShow || 4;
   const blankElement = () => <></>;
   const carousel = useRef(null);
@@ -104,9 +115,18 @@ export const PerformerCarousel = ({ title, itemsToShow, performers }) => {
     { width: 768, itemsToShow: 4 },
   ];
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (performers?.length > itemCount) setShowNextBtn(true);
   }, [itemCount, performers]);
+
+  useEffect(() => {
+    if (performers?.length > 0) {
+      const performerIds = performers.map((performer) => performer.objectID);
+      dispatch(getPerformersInfoAction(performerIds));
+    }
+  }, [performers, dispatch]);
 
   const scroll = (direction) => {
     if (!carousel.current) return;
@@ -122,7 +142,7 @@ export const PerformerCarousel = ({ title, itemsToShow, performers }) => {
     else setShowPrevBtn(true);
   };
 
-  return performers ? (
+  return performers?.length > 0 ? (
     <Container>
       {title && <CarouselTitle>{title}</CarouselTitle>}
       <StyledCarousel
@@ -135,11 +155,17 @@ export const PerformerCarousel = ({ title, itemsToShow, performers }) => {
         breakPoints={breakPoints}
         itemPadding={[0, 10]}
       >
-        {performers.map((item) => {
+        {performers.map((item, index) => {
           return (
-            <CarouselItem key={item.id} to={`event/${item.id}`}>
+            <CarouselItem
+              key={`performer-${item.objectID}-${index}`}
+              to={`performer/${item.objectID}`}
+            >
               <CarouselItemImage
-                backgroundImage={`url(${mockPerformerImage})`}
+                backgroundImage={`url(${
+                  performersMeta[item.objectID]?.images?.carouselSearch ||
+                  mockPerformerImage
+                })`}
               />
               <CarouselItemTitle>{item.name}</CarouselItemTitle>
             </CarouselItem>
@@ -168,4 +194,5 @@ PerformerCarousel.propTypes = {
   title: PropTypes.string,
   itemsToShow: PropTypes.number,
   performers: PropTypes.array,
+  performersMeta: PropTypes.object,
 };

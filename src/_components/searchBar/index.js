@@ -4,21 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { connectedAutocomplete as Autocomplete } from './autocomplete';
 import { connectedPlaces as Places } from '_components/places';
-import { LocationsAutocomplete } from './locationsAutocomplete';
 import { EventsDropdown } from './eventsDropdown';
-import { DayPicker, Flex } from '_components';
+import { Flex } from '_components';
 import { SearchContainer, FiltersContainer } from './styledComponents';
 
-import { setDate, setQuery, setLocation, setResults } from '_store/search';
+import { setQuery, setResults } from '_store/search';
 import { withInstantSearch } from '_hoc';
+
 import { CategoriesDropdown } from './categoriesDropdown';
 import { DateRangeDropdown } from './dateRangeDropdown';
-
-const locationSearchConfig = {
-  defaultIndex: 'venues',
-  hitsPerPage: 3,
-  multiple: false,
-};
 
 export const SearchBar = ({
   showLocation,
@@ -31,10 +25,6 @@ export const SearchBar = ({
 }) => {
   const dispatch = useDispatch();
 
-  const handleSetDate = (date) => {
-    dispatch(setDate(date));
-  };
-
   const handleSetQuery = (query) => {
     dispatch(setQuery(query));
   };
@@ -43,15 +33,15 @@ export const SearchBar = ({
     dispatch(setResults(results));
   };
 
-  const handleSetLocation = (location) => {
-    dispatch(setLocation(location));
-  };
-
   const searchQuery = useSelector(({ searchReducer }) => searchReducer.query);
   const searchLocation = useSelector(
     ({ searchReducer }) => searchReducer.location
   );
-  const searchDate = useSelector(({ searchReducer }) => searchReducer.date);
+
+  const defaultLocation = {
+    lat: 32.8203525,
+    lng: -97.011731,
+  };
 
   return (
     <>
@@ -71,35 +61,6 @@ export const SearchBar = ({
             showAutocompleteIcon={showAutocompleteIcon}
           />
         </Flex>
-        {showLocation && (
-          <Flex flex={1}>
-            <Autocomplete
-              {...rest}
-              value={searchLocation}
-              placeholder="Anywhere"
-              onChange={(value) => handleSetLocation(value)}
-              renderList={({ results, dropdownEl, onChange, ...rest }) => (
-                <LocationsAutocomplete
-                  ref={dropdownEl}
-                  results={results}
-                  onChange={onChange}
-                  {...rest}
-                />
-              )}
-              config={locationSearchConfig}
-              showDropdown={showDropdown}
-              showAutocompleteIcon={showAutocompleteIcon}
-            />
-          </Flex>
-        )}
-        {showDate && (
-          <Flex flex={1}>
-            <DayPicker
-              value={'Anytime' || searchDate}
-              onDateChange={(value) => handleSetDate(value)}
-            />
-          </Flex>
-        )}
       </SearchContainer>
       {showFilters && (
         <FiltersContainer>
@@ -107,12 +68,7 @@ export const SearchBar = ({
             <CategoriesDropdown />
           </Flex>
           <Flex flex={1} justify="center">
-            <Places
-              defaultRefinement={{
-                lat: 32.8203525,
-                lng: -97.011731,
-              }}
-            />
+            <Places defaultRefinement={searchLocation || defaultLocation} />
           </Flex>
           <Flex flex={1} justify="center">
             <DateRangeDropdown />
@@ -141,5 +97,4 @@ SearchBar.defaultProps = {
   showAutocompleteIcon: true,
   showFilters: false,
 };
-
 export const connectedSearch = withInstantSearch(SearchBar);

@@ -8,6 +8,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { connectAutoComplete } from 'react-instantsearch-dom';
 import throttle from 'lodash/throttle';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 /* Styled Components */
 import { SearchInput, IconContainer } from './styledComponents';
@@ -18,6 +19,7 @@ const SearchIcon = <Icon size={24} color={colors.brand} name="search" />;
 
 const Autocomplete = ({
   placeholder,
+  value,
   onChange,
   onChangeResults,
   showDropdown,
@@ -31,7 +33,7 @@ const Autocomplete = ({
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(value);
   const [activeOption, setActiveOption] = useState(0);
 
   const dropdownEl = useRef(null);
@@ -44,9 +46,13 @@ const Autocomplete = ({
 
   const handleChangeResults = useCallback(
     (results) => {
-      setOptions(results);
+      const organizedResults = results.reduce((agg, data) => {
+        agg[data?.index] = data?.hits;
+        return agg;
+      }, {});
+      setOptions(organizedResults);
       if (onChangeResults) {
-        onChangeResults(results);
+        onChangeResults(organizedResults);
       }
     },
     [setOptions, onChangeResults]
@@ -110,15 +116,16 @@ const Autocomplete = ({
     }
   }, [inputValue, fetch, handleChangeResults]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     const active = true;
 
     if (active) {
       setShowOptions(true);
       setActiveOption(0);
+
       handleChangeResults(hits);
     }
-  }, [hits, handleChangeResults]);
+  }, [hits]);
 
   useEffect(() => {
     document.addEventListener('click', handleDocumentClick);
@@ -160,6 +167,7 @@ const Autocomplete = ({
 
 Autocomplete.propTypes = {
   placeholder: PropTypes.string,
+  value: PropTypes.string.isRequired,
   showDropdown: PropTypes.bool.isRequired,
   showAutocompleteIcon: PropTypes.bool.isRequired,
   onChange: PropTypes.func,

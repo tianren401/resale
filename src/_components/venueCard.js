@@ -100,7 +100,7 @@ export const VenueCard = ({ venue }) => {
   const { name, city, state } = venue;
   const date = format(new Date(), 'MMMM do');
   return (
-    <Card to={`../venue/${venue.objectID}`}>
+    <Card>
       <TimeColumn>
         <MainInfo>Next Event</MainInfo>
         <Detail>{date}</Detail>
@@ -111,7 +111,9 @@ export const VenueCard = ({ venue }) => {
           {city}, {state}
         </Detail>
       </InfoColumn>
-      <StyledButton>{isMobileDevice ? 'All' : 'All Events'}</StyledButton>
+      <StyledButton to={`../venue/${venue.id}`}>
+        {isMobileDevice ? 'All' : 'All Events'}
+      </StyledButton>
     </Card>
   );
 };

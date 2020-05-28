@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
 
 import { Flex, FlexItem } from '_components';
 import { formatTimeStamp } from '_helpers';
@@ -16,7 +15,11 @@ import {
 
 const ListItem = ({ data, indexName, ...rest }) => {
   if (!data) {
-    return null;
+    return (
+      <SectionContainer column>
+        <h3>Not found</h3>
+      </SectionContainer>
+    );
   }
   const { className, handleItemClick } = rest;
   let child = null;
@@ -94,18 +97,15 @@ ListItem.propTypes = {
 
 export const EventsDropdown = React.forwardRef((props, ref) => {
   const { results, activeOption, handleItemClick } = props;
-  // map data
-  const options = _.chain(results).slice(0, 10).groupBy('index').value();
-
   let optionList = null;
 
   const orders = ['performers', 'events', 'venues'];
-  const categories = Object.keys(options).sort(
+  const categories = Object.keys(results).sort(
     (a, b) => orders.indexOf(a) - orders.indexOf(b)
   );
 
-  const total = Object.keys(options).reduce((total, category) => {
-    return total + options[category][0]?.hits.length;
+  const total = Object.keys(results).reduce((total, category) => {
+    return total + results[category].length;
   }, 0);
 
   if (total > 0) {
@@ -117,9 +117,8 @@ export const EventsDropdown = React.forwardRef((props, ref) => {
             <SectionHeader>
               <h1>{category}</h1>
             </SectionHeader>
-            {(options[category][0]?.hits || [])
-              .slice(0, 3)
-              .map((hit, index) => {
+            {results[category]?.length > 0 ? (
+              results[category].slice(0, 3).map((hit, index) => {
                 if (index === activeOption) {
                   className = 'active';
                 }
@@ -133,7 +132,10 @@ export const EventsDropdown = React.forwardRef((props, ref) => {
                     handleItemClick={handleItemClick}
                   />
                 );
-              })}
+              })
+            ) : (
+              <ListItem data={null} />
+            )}
           </React.Fragment>
         ))}
         <Link to={'/results'}>

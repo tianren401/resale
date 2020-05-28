@@ -51,6 +51,7 @@ export const SectionHeader = styled(Flex)`
     line-height: 22px;
     color: ${colors.brand};
     text-transform: capitalize;
+    margin-left: 21px;
   }
 `;
 

@@ -3,10 +3,10 @@ import { colors } from '_constants';
 import { deviceSize } from '_constants';
 import { Flex } from '_components/flex';
 
-const SeachCommonStyle = css`
+const SearchCommonStyle = css`
   text-align: left;
   position: relative;
-
+  margin: 0 auto;
   background: ${colors.white};
   display: flex;
   flex-direction: row;
@@ -26,7 +26,7 @@ const SeachCommonStyle = css`
 `;
 
 export const SearchContainer = styled.div`
-  ${SeachCommonStyle};
+  ${SearchCommonStyle};
 
   height: 60px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
@@ -40,9 +40,10 @@ export const SearchContainer = styled.div`
 `;
 
 export const FiltersContainer = styled.div`
+  ${SearchCommonStyle};
   margin-top: 32px;
-  ${SeachCommonStyle};
   height: 60px;
+  background: transparent;
 
   @media (max-width: ${deviceSize.tablet}px) {
     flex-direction: column;
@@ -156,7 +157,6 @@ export const AutocompleteItem = styled.li`
 export const EmptyListContainer = styled.div`
   color: ${colors.black};
   background-color: ${colors.white};
-  margin-top: -20px;
   margin-bottom: 10px;
 `;
 

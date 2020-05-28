@@ -7,24 +7,20 @@ import { ListItem } from './listItem';
 import { ItemList, SectionHeader, SectionContainer } from './styledComponents';
 import { PerformerCarousel } from '_components/performerCarousel';
 
-export const ResultsList = () => {
+export const ResultsList = ({ onLoadMore }) => {
   // fetch search resutls from reducer
   const results = useSelector(({ searchReducer }) => searchReducer.results);
+  const performersMeta = useSelector(
+    ({ searchReducer }) => searchReducer.performersMeta
+  );
 
   // event handlers
   const handleItemClick = () => {};
 
-  // map data
-  const options = results.reduce((agg, value) => {
-    agg[value?.index] = value?.hits;
-    return agg;
-  }, {});
-
   const orders = ['performers', 'events', 'venues'];
-  const categories = Object.keys(options).sort(
+  const categories = Object.keys(results).sort(
     (a, b) => orders.indexOf(a) - orders.indexOf(b)
   );
-
   return (
     <MainContainer>
       {categories.map((category) => {
@@ -34,28 +30,37 @@ export const ResultsList = () => {
               <SectionHeader>
                 <h1>{category}</h1>
               </SectionHeader>
-              {(options[category] || []).map((hit) => {
-                return (
-                  <ListItem
-                    key={`${category}-${hit.objectID}`}
-                    data={hit}
-                    indexName={category}
-                    handleItemClick={handleItemClick}
-                  />
-                );
-              })}
-
-              {category === 'events' && (
+              {results[category]?.length > 0 ? (
+                <>
+                  {results[category].map((hit) => (
+                    <ListItem
+                      key={`${category}-${hit.objectID}`}
+                      data={hit}
+                      indexName={category}
+                      handleItemClick={handleItemClick}
+                    />
+                  ))}
+                  {category === 'events' && (
+                    <SectionContainer>
+                      <LoadMoreButton onClick={onLoadMore}>
+                        Load More
+                      </LoadMoreButton>
+                    </SectionContainer>
+                  )}
+                </>
+              ) : (
                 <SectionContainer>
-                  <LoadMoreButton>Load More</LoadMoreButton>
+                  <h3>Not found</h3>
                 </SectionContainer>
               )}
             </>
           </ItemList>
         ) : (
           <PerformerCarousel
+            key="performerCarousel"
             title="Performers"
-            performers={options[category]}
+            performers={results[category]}
+            performersMeta={performersMeta}
           />
         );
       })}
@@ -68,4 +73,5 @@ ResultsList.displayName = 'ResultsList';
 ResultsList.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object),
   handleItemClick: PropTypes.func,
+  onLoadMore: PropTypes.func,
 };

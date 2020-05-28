@@ -61,6 +61,17 @@ export const Container = styled.div`
     height: 70%;
     min-height: 800px;
   }
+
+  @media screen and (max-width: ${deviceSize.tablet}px) {
+    height: 50%;
+    max-height: 420px;
+  }
+
+  .rec-carousel {
+    @media screen and (max-width: ${deviceSize.tablet}px) {
+      max-height: 420px;
+    }
+  }
 `;
 
 export const StyledCarouselItem = styled.div`
@@ -76,6 +87,11 @@ export const StyledCarouselItem = styled.div`
   @media (min-width: ${deviceSize.tablet}px) {
     min-height: 800px;
     padding: 0 20%;
+  }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    min-height: 420px;
+    padding: 0 5%;
   }
 `;
 

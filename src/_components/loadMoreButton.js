@@ -22,6 +22,6 @@ const StyledLoadMoreButton = styled.div`
   }
 `;
 
-export const LoadMoreButton = () => {
-  return <StyledLoadMoreButton>Load More</StyledLoadMoreButton>;
+export const LoadMoreButton = (props) => {
+  return <StyledLoadMoreButton {...props}>Load More</StyledLoadMoreButton>;
 };

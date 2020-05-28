@@ -40,7 +40,7 @@ const ApplyButton = styled.div`
 
   @media (max-width: ${deviceSize.tablet}px) {
     width: initial;
-    margin: 200px 40px 0px 40px;
+    margin: 10px 0 0 0;
     border-radius: 8px;
   }
 `;

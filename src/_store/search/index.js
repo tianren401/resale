@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { searchService } from '_services';
+import { searchService, performerEventsService } from '_services';
 
 export const searchLocationAction = createAsyncThunk(
   'search/fetchLocation',
@@ -17,19 +17,29 @@ export const searchQueryAction = createAsyncThunk(
   }
 );
 
+export const getPerformersInfoAction = createAsyncThunk(
+  'search/fetchPerformersInfo',
+  async (performerIds) => {
+    const response = await performerEventsService.getPerformerImages(
+      performerIds
+    );
+
+    return response;
+  }
+);
+
 const searchSlice = createSlice({
   name: 'search',
   initialState: {
     query: '',
     category: 'any',
-    location: {
-      lat: 32.8203525,
-      lng: -97.011731,
-    },
+    location: null,
     date: 'all',
     dateRange: null,
     results: [],
-    locations: [],
+    eventPageSize: 10,
+    hitsPerPage: 10,
+    performersMeta: {},
   },
   reducers: {
     setQuery(state, action) {
@@ -50,6 +60,32 @@ const searchSlice = createSlice({
     setResults(state, action) {
       state.results = action.payload;
     },
+    loadMoreEvents(state) {
+      state.eventPageSize += state.hitsPerPage;
+    },
+  },
+  extraReducers: {
+    [getPerformersInfoAction.fulfilled]: (state, action) => {
+      const performersMeta = action.payload.reduce((agg, data) => {
+        const performerImages = data.images.reduce(
+          (agg, img) => ({
+            ...agg,
+            [img.imageType]: img.imageUrl,
+          }),
+          {}
+        );
+        agg[data.performer.id] = {
+          images: performerImages,
+          performer: data.performer,
+        };
+        return agg;
+      }, {});
+
+      state.performersMeta = {
+        ...state.performersMeta,
+        ...performersMeta,
+      };
+    },
   },
 });
 
@@ -60,6 +96,7 @@ export const {
   setDate,
   setDateRange,
   setResults,
+  loadMoreEvents,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

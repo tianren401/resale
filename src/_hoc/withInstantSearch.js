@@ -30,8 +30,14 @@ export const withInstantSearch = (WrappedComponent) => {
       );
     }
 
+    const onChangeState = () => {};
+
     return (
-      <InstantSearch indexName={defaultIndex} searchClient={searchClient}>
+      <InstantSearch
+        indexName={defaultIndex}
+        searchClient={searchClient}
+        onSearchStateChange={onChangeState}
+      >
         <Configure hitsPerPage={hitsPerPage} />
 
         {multiple &&
@@ -42,6 +48,7 @@ export const withInstantSearch = (WrappedComponent) => {
                 <Configure
                   filters={eventFilters.join(' AND ')}
                   aroundLatLng={params?.location}
+                  hitsPerPage={params?.eventPageSize || hitsPerPage}
                 />
               )}
               {indexName === 'venues' && (

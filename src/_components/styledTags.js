@@ -132,6 +132,7 @@ export const SearchRowContainer = styled.div`
   padding: 30px 0;
   max-width: 940px;
   ${(props) => (props.absolute ? absolutePosition : relativePosition)}
+
   @media (min-width: ${deviceSize.tablet}px) {
     width: calc(100% - 60px);
     padding: 30px;

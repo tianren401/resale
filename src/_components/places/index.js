@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import places from 'places.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import connect from './connector';
-import { useClickAway } from '_hooks';
+import { useClickAway, useBrowserLocation } from '_hooks';
 import { setLocation } from '_store/search';
 
 import { StyledDropdown, SearchInput, IconContainer } from './styledComponents';
@@ -21,9 +21,28 @@ const Places = ({ refine, defaultRefinement, className }) => {
 
   // set location
   const dispatch = useDispatch();
-  const handleSetLocation = (location) => {
-    dispatch(setLocation(location));
-  };
+  const handleSetLocation = useCallback(
+    (location) => {
+      dispatch(setLocation(location));
+    },
+    [dispatch]
+  );
+
+  const searchLocation = useSelector(
+    ({ searchReducer }) => searchReducer.location
+  );
+
+  const { latitude, longitude, error } = useBrowserLocation(true);
+
+  useEffect(() => {
+    if (!error && !!latitude && !!longitude) {
+      handleSetLocation({
+        lat: latitude,
+        lng: longitude,
+      });
+    }
+    return () => {};
+  }, [latitude, longitude, error, handleSetLocation]);
 
   useEffect(() => {
     const autocomplete = places({
@@ -47,6 +66,11 @@ const Places = ({ refine, defaultRefinement, className }) => {
     });
   }, []); //eslint-disable-line
 
+  const placeHolder =
+    searchLocation?.lat && searchLocation?.lng
+      ? 'Current Location'
+      : 'Any Location';
+
   return (
     <StyledDropdown className={className}>
       <IconContainer>
@@ -56,7 +80,7 @@ const Places = ({ refine, defaultRefinement, className }) => {
         ref={myInput}
         type="search"
         id="address-input"
-        placeholder="Any Location"
+        placeholder={placeHolder}
       />
     </StyledDropdown>
   );
