@@ -5,33 +5,24 @@ import styled from 'styled-components';
 
 import { isMobileDevice } from '_helpers';
 import { getPerformerEventsAction } from '_store/performer';
-import { getVenueEventsAction } from '_store/venue';
-import { Header } from './components/header';
 import { Upcoming } from './components/upcoming';
-import { Faq } from './components/faq';
 import { Footer } from '_pages/home/footer';
-import { HomeLayout } from '_components';
+import { HomeLayout, PerformerVenueHeader, Faq } from '_components';
 
 const Container = styled(HomeLayout)`
   width: 100%;
 `;
 
-export const PerformerOrVenue = ({ performerId, venueId }) => {
-  const reducer = performerId
-    ? (state) => state.performerReducer
-    : (state) => state.venueReducer;
+export const Performer = ({ performerId }) => {
+  const reducer = (state) => state.performerReducer;
 
   const { events } = useSelector(reducer);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (performerId) {
-      dispatch(getPerformerEventsAction({ id: performerId }));
-    } else {
-      dispatch(getVenueEventsAction({ id: venueId }));
-    }
-  }, [dispatch, performerId, venueId]);
+    dispatch(getPerformerEventsAction({ id: performerId }));
+  }, [dispatch, performerId]);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -41,11 +32,18 @@ export const PerformerOrVenue = ({ performerId, venueId }) => {
 
   return (
     <Container>
-      {!modalOpen && <Header attractions={events} />}
+      {!modalOpen && (
+        <PerformerVenueHeader
+          attractions={events}
+          image={events?.heroImage?.length && events.heroImage[0].imageUrl}
+          name={events.name}
+          subtitle={events.subtitle}
+          type={'performer'}
+        />
+      )}
       <Upcoming
         events={events}
         sendToPage={getModalState}
-        venueId={venueId}
         performerId={performerId}
       />
       {isMobileDevice && !modalOpen && <Faq />}
@@ -54,7 +52,6 @@ export const PerformerOrVenue = ({ performerId, venueId }) => {
   );
 };
 
-PerformerOrVenue.propTypes = {
+Performer.propTypes = {
   performerId: PropTypes.number,
-  venueId: PropTypes.number,
 };

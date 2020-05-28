@@ -57,7 +57,13 @@ DropdownMenu.propTypes = {
   selectedOption: PropTypes.any,
 };
 
-export const Dropdown = ({ options, defaultOption, plain, handleChange }) => {
+export const Dropdown = ({
+  options,
+  defaultOption,
+  plain,
+  handleChange,
+  ...rest
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
 
@@ -88,7 +94,12 @@ export const Dropdown = ({ options, defaultOption, plain, handleChange }) => {
   const className = isOpen ? 'active' : 'inactive';
 
   return (
-    <StyledDropdown onMouseUp={handleOpen} plain={plain} className={className}>
+    <StyledDropdown
+      onMouseUp={handleOpen}
+      plain={plain}
+      className={className}
+      {...rest}
+    >
       {selectedOption?.label}
       {isOpen ? (
         <Box marginLeft="15px">

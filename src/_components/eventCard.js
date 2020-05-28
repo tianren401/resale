@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 
-import { deviceSize } from '_constants';
+import { deviceSize, colors } from '_constants';
 
 const FlexColumn = styled.div`
   display: flex;
@@ -52,7 +52,7 @@ const Detail = styled.span`
 `;
 
 const StyledButton = styled(Link)`
-  background: #6727f1;
+  background: ${colors.brand};
   border-radius: 6px;
   color: white;
   width: 20%;
@@ -62,10 +62,11 @@ const StyledButton = styled(Link)`
   @media (max-width: ${deviceSize.tablet}px) {
     border: none;
     background: none;
-    color: #6726f1;
+    color: ${colors.brand};
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
+    font-weight: 600;
   }
 `;
 

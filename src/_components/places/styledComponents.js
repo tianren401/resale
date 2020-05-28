@@ -27,7 +27,7 @@ export const StyledDropdown = styled.div`
   border-radius: 6px;
 
   @media (max-width: ${deviceSize.tablet}px) {
-    width: 100% !important;
+    width: 100%;
   }
 
 

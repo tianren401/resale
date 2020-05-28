@@ -11,7 +11,7 @@ import { StyledDropdown, SearchInput, IconContainer } from './styledComponents';
 
 import { LocationIcon } from '_components/icon/svgIcons';
 
-const Places = ({ refine, defaultRefinement }) => {
+const Places = ({ refine, defaultRefinement, className }) => {
   const handleClickAway = () => {
     // hide dropdown
   };
@@ -48,7 +48,7 @@ const Places = ({ refine, defaultRefinement }) => {
   }, []); //eslint-disable-line
 
   return (
-    <StyledDropdown>
+    <StyledDropdown className={className}>
       <IconContainer>
         <LocationIcon />
       </IconContainer>
@@ -65,6 +65,7 @@ const Places = ({ refine, defaultRefinement }) => {
 Places.propTypes = {
   refine: PropTypes.func,
   defaultRefinement: PropTypes.object,
+  className: PropTypes.string,
 };
 export const connectedPlaces = Places;
 

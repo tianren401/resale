@@ -1,10 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { deviceSize } from '_constants';
 
-const StyledHeader = styled.div`
+export const StyledHeader = styled.div`
   display: flex;
   align-items: flex-end;
   width: 100%;
@@ -17,7 +15,7 @@ const StyledHeader = styled.div`
   background-position-y: center;
 `;
 
-const EventInfo = styled.div`
+export const EventInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 75%;
@@ -28,7 +26,7 @@ const EventInfo = styled.div`
   }
 `;
 
-const Performer = styled.div`
+export const AttractionName = styled.div`
   font-weight: bold;
   font-size: 38px;
   line-height: 46px;
@@ -42,7 +40,7 @@ const Performer = styled.div`
   }
 `;
 
-const Subtitle = styled.div`
+export const Subtitle = styled.div`
   color: white;
   font-size: 14px;
   padding: 5px;
@@ -53,7 +51,7 @@ const Subtitle = styled.div`
   }
 `;
 
-const Address = styled.div`
+export const Address = styled.div`
   color: white;
   font-size: 16px;
   padding: 5px;
@@ -63,28 +61,3 @@ const Address = styled.div`
     line-height: 24px;
   }
 `;
-
-export const Header = ({ attractions }) => {
-  return (
-    <StyledHeader
-      image={
-        attractions?.heroImage?.length && attractions.heroImage[0].imageUrl
-      }
-    >
-      <EventInfo>
-        <Performer>{attractions ? attractions.name : 'No results'}</Performer>
-        {attractions?.similarVenues && (
-          <Address>
-            {attractions.allUpcomingEvents?.length &&
-              `${attractions.allUpcomingEvents[0].venue.street} ${attractions.allUpcomingEvents[0].venue.city} ${attractions.allUpcomingEvents[0].venue.state} ${attractions.allUpcomingEvents[0].venue.zip}`}
-          </Address>
-        )}
-        <Subtitle>{attractions.subtitle}</Subtitle>
-      </EventInfo>
-    </StyledHeader>
-  );
-};
-
-Header.propTypes = {
-  attractions: PropTypes.object,
-};

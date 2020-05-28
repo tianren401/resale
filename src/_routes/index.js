@@ -11,20 +11,20 @@ import { GlobalStyles } from '../globalStyles';
 import {
   Home,
   SeatSelection,
-  PerformerOrVenue,
   Checkout,
   Results,
+  Performer,
+  Venue,
 } from '_pages';
-import { DateRangePicker } from '_components/dateRangePicker/dateRangePicker';
 
 const DynamicPerformer = () => {
   const { performerId } = useParams();
-  return <PerformerOrVenue performerId={parseInt(performerId)} />;
+  return <Performer performerId={parseInt(performerId)} />;
 };
 
 const DynamicVenue = () => {
   const { venueId } = useParams();
-  return <PerformerOrVenue venueId={parseInt(venueId)} />;
+  return <Venue venueId={parseInt(venueId)} />;
 };
 
 const DynamicEvent = () => {
@@ -37,7 +37,6 @@ const Routes = () => (
     <GlobalStyles />
     <Switch>
       <Route exact path="/home" component={Home} />
-      <Route exact path="/daypicker" component={DateRangePicker} />
       <Route path="/performer/:performerId">
         <DynamicPerformer />
       </Route>

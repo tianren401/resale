@@ -135,9 +135,13 @@ export const DateRangePicker = ({ sendToContainer, weekendFilter }) => {
   };
 
   const handleDayMouseEnter = (day) => {
-    const { from, to } = desktopRange;
-    if (!isSelectingFirstDay(from, to, day)) {
-      setDesktopRange({ ...desktopRange, enteredTo: day });
+    if (!isMobileDevice) {
+      const { from, to } = desktopRange;
+      if (!isSelectingFirstDay(from, to, day)) {
+        setDesktopRange({ ...desktopRange, enteredTo: day });
+      }
+    } else {
+      return null;
     }
   };
 
@@ -178,7 +182,7 @@ export const DateRangePicker = ({ sendToContainer, weekendFilter }) => {
         onDayClick={
           isMobileDevice ? handleDayClickMobile : handleDayClickDesktop
         }
-        onDayMouseEnter={!isMobileDevice && handleDayMouseEnter}
+        onDayMouseEnter={handleDayMouseEnter}
         showOutsideDays
         disabledDays={weekendFilter && { daysOfWeek: [1, 2, 3, 4, 5] }}
       />

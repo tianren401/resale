@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import closeModalButton from '_images/closeModal.svg';
 import { DateRangePicker } from './dateRangePicker/dateRangePicker';
+import { setDate, setDateRange } from '_store/search';
 
 const Modal = styled.div`
   position: absolute;
@@ -30,16 +32,24 @@ const Text = styled.div`
   margin: 0 auto;
 `;
 
-export const PerformerModal = ({ sendStateFromModal, sendDaysFromModal }) => {
-  const [selectedDays, setSelectedDays] = useState([]);
-
-  const getDatesFromChild = (days) => {
-    setSelectedDays(days);
-  };
-
+export const PerformerModal = ({ sendStateFromModal }) => {
   const handleClose = () => {
     sendStateFromModal(false);
-    sendDaysFromModal(selectedDays);
+  };
+
+  const dispatch = useDispatch();
+
+  const handleSelectDateRange = (days) => {
+    // calc timestamps for  start/end
+    const startDate = new Date(days[0]);
+    const endDate = new Date(days[days.length - 1]);
+    dispatch(setDate('date'));
+    dispatch(
+      setDateRange({
+        start: startDate.getTime(),
+        end: endDate.getTime(),
+      })
+    );
   };
 
   return (
@@ -49,7 +59,7 @@ export const PerformerModal = ({ sendStateFromModal, sendDaysFromModal }) => {
         <Text>Calendar</Text>
       </Header>
       <DayPickerSection>
-        <DateRangePicker sendToContainer={getDatesFromChild} />
+        <DateRangePicker sendToContainer={handleSelectDateRange} />
       </DayPickerSection>
     </Modal>
   );
@@ -57,5 +67,4 @@ export const PerformerModal = ({ sendStateFromModal, sendDaysFromModal }) => {
 
 PerformerModal.propTypes = {
   sendStateFromModal: PropTypes.func,
-  sendDaysFromModal: PropTypes.func,
 };
