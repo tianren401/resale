@@ -12,6 +12,7 @@ import {
   Loader,
 } from '_components';
 import { purchasePayment } from '_store/checkout';
+import { clearLockRequestId } from '_store/checkoutTicket';
 import { colors, cardLogos } from '_constants';
 import mail from '_images/mail.svg';
 import userFace from '_images/mocks/checkoutFace.png';
@@ -133,6 +134,7 @@ export const OrderInfo = () => {
       purchasePayment({
         request: orderRequest,
         success: () => {
+          dispatch(clearLockRequestId());
           history.push('/checkout/confirmation');
         },
       })

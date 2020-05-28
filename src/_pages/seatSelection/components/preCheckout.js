@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { TextButton } from '_components';
@@ -105,6 +105,7 @@ const Checkout = styled.button`
 export const PreCheckout = () => {
   const checkoutTicket = useSelector((state) => state.checkoutTicketReducer);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(
@@ -119,22 +120,20 @@ export const PreCheckout = () => {
   const handleCheckout = () => {
     dispatch(
       getLockRequestIdAction({
-        id: checkoutTicket.ticketGroupId,
-        quantity: checkoutTicket.ticketGroupQuantity,
-        price: checkoutTicket.ticketGroupPrice,
+        request: {
+          id: checkoutTicket.ticketGroupId,
+          quantity: checkoutTicket.ticketGroupQuantity,
+          price: checkoutTicket.ticketGroupPrice,
+        },
+        success: () => {
+          history.push('/checkout');
+        },
       })
     );
   };
 
   const handleBackButton = () => {
     dispatch(clearPreCheckoutTicketDataAction());
-  };
-
-  const renderRedirect = () => {
-    console.log(checkoutTicket);
-    if (checkoutTicket.lockRequestId) {
-      return <Redirect to="/checkout" />;
-    }
   };
 
   return (
@@ -175,7 +174,7 @@ export const PreCheckout = () => {
         <p>Money Back Guarantee</p>
       </CheckoutTag>
       <Checkout onClick={handleCheckout}>Checkout</Checkout>
-      {renderRedirect()}
+      {/* {renderRedirect()} */}
     </Container>
   );
 };

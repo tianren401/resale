@@ -81,7 +81,7 @@ export const checkoutSlice = createSlice({
       state.loading = false;
     },
     [purchasePayment.fulfilled]: (state, action) => {
-      state.orderId = action.payload;
+      state.orderId = action.payload.response;
       state.loading = false;
     },
     [purchasePayment.pending]: (state) => {

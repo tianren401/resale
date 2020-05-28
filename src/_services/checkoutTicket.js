@@ -1,8 +1,8 @@
-import { post } from '_helpers/api';
+import { post, del } from '_helpers/api';
 
 function getLockRequestId(requestBody) {
   return post(
-    'orders/reserve',
+    'orders/lock',
     {
       ticketGroupId: requestBody.id,
       quantity: requestBody.quantity,
@@ -12,6 +12,11 @@ function getLockRequestId(requestBody) {
   );
 }
 
+function deleteLockRequestId(lockId) {
+  return del('orders/lock', lockId);
+}
+
 export const checkoutTickeService = {
   getLockRequestId,
+  deleteLockRequestId,
 };

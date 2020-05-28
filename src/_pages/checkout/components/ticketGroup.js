@@ -98,9 +98,6 @@ export const TicketGroup = () => {
   } = useSelector((state) => state.checkoutTicketReducer);
 
   const date = format(new Date(event.date), "EEEE MMM do 'at' h:mma");
-  const venueImg =
-    vfsURL ||
-    'https://vfs.seatics.com/Seatics/2019_MinuteMaidPark_MLB_Astros/400x300/125.jpg';
   return (
     <Container>
       <TicketName>{event.name}</TicketName>
@@ -113,10 +110,10 @@ export const TicketGroup = () => {
       <H6 marginTop="4px" color={colors.darkGray}>
         Section {ticketGroupSection}, Row {ticketGroupRow}
       </H6>
-      <VFS image={`url(${venueImg})`} />
+      {!!vfsURL && <VFS image={`url(${vfsURL})`} />}
       <PriceDiv>
         <H6>Price per ticket</H6>
-        <H6>${ticketGroupPrice * 100}</H6>
+        <H6>${ticketGroupPrice}</H6>
       </PriceDiv>
       <PriceDiv>
         <H6>Quantity</H6>
@@ -124,14 +121,14 @@ export const TicketGroup = () => {
       </PriceDiv>
       <PriceDiv>
         <H6>Taxes {`\u0026`} Fees</H6>
-        <H6>$25</H6>
+        <H6>$1</H6>
       </PriceDiv>
       <PriceDiv marginTop="16px">
         <H5 weight="600" color={colors.brand}>
           Total
         </H5>
         <H5 weight="600" color={colors.brand}>
-          ${ticketGroupPrice * ticketGroupQuantity * 100 + 25}
+          ${ticketGroupPrice * ticketGroupQuantity + 1}
         </H5>
       </PriceDiv>
       <BorderLine />

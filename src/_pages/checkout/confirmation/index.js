@@ -98,7 +98,7 @@ export const Confirmation = () => {
             </H5>
             <H5 marginTop="15px">{ticketGroupQuantity} Ticket</H5>
             <H5>
-              ${ticketGroupPrice * ticketGroupQuantity * 100 + 25} charged to{' '}
+              ${ticketGroupPrice * ticketGroupQuantity + 1} charged to
               {paymentMethod.type} {paymentMethod.lastFour}
             </H5>
           </DeliveryInfo>

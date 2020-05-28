@@ -4,8 +4,21 @@ import { checkoutTickeService } from '_services';
 
 export const getLockRequestIdAction = createAsyncThunk(
   'checkoutTicket/get',
-  async (request) => {
-    const response = await checkoutTickeService.getLockRequestId(request);
+  async (payload) => {
+    const response = await checkoutTickeService.getLockRequestId(
+      payload.request
+    );
+    payload.success();
+    return response;
+  }
+);
+
+export const deleteLockRequestIdAction = createAsyncThunk(
+  'checkoutTicket/del',
+  async (payload) => {
+    const response = await checkoutTickeService.deleteLockRequestId({
+      lockId: payload,
+    });
     return response;
   }
 );
@@ -47,6 +60,9 @@ const checkoutTicketSlice = createSlice({
       state.ticketGroupRange = action.payload.ticketGroupRange;
       state.ticketGroupSplits = action.payload.ticketGroupSplits;
     },
+    clearLockRequestId(state) {
+      state.lockRequestId = null;
+    },
     clearPreCheckoutTicketDataAction(state) {
       state.ticketGroupId = null;
       state.ticketGroupPrice = null;
@@ -75,6 +91,9 @@ const checkoutTicketSlice = createSlice({
     [getLockRequestIdAction.fulfilled]: (state, action) => {
       state.lockRequestId = action.payload.lockRequestId;
     },
+    [deleteLockRequestIdAction.fulfilled]: (state) => {
+      state.lockRequestId = null;
+    },
   },
 });
 
@@ -83,6 +102,7 @@ export const {
   clearPreCheckoutTicketDataAction,
   setCheckoutTicketEventDataAction,
   setCheckoutTicketQuantityAction,
+  clearLockRequestId,
 } = checkoutTicketSlice.actions;
 
 export default checkoutTicketSlice.reducer;
