@@ -30,3 +30,4 @@ export * from './performerVenueHeader';
 export * from './performerVenueSimilarCarousel';
 export * from './dateRangeDropdown';
 export * from './faq';
+export * from './scrollToTop';

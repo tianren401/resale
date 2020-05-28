@@ -17,6 +17,8 @@ import {
   Venue,
 } from '_pages';
 
+import { ScrollToTop } from '_components';
+
 const DynamicPerformer = () => {
   const { performerId } = useParams();
   return <Performer performerId={parseInt(performerId)} />;
@@ -34,6 +36,7 @@ const DynamicEvent = () => {
 
 const Routes = () => (
   <Router>
+    <ScrollToTop />
     <GlobalStyles />
     <Switch>
       <Route exact path="/home" component={Home} />
