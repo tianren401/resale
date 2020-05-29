@@ -85,7 +85,7 @@ export const Confirmation = () => {
           <H4>Check your email!</H4>
           <H5 lineHeight="22px" marginTop="15px">
             <MailImage src={mail} />
-            Your e-tickets was sent to {deliveryInfo.email}
+            Your e-tickets were sent to {deliveryInfo.email}
           </H5>
           <DeliveryInfo>
             <H5>{event.name}</H5>
@@ -96,10 +96,14 @@ export const Confirmation = () => {
             <H5>
               Section {ticketGroupSection}, Row {ticketGroupRow}
             </H5>
-            <H5 marginTop="15px">{ticketGroupQuantity} Ticket</H5>
+            {ticketGroupQuantity > 1 ? (
+              <H5 marginTop="15px">{ticketGroupQuantity} Tickets</H5>
+            ) : (
+              <H5 marginTop="15px">{ticketGroupQuantity} Ticket</H5>
+            )}
             <H5>
-              ${ticketGroupPrice * ticketGroupQuantity + 1} charged to
-              {paymentMethod.type} {paymentMethod.lastFour}
+              ${ticketGroupPrice * ticketGroupQuantity + 1} charged to your{' '}
+              {paymentMethod.type} ending in {paymentMethod.lastFour}
             </H5>
           </DeliveryInfo>
         </ConfrimationGroup>

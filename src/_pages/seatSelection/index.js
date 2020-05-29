@@ -46,7 +46,7 @@ const MapContainer = styled.div`
   margin: 10px;
   width: calc(100% - 20px);
   height: calc(100% - 10px);
-  z-index: -1;
+  z-index: 0;
 `;
 
 export const SeatSelection = ({ eventId }) => {
