@@ -8,7 +8,7 @@ import { getTicketGroupListAction } from '_store/ticketGroupList';
 import { setCheckoutTicketEventDataAction } from '_store/checkoutTicket';
 import { EventLayout } from '_components';
 import { Header } from './components/header';
-import { TicketList } from './components/ticketList';
+import { TicketGroupList } from './components/ticketGroupList';
 import { PreCheckout } from './components/preCheckout';
 import { FilterOptions } from './components/filterOptions';
 import { navigationHeight } from '../../_constants';
@@ -23,24 +23,30 @@ const Container = styled.div`
 
 const TicketsContainer = styled.div`
   position: relative;
-  width: 23%;
+  width: 320px;
   height: 100%;
   box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.15);
-  z-index: 1;
   overflow: auto;
+
+  ${({ checkout }) =>
+    checkout &&
+    `
+    overflow: hidden;
+    `};
 `;
 
 const MapFilterContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 77%;
+  width: calc(100% - 320px);
   height: 93%;
 `;
 
 const MapContainer = styled.div`
-  width: 98%;
-  height: 98%;
-  margin: 1%;
+  margin: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 10px);
+  z-index: -1;
 `;
 
 export const SeatSelection = ({ eventId }) => {
@@ -65,7 +71,9 @@ export const SeatSelection = ({ eventId }) => {
   }, [dispatch, eventId]);
 
   useEffect(() => {
-    if (eventData && eventId) {
+    const ticketGroups = ticketData.ticketGroupListFormatted;
+
+    if (mapData && eventData && mapContainerRef?.current && ticketGroups) {
       dispatch(
         setCheckoutTicketEventDataAction({
           eventData: {
@@ -75,15 +83,8 @@ export const SeatSelection = ({ eventId }) => {
           eventId,
         })
       );
-    }
-  }, [dispatch, eventData, eventId]);
 
-  useEffect(() => {
-    const ticketGroups = ticketData.ticketGroupListFormatted;
-
-    if (mapData && eventData && mapContainerRef?.current && ticketGroups) {
       window.Seatics.config.enableLegend = false;
-
       window.Seatics.MapComponent.create({
         imgSrc: eventData.mapImage,
         tickets: ticketGroups,
@@ -97,8 +98,8 @@ export const SeatSelection = ({ eventId }) => {
             );
           },
         },
-        mapWidth: 0.5,
-        mapHeight: 0.5,
+        mapWidth: 1,
+        mapHeight: 1,
         mapName: eventData.mapName,
         enableSectionInfoPopups: true,
       });
@@ -111,14 +112,16 @@ export const SeatSelection = ({ eventId }) => {
     eventData,
     setFilterOptions,
     ticketData.ticketGroupListFormatted,
+    dispatch,
+    eventId,
   ]);
 
   return (
     <EventLayout>
       <Container>
         <Header event={eventData} />
-        <TicketsContainer>
-          <TicketList ref={ticketListRef} />
+        <TicketsContainer checkout={checkoutTicket.ticketGroupId}>
+          <TicketGroupList ref={ticketListRef} />
           {checkoutTicket.ticketGroupId && <PreCheckout />}
         </TicketsContainer>
         <MapFilterContainer>

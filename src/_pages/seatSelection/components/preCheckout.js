@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { TextButton } from '_components';
+import { TextButton, Dropdown } from '_components';
 import {
   getLockRequestIdAction,
   setCheckoutTicketQuantityAction,
@@ -24,6 +24,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   background: white;
+  padding: 20px;
 `;
 
 const BackButton = styled(TextButton)`
@@ -31,25 +32,24 @@ const BackButton = styled(TextButton)`
   flex-direction: row;
   align-items: center;
   font-size: 16px;
-  margin: 10% 5%;
+  margin: 10px 0 40px 0;
 `;
 
 const TicketTitle = styled.h2`
   font-weight: bold;
-  width: 87.5%;
-  margin: 0 auto;
+  width: 280px;
 `;
 
 const TicketSubTitle = styled.div`
   color: #8d8d94;
-  width: 87.5%;
-  margin: 2.5% auto;
+  width: 280px;
+  margin-bottom: 24px;
 `;
 
 const SeatImage = styled.img`
   height: 22%;
-  width: 85%;
-  margin: 5% auto;
+  width: 280px;
+  margin-bottom: 32px;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
     0px 0px 2px rgba(130, 136, 148, 0.16);
@@ -58,31 +58,16 @@ const SeatImage = styled.img`
 const Price = styled.div`
   color: #3dcc79;
   font-size: 18px;
-  width: 87.5%;
-  margin: 5% auto;
-`;
-
-const DropDown = styled.select`
-  height: 48px;
-  width: 87.5%;
-  margin: 5% auto;
-  font-size: 14px;
-  background: #ffffff;
-  border: 1px solid #e6e6eb;
-  border-radius: 6px;
-
-  &:hover {
-    color: #6726f1;
-    border: 1px solid #6726f1;
-  }
+  width: 280px;
+  margin-bottom: 32px;
 `;
 
 const CheckoutTag = styled.div`
   display: flex;
   flex-direction: row;
   color: #8d8d94;
-  width: 87.5%;
-  margin: 1% auto;
+  width: 280px;
+  margin-top: 16px;
   align-items: center;
 `;
 
@@ -93,8 +78,8 @@ export const TagImage = styled.img`
 
 const Checkout = styled.button`
   height: 48px;
-  width: 87.5%;
-  margin: 10% auto;
+  width: 280px;
+  margin-top: 32px;
   background-color: #6726f1;
   color: white;
   font-size: 14px;
@@ -113,8 +98,8 @@ export const PreCheckout = () => {
     );
   }, [checkoutTicket.ticketGroupSplits, dispatch]);
 
-  const handleQuantityChange = (event) => {
-    dispatch(setCheckoutTicketQuantityAction(event.target.value));
+  const handleQuantityChange = (option) => {
+    dispatch(setCheckoutTicketQuantityAction(parseInt(option.key)));
   };
 
   const handleCheckout = () => {
@@ -136,6 +121,19 @@ export const PreCheckout = () => {
     dispatch(clearPreCheckoutTicketDataAction());
   };
 
+  const quantitySplitOptions = () => {
+    const resultList = [];
+    checkoutTicket.ticketGroupSplits.forEach((split) => {
+      if (split === 1) {
+        resultList.push({ label: `${split} Ticket`, key: split });
+      } else {
+        resultList.push({ label: `${split} Tickets`, key: split });
+      }
+    });
+
+    return resultList;
+  };
+
   return (
     <Container>
       <BackButton onClick={handleBackButton}>
@@ -154,13 +152,12 @@ export const PreCheckout = () => {
         <SeatImage src={checkoutTicket.vfsURL} alt={'view from seat'} />
       )}
       <Price>{`$${checkoutTicket.ticketGroupPrice}/ea`}</Price>
-      <DropDown onChange={handleQuantityChange}>
-        {checkoutTicket.ticketGroupSplits.map((split) => (
-          <option key={split} value={split}>
-            {split}
-          </option>
-        ))}
-      </DropDown>
+      <Dropdown
+        options={quantitySplitOptions()}
+        defaultOption={checkoutTicket?.ticketGroupSplits[0]}
+        plain={false}
+        handleChange={handleQuantityChange}
+      />
       <CheckoutTag>
         <TagImage src={lockCircleIcon} />
         <p>Secured</p>
@@ -174,7 +171,6 @@ export const PreCheckout = () => {
         <p>Money Back Guarantee</p>
       </CheckoutTag>
       <Checkout onClick={handleCheckout}>Checkout</Checkout>
-      {/* {renderRedirect()} */}
     </Container>
   );
 };
