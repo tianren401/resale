@@ -30,7 +30,7 @@ export const Header = ({ event }) => {
     <StyledHeader>
       <Event>{event?.eventName}</Event>
       <Subtitle>
-        {`${event?.eventDate.toDateString()} • ${event?.city}`}
+        {`${event?.eventDate.toDateString()} • ${event?.city},`}
         {` ${event?.stateProvince} • ${event?.venueName}`}
       </Subtitle>
     </StyledHeader>

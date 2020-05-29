@@ -31,7 +31,7 @@ export const StyledDropdown = styled.div`
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(130, 136, 148, 0.16);
   }
 
-  &:focus{ 
+  &:focus{
     box-shadow: none;
     border-color: ${colors.brandHover};
     background: linear-gradient(0deg, rgba(103, 38, 241, 0.16), rgba(103, 38, 241, 0.16)), #FFFFFF;

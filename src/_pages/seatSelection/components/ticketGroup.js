@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { setPreCheckoutTicketDataAction } from '_store/checkoutTicket';
+import vfsPlaceHolder from '_images/vfsPlaceHolder.svg';
 
 const StyledTicketGroup = styled.tr`
   outline: 1px solid #f0f0f5;
-  height: 50%;
+  height: 72px;
 `;
 
 const TicketInformation = styled.td`
   align-content: center;
-  padding: 5%;
+  padding: 20px;
 `;
 
 const TicketSectionRow = styled.p`
@@ -34,48 +35,76 @@ const TicketPrice = styled.button`
   width: 80%;
 `;
 
-export const TicketGroup = (props) => {
-  const tgData = props.ticketGroupData;
+export const TicketGroup = ({
+  ticketGroupData,
+  vfsImage,
+  setVFSImage,
+  setSeatMessage,
+}) => {
   const ticketData = useSelector((state) => state.ticketGroupListReducer);
   const dispatch = useDispatch();
 
+  const handleMouseEnter = () => {
+    window.Seatics.MapComponent.highlightTicket(ticketGroupData);
+    if (!vfsImage) {
+      return;
+    }
+
+    if (!ticketGroupData.section) {
+      setSeatMessage('No image for selected seat');
+    } else {
+      setVFSImage(ticketGroupData.section?.vfsUrl || vfsPlaceHolder);
+      setSeatMessage('');
+    }
+  };
+
+  const handleMouseLeave = () => {
+    window.Seatics.MapComponent.removeHighlight(ticketGroupData);
+    if (!vfsImage) {
+      return;
+    }
+
+    setVFSImage(vfsPlaceHolder);
+    setSeatMessage('Hover over a seat');
+  };
+
   const handleBuyButton = () => {
     const fullTicketData = ticketData.ticketGroupListRaw.find((ticketGroup) => {
-      return ticketGroup.exchangeTicketGroupId === tgData.tgID;
+      return ticketGroup.exchangeTicketGroupId === ticketGroupData.tgID;
     });
 
     dispatch(
       setPreCheckoutTicketDataAction({
-        ticketGroupID: tgData.tgID,
-        ticketGroupPrice: tgData.tgPrice,
-        ticketGroupSection: tgData.tgUserSec,
-        ticketGroupRow: tgData.tgUserRow,
-        ticketGroupRange: tgData.tgRange,
-        ticketGroupSplits: tgData.splits,
+        ticketGroupID: ticketGroupData.tgID,
+        ticketGroupPrice: ticketGroupData.tgPrice,
+        ticketGroupSection: ticketGroupData.tgUserSec,
+        ticketGroupRow: ticketGroupData.tgUserRow,
+        ticketGroupRange: ticketGroupData.tgRange,
+        ticketGroupSplits: ticketGroupData.splits,
         deliveryTypeId: fullTicketData.nearTerm.nearTermDeliveryMethod.id,
         deliveryTypeName:
           fullTicketData.nearTerm.nearTermDeliveryMethod.description,
-        vfsURL: tgData.section?.vfsUrl,
+        vfsURL: ticketGroupData.section?.vfsUrl,
       })
     );
   };
 
   return (
     <StyledTicketGroup
-      onMouseEnter={() => window.Seatics.MapComponent.highlightTicket(tgData)}
-      onMouseLeave={() => window.Seatics.MapComponent.removeHighlight(tgData)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <TicketInformation>
         <TicketSectionRow>
-          {`Section ${tgData.tgUserSec} • Row ${tgData.tgUserRow}`}
+          {`Section ${ticketGroupData.tgUserSec} • Row ${ticketGroupData.tgUserRow}`}
         </TicketSectionRow>
         <TicketQuantity>
-          {`${tgData?.tgRange[0]} - ${tgData?.tgRange[1]} Tickets`}
+          {`${ticketGroupData?.tgRange[0]} - ${ticketGroupData?.tgRange[1]} Tickets`}
         </TicketQuantity>
       </TicketInformation>
       <td style={{ height: '100%' }}>
         <TicketPrice onClick={handleBuyButton}>
-          {`$${tgData.tgPrice}/ea`}
+          {`$${ticketGroupData.tgPrice}/ea`}
         </TicketPrice>
       </td>
     </StyledTicketGroup>
@@ -84,4 +113,7 @@ export const TicketGroup = (props) => {
 
 TicketGroup.propTypes = {
   ticketGroupData: PropTypes.objectOf(Object),
+  setVFSImage: PropTypes.any,
+  vfsImage: PropTypes.any,
+  setSeatMessage: PropTypes.any,
 };
