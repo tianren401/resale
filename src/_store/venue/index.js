@@ -13,7 +13,7 @@ export const getVenueEventsAction = createAsyncThunk(
 const venueSlice = createSlice({
   name: 'venueEvents',
   initialState: {
-    events: {},
+    venue: {},
     loading: 'idle',
   },
   reducers: {
@@ -23,7 +23,7 @@ const venueSlice = createSlice({
   },
   extraReducers: {
     [getVenueEventsAction.fulfilled]: (state, action) => {
-      state.events = action.payload;
+      state.venue = action.payload;
     },
   },
 });

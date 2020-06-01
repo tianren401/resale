@@ -22,8 +22,8 @@ export const PerformerVenueHeader = ({
         <AttractionName>{attractions ? name : 'No results'}</AttractionName>
         {type === 'venue' && (
           <Address>
-            {attractions.allUpcomingEvents?.length &&
-              `${attractions.allUpcomingEvents[0][type].street} ${attractions.allUpcomingEvents[0][type].city} ${attractions.allUpcomingEvents[0][type].state} ${attractions.allUpcomingEvents[0][type].zip}`}
+            {attractions?.venue &&
+              `${attractions.venue.street} ${attractions.venue.city} ${attractions.venue.state} ${attractions.venue.zip}`}
           </Address>
         )}
         <Subtitle>{subtitle}</Subtitle>

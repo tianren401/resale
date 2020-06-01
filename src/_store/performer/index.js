@@ -15,7 +15,7 @@ export const getPerformerEventsAction = createAsyncThunk(
 const performerSlice = createSlice({
   name: 'performer',
   initialState: {
-    events: {},
+    performer: {},
     loading: 'idle',
   },
   reducers: {
@@ -25,7 +25,7 @@ const performerSlice = createSlice({
   },
   extraReducers: {
     [getPerformerEventsAction.fulfilled]: (state, action) => {
-      state.events = action.payload;
+      state.performer = action.payload;
     },
   },
 });

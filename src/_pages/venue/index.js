@@ -16,7 +16,7 @@ const Container = styled(HomeLayout)`
 export const Venue = ({ venueId }) => {
   const reducer = (state) => state.venueReducer;
 
-  const { events } = useSelector(reducer);
+  const { venue } = useSelector(reducer);
 
   const dispatch = useDispatch();
 
@@ -30,18 +30,26 @@ export const Venue = ({ venueId }) => {
     setModalOpen(state);
   };
 
+  const desktopImage =
+    venue?.heroImage?.length &&
+    venue.heroImage.find((image) => image.imageType === 'heroPV').imageUrl;
+  const mobileImage =
+    venue?.heroImage?.length &&
+    venue.heroImage.find((image) => image.imageType === 'heroPVMobile')
+      .imageUrl;
+
   return (
     <Container>
       {!modalOpen && (
         <PerformerVenueHeader
-          attractions={events}
-          image={events?.heroImage?.length && events.heroImage[0].imageUrl}
-          name={events.name}
-          subtitle={events.subtitle}
+          attractions={venue}
+          image={isMobileDevice ? mobileImage : desktopImage}
+          name={venue?.venue?.name}
+          subtitle={venue.subtitle}
           type={'venue'}
         />
       )}
-      <Upcoming events={events} sendToPage={getModalState} venueId={venueId} />
+      <Upcoming events={venue} sendToPage={getModalState} venueId={venueId} />
       {isMobileDevice && !modalOpen && <Faq />}
       {!modalOpen && <Footer />}
     </Container>
