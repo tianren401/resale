@@ -7,7 +7,7 @@ const searchClient = algoliasearch(
   process.env.REACT_APP_ALGOLIA_API_KEY
 );
 
-const SHOW_LOADING_AFTER_MS = 300;
+const showLoadingAfterMs = 300;
 
 export const useAlgoliaSearch = ({
   isMultiple = true,
@@ -36,7 +36,7 @@ export const useAlgoliaSearch = ({
       // Show loading after a while to prevent jumpyness
       const loadingTimeout = setTimeout(
         () => setLoading(true),
-        SHOW_LOADING_AFTER_MS
+        showLoadingAfterMs
       );
 
       let res = null;

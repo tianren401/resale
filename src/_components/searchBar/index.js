@@ -33,7 +33,7 @@ export const SearchBar = ({
   const handleSearchResults = useCallback(
     // eslint-disable-next-line
     ({ searchState, results }) => {
-      // handle search state
+      // TODO: handle search state
       const organizedResults = results
         ? results.reduce((agg, data) => {
             agg[data?.index] = data?.hits;
