@@ -3,14 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { Header } from './components/header';
-import { SearchRowContainer, connectedSearch as SearchBar } from '_components';
+import { SearchRowContainer, SearchBar } from '_components';
 import { Footer } from '_pages/home/footer';
 import { ResultsList } from './components';
 import { HomeLayout } from '_components';
 import { loadMoreEvents, setQuery, setResults } from '_store/search';
+import { deviceSize } from '_constants';
 
 const Container = styled(HomeLayout)`
   width: 100%;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+  }
 `;
 
 export const Results = () => {

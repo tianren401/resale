@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { DateRangeDropdown } from '_components';
-import { connectedPlaces as Places } from '_components/places';
+import { Places } from '_components/places';
 import { deviceSize, colors } from '_constants';
 
 export const ComponentContainer = styled.div`

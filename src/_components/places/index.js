@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import places from 'places.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import connect from './connector';
 import { useClickAway, useBrowserLocation } from '_hooks';
 import { setLocation } from '_store/search';
 
@@ -11,7 +10,7 @@ import { StyledDropdown, SearchInput, IconContainer } from './styledComponents';
 
 import { LocationIcon } from '_components/icon/svgIcons';
 
-const Places = ({ refine, defaultRefinement, className }) => {
+export const Places = ({ refine, defaultRefinement, className }) => {
   const handleClickAway = () => {
     // hide dropdown
   };
@@ -91,7 +90,3 @@ Places.propTypes = {
   defaultRefinement: PropTypes.object,
   className: PropTypes.string,
 };
-export const connectedPlaces = Places;
-
-// for gloal location sertting use connector
-// export const connectedPlaces = connect(Places);

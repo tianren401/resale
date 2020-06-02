@@ -31,6 +31,10 @@ const CarouselItem = styled(Link)`
   cursor: pointer;
   position: relative;
   max-width: 220px;
+  color: ${colors.black};
+  &:hover {
+    color: ${colors.brand};
+  }
 `;
 
 const CarouselTitle = styled.div`
@@ -51,6 +55,14 @@ const CarouselItemImage = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-image: ${(props) => props.backgroundImage};
+
+  &:hover {
+    background-blend-mode: multiply, normal;
+    /* Elevation 3 */
+
+    box-shadow: 0px 7px 30px rgba(0, 0, 0, 0.25),
+      0px 0px 4px rgba(91, 93, 99, 0.16), 0px 0px 2px rgba(130, 136, 148, 0.08);
+  }
 `;
 
 const CarouselItemTitle = styled.span`
@@ -59,7 +71,6 @@ const CarouselItemTitle = styled.span`
   font-weight: 600;
   font-size: 16px;
   line-height: 21px;
-  color: ${colors.black};
   margin-top: 12px;
   white-space: nowrap;
   overflow: hidden;

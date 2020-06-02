@@ -30,21 +30,28 @@ export const StyledDropdown = styled.div`
     width: 100%;
   }
 
-
   &:hover {
-    border-color: ${colors.brandHover};
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(130, 136, 148, 0.16);
+    border-color: ${colors.brand};
+    color: ${colors.brand};
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
+      0px 0px 2px rgba(130, 136, 148, 0.16);
   }
 
-  &:focus{ 
+  &:focus {
     box-shadow: none;
-    border-color: ${colors.brandHover};
-    background: linear-gradient(0deg, rgba(103, 38, 241, 0.16), rgba(103, 38, 241, 0.16)), #FFFFFF;
+    border-color: ${colors.brand};
+    color: ${colors.brand};
+    background: linear-gradient(
+        0deg,
+        rgba(103, 38, 241, 0.16),
+        rgba(103, 38, 241, 0.16)
+      ),
+      #ffffff;
   }
 
   &.active {
-    border-color: ${colors.brandHover};
-    color: color: linear-gradient(0deg, rgba(39, 39, 41, 0.16), rgba(39, 39, 41, 0.16)), #6726F1;
+    border-color: ${colors.brand};
+    color: ${colors.brand};
     border-color: ${colors.brand};
   }
 
@@ -83,15 +90,15 @@ export const StyledDropdown = styled.div`
   .ap-suggestion {
     line-height: 48px;
     height: 48px;
-    
+
     &:hover {
-    color: ${colors.brand};
-    background: linear-gradient(
-        0deg,
-        rgba(103, 38, 241, 0.16),
-        rgba(103, 38, 241, 0.16)
-      ),
-      #ffffff;
+      color: ${colors.brand};
+      background: linear-gradient(
+          0deg,
+          rgba(103, 38, 241, 0.16),
+          rgba(103, 38, 241, 0.16)
+        ),
+        #ffffff;
     }
   }
 `;
@@ -150,7 +157,12 @@ export const SearchInput = styled.input`
   line-height: 22px;
   color: ${colors.black};
 
+  &:hover {
+    color: ${colors.brand};
+  }
+
   &:focus {
+    color: ${colors.brand};
     width: 100%;
     outline: none;
   }
@@ -160,6 +172,10 @@ export const SearchInput = styled.input`
     font-size: 14px;
     line-height: 22px;
     color: ${colors.black};
+
+    &:hover {
+      color: ${colors.brand};
+    }
   }
 
   @media (max-width: ${deviceSize.tablet}px) {

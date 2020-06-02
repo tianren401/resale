@@ -27,19 +27,21 @@ export const StyledDropdown = styled.div`
   border-radius: 6px;
 
   &:hover {
-    border-color: ${colors.brandHover};
+    border-color: ${colors.brand};
+    color: ${colors.brand};
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(130, 136, 148, 0.16);
   }
 
   &:focus{
     box-shadow: none;
-    border-color: ${colors.brandHover};
+    border-color: ${colors.brand};
+    color: ${colors.brand};
     background: linear-gradient(0deg, rgba(103, 38, 241, 0.16), rgba(103, 38, 241, 0.16)), #FFFFFF;
   }
 
   &.active {
-    border-color: ${colors.brandHover};
-    color: color: linear-gradient(0deg, rgba(39, 39, 41, 0.16), rgba(39, 39, 41, 0.16)), #6726F1;
+    border-color: ${colors.brand};
+    color: ${colors.brand};
     border-color: ${colors.brand};
   }
 

@@ -12,7 +12,7 @@ import {
 } from './styledComponents';
 import leftArrow from '_images/leftArrow.svg';
 import rightArrow from '_images/rightArrow.svg';
-import { SearchRowContainer, connectedSearch as SearchBar } from '_components';
+import { SearchRowContainer, SearchBar } from '_components';
 
 export const Hero = ({ events }) => {
   const [timer, setTimer] = useState(null);

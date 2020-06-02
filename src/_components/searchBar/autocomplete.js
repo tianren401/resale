@@ -1,14 +1,5 @@
-import React, {
-  useState,
-  useEffect,
-  useMemo,
-  useRef,
-  useCallback,
-} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { connectAutoComplete } from 'react-instantsearch-dom';
-import throttle from 'lodash/throttle';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 /* Styled Components */
 import { SearchInput, IconContainer } from './styledComponents';
@@ -17,21 +8,16 @@ import { Icon } from '_components/icon';
 import { colors } from '_constants';
 const SearchIcon = <Icon size={24} color={colors.brand} name="search" />;
 
-const Autocomplete = ({
+export const Autocomplete = ({
   placeholder,
   value,
   onChange,
-  onChangeResults,
   showDropdown,
   showAutocompleteIcon,
   renderList,
-  hits,
-  refine,
+  options,
   ...rest
 }) => {
-  // eslint-disable-next-line
-  const [loading, setLoading] = useState(false);
-  const [options, setOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   const [activeOption, setActiveOption] = useState(0);
@@ -44,24 +30,9 @@ const Autocomplete = ({
     onChange(event.target.value);
   };
 
-  const handleChangeResults = useCallback(
-    (results) => {
-      const organizedResults = results.reduce((agg, data) => {
-        agg[data?.index] = data?.hits;
-        return agg;
-      }, {});
-      setOptions(organizedResults);
-      if (onChangeResults) {
-        onChangeResults(organizedResults);
-      }
-    },
-    [setOptions, onChangeResults]
-  );
-
   const resetSearch = () => {
     setShowOptions(false);
     setActiveOption(0);
-    setLoading(false);
   };
 
   const handleItemClick = () => {
@@ -102,30 +73,14 @@ const Autocomplete = ({
     }
   };
 
-  const fetch = useMemo(() => throttle(refine, 500), [refine]);
-
   useEffect(() => {
-    if (inputValue.length <= 1) {
-      handleChangeResults([]);
-      return undefined;
-    }
-
-    setLoading(true);
-    if (inputValue.length >= 3) {
-      fetch(inputValue);
-    }
-  }, [inputValue, fetch, handleChangeResults]);
-
-  useDeepCompareEffect(() => {
     const active = true;
 
     if (active) {
       setShowOptions(true);
       setActiveOption(0);
-
-      handleChangeResults(hits);
     }
-  }, [hits]);
+  }, [options]);
 
   useEffect(() => {
     document.addEventListener('click', handleDocumentClick);
@@ -171,11 +126,6 @@ Autocomplete.propTypes = {
   showDropdown: PropTypes.bool.isRequired,
   showAutocompleteIcon: PropTypes.bool.isRequired,
   onChange: PropTypes.func,
-  onChangeResults: PropTypes.func,
   renderList: PropTypes.func,
-  hits: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currentRefinement: PropTypes.string,
-  refine: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-
-export const connectedAutocomplete = connectAutoComplete(Autocomplete);
