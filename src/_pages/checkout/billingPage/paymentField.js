@@ -79,6 +79,10 @@ export const PaymentField = () => {
                 },
               },
             },
+            venmo: {},
+            paypal: {
+              flow: 'vault',
+            },
             vaultManager: true,
           }}
           onInstance={(instance) => setBraintreeInstance(instance)}
