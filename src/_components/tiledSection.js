@@ -18,9 +18,14 @@ export const TiledSection = ({ events, gutter }) => {
           const marginVal = (gutter || 20) / 2;
           let width = '';
           let margin = '';
-          if (index % 4 === 0 || index % 4 === 3)
+          let cardImage;
+          if (index % 4 === 0 || index % 4 === 3) {
+            cardImage = 'trendingTwo';
             width = `calc(66% - ${marginVal}px)`;
-          else width = `calc(34% - ${marginVal}px)`;
+          } else {
+            width = `calc(34% - ${marginVal}px)`;
+            cardImage = 'trendingOne';
+          }
           if (index % 2 === 0)
             margin = `${marginVal}px ${marginVal}px ${marginVal}px 0`;
           else margin = `${marginVal}px 0 ${marginVal}px ${marginVal}px`;
@@ -30,6 +35,7 @@ export const TiledSection = ({ events, gutter }) => {
               event={event}
               width={width}
               margin={margin}
+              cardImage={cardImage}
             />
           );
         })}

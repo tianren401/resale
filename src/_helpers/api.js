@@ -37,18 +37,28 @@ export async function handleResponse(response) {
     });
 }
 
+//allows us to pass a token with every request
+function getAuthFromStorage() {
+  try {
+    return JSON.parse(localStorage.getItem('auth'));
+  } catch (err) {
+    return null;
+  }
+}
+
 /**
  * Generic request
  *
  * @param {string} path - request path (no leading "/")
  * @param {Object} opts - options passed on to the fetch request
  */
-export function request(path, opts = {}, rootURL = '') {
+export function request({ path, opts = {}, rootURL = '' }) {
   return fetch(`${rootURL || baseUrl}/${path}`, {
     credentials: 'include',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: getAuthFromStorage().token,
     },
     ...opts,
   }).then(handleResponse);
@@ -58,14 +68,17 @@ export function request(path, opts = {}, rootURL = '') {
  * GET request
  *
  * @param {string} path - request path (no leading "/")
- * @param {Object} params - request params in object form
+ * @param {Object} parameters - request parameters in object form
  * @param {Object} opts - options passed on to the fetch request
  */
-export function get(path, params = {}, opts = {}) {
-  const search = stringify(params);
-  return request(`${path}?${search}`, {
-    method: 'GET',
-    ...opts,
+export function get({ path, parameters = {}, opts = {} }) {
+  const search = stringify(parameters);
+  return request({
+    path: `${path}?${search}`,
+    opts: {
+      method: 'GET',
+      ...opts,
+    },
   });
 }
 
@@ -73,19 +86,19 @@ export function get(path, params = {}, opts = {}) {
  * GET search events
  *
  * @param {string} path - request path (no leading "/")
- * @param {Object} params - request params in object form
+ * @param {Object} parameters - request parameters in object form
  * @param {Object} opts - options passed on to the fetch request
  */
-export function getESResults(path, params = {}, opts = {}) {
-  const search = stringify(params);
-  return request(
-    `${path}?${search}`,
-    {
+export function getESResults({ path, parameters = {}, opts = {} }) {
+  const search = stringify(parameters);
+  return request({
+    path: `${path}?${search}`,
+    opts: {
       method: 'GET',
       ...opts,
     },
-    esUrl
-  );
+    rootURL: esUrl,
+  });
 }
 
 /**
@@ -108,11 +121,14 @@ export function ajaxGet(path, dataType) {
  * @param {Object} body - requesty body
  * @param {Object} opts - options passed on to the fetch request
  */
-export function post(path, body = {}, opts = {}) {
-  return request(path, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    ...opts,
+export function post({ path, body = {}, opts = {} }) {
+  return request({
+    path,
+    opts: {
+      method: 'POST',
+      body: JSON.stringify(body),
+      ...opts,
+    },
   });
 }
 
@@ -123,11 +139,14 @@ export function post(path, body = {}, opts = {}) {
  * @param {Object} body - requesty body
  * @param {Object} opts - options passed on to the fetch request
  */
-export function put(path, body = {}, opts = {}) {
-  return request(path, {
-    method: 'PUT',
-    body: JSON.stringify(body),
-    ...opts,
+export function put({ path, body = {}, opts = {} }) {
+  return request({
+    path,
+    body: {
+      method: 'PUT',
+      body: JSON.stringify(body),
+      ...opts,
+    },
   });
 }
 
@@ -135,13 +154,16 @@ export function put(path, body = {}, opts = {}) {
  * DELETE request
  *
  * @param {string} path - request path (no leading "/")
- * @param {Object} params - request params in object form
+ * @param {Object} parameters - request parameters in object form
  * @param {Object} opts - options passed on to the fetch request
  */
-export function del(path, params = {}, opts = {}) {
-  const search = stringify(params);
-  return request(`${path}?${search}`, {
-    method: 'DELETE',
-    ...opts,
+export function del({ path, parameters = {}, opts = {} }) {
+  const search = stringify(parameters);
+  return request({
+    path: `${path}?${search}`,
+    opts: {
+      method: 'DELETE',
+      ...opts,
+    },
   });
 }

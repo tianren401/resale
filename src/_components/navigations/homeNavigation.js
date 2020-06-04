@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { isMobileDevice } from '_helpers';
 import { navigationHeight, deviceSize, colors } from '_constants';
 import { LoginModal } from '_pages';
+import { logout } from '_store/auth';
 import { useModal } from '_hooks/useModal';
 
 const StyledNavigation = styled.div`
@@ -137,14 +138,22 @@ const InitialsBadge = styled.div`
 export const HomeNavigation = () => {
   const authState = useSelector(({ authReducer }) => authReducer);
   const [loginType, setType] = useState('');
-  const { openModal, isOpenModal } = useModal();
+  const { openModal, closeModal, isOpenModal } = useModal();
+  const dispatch = useDispatch();
 
   const handleModalOpen = (modal) => {
     openModal();
     setType(modal);
   };
 
+  const handleLogout = () => {
+    closeModal();
+    dispatch(logout());
+  };
+
   const isAuthorized = !!authState.user;
+  const firstInitial = authState?.user?.firstName[0];
+  const lastInitial = authState?.user?.lastName[0];
   return (
     <StyledNavigation isAuthorized={isAuthorized} hidden={isOpenModal}>
       <Logo to="/">SelectSeats</Logo>
@@ -157,10 +166,13 @@ export const HomeNavigation = () => {
         <UserItems to="/">My Tickets</UserItems>
         {isAuthorized ? (
           <>
+            <UserItems onClick={handleLogout}>Log Out</UserItems>
             <UserItems>
-              <InitialsBadge>AA</InitialsBadge>
+              <InitialsBadge>
+                {firstInitial}
+                {lastInitial}
+              </InitialsBadge>
             </UserItems>
-            {/* <UserItems onClick={handlelogout}>Log Out</UserItems> */}
           </>
         ) : (
           <>
@@ -175,7 +187,17 @@ export const HomeNavigation = () => {
             </UserItemsMobile>
           </>
         )}
-        {isAuthorized && isMobileDevice && <InitialsBadge>AA</InitialsBadge>}
+        {isAuthorized && isMobileDevice && (
+          <>
+            <UserItemsMobile onClick={handleLogout}>Log Out</UserItemsMobile>
+            <UserItemsMobile>
+              <InitialsBadge>
+                {firstInitial}
+                {lastInitial}
+              </InitialsBadge>
+            </UserItemsMobile>
+          </>
+        )}
       </MenuContainer>
 
       <LoginModal loginType={loginType} />

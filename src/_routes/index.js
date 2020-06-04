@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,8 +17,9 @@ import {
   Performer,
   Venue,
 } from '_pages';
-
 import { ScrollToTop } from '_components';
+import { authService } from '_services';
+import { getUserInfoAction } from '_store/auth';
 
 const DynamicPerformer = () => {
   const { performerId } = useParams();
@@ -34,26 +36,36 @@ const DynamicEvent = () => {
   return <SeatSelection eventId={parseInt(eventId)} />;
 };
 
-const Routes = () => (
-  <Router>
-    <ScrollToTop />
-    <GlobalStyles />
-    <Switch>
-      <Route exact path="/home" component={Home} />
-      <Route path="/performer/:performerId">
-        <DynamicPerformer />
-      </Route>
-      <Route path="/venue/:venueId">
-        <DynamicVenue />
-      </Route>
-      <Route exact path="/event/:eventId">
-        <DynamicEvent />
-      </Route>
-      <Route path="/checkout" component={Checkout} />
-      <Route path="/results" component={Results} />
-      <Redirect to="/home" />
-    </Switch>
-  </Router>
-);
+const Routes = () => {
+  const authState = useSelector(({ authReducer }) => authReducer);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (authService.getAuthFromStorage()?.token && !authState.user) {
+      dispatch(getUserInfoAction());
+    }
+  }, [authState.user, dispatch]);
+
+  return (
+    <Router>
+      <ScrollToTop />
+      <GlobalStyles />
+      <Switch>
+        <Route exact path="/home" component={Home} />
+        <Route path="/performer/:performerId">
+          <DynamicPerformer />
+        </Route>
+        <Route path="/venue/:venueId">
+          <DynamicVenue />
+        </Route>
+        <Route exact path="/event/:eventId">
+          <DynamicEvent />
+        </Route>
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/results" component={Results} />
+        <Redirect to="/home" />
+      </Switch>
+    </Router>
+  );
+};
 
 export default Routes;

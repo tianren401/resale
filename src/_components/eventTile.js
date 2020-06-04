@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 
+import { isMobileDevice } from '_helpers';
 import { deviceSize } from '_constants';
 
 const Tile = styled(Link)`
@@ -47,7 +48,14 @@ const Description = styled.div`
   padding: 0 0px 18px 18px;
 `;
 
-export const EventTile = ({ event, width, margin }) => {
+export const EventTile = ({ event, width, margin, cardImage }) => {
+  const desktopImage =
+    event?.images?.length &&
+    event.images.find((image) => image.imageType === cardImage).imageUrl;
+  const mobileImage =
+    event?.images?.length &&
+    event.images.find((image) => image.imageType === 'trendingMobile').imageUrl;
+
   return (
     <Tile
       to={
@@ -55,7 +63,7 @@ export const EventTile = ({ event, width, margin }) => {
           ? `event/${event.event.id}`
           : `performer/${event.performer.id}`
       }
-      image={`url(${event.images[0].imageUrl})`}
+      image={`url(${isMobileDevice ? mobileImage : desktopImage})`}
       width={width}
       margin={margin}
     >
@@ -72,4 +80,5 @@ EventTile.propTypes = {
   event: PropTypes.object,
   width: PropTypes.any,
   margin: PropTypes.any,
+  cardImage: PropTypes.string,
 };

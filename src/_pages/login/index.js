@@ -14,11 +14,7 @@ export const Login = ({ loginType }) => {
     dispatch(loginAction(values));
     closeModal();
   };
-  return (
-    <div>
-      <LoginForm handleSubmit={handleSubmit} loginType={loginType} />
-    </div>
-  );
+  return <LoginForm handleSubmit={handleSubmit} loginType={loginType} />;
 };
 
 export const Signup = ({ loginType }) => {
@@ -28,11 +24,7 @@ export const Signup = ({ loginType }) => {
     dispatch(signupAction(values));
     closeModal();
   };
-  return (
-    <div>
-      <LoginForm handleSubmit={handleSubmit} loginType={loginType} />
-    </div>
-  );
+  return <LoginForm handleSubmit={handleSubmit} loginType={loginType} />;
 };
 
 const modalDesktopStyles = {
