@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -21,9 +20,6 @@ const FilterItem = styled.div`
 `;
 
 export const FilterOptions = ({ filterOptions }) => {
-  const ticketData = useSelector((state) => state.ticketGroupListReducer);
-  const [maxPrice, setMaxPrice] = useState(0);
-
   const quanityOptionsList = (max) => {
     const resultList = [{ label: 'Any Quantity', key: 0 }];
     const range = [...Array(max + 1).keys()].slice(1);
@@ -40,12 +36,12 @@ export const FilterOptions = ({ filterOptions }) => {
     return resultList;
   };
 
-  const handleSortChange = (option) => {
+  const handleSortFilterChange = (option) => {
     filterOptions.sortType = window.Seatics.SortOptions[option.key];
     window.Seatics.MapComponent.setFilterOptions(filterOptions);
   };
 
-  const handleQuantityChange = (option) => {
+  const handleQuantityFilterChange = (option) => {
     if (option.key === 0 || option.key === 7) {
       filterOptions.quantityFilter = { value: option.key, exact: false };
     } else {
@@ -55,28 +51,11 @@ export const FilterOptions = ({ filterOptions }) => {
     window.Seatics.MapComponent.setFilterOptions(filterOptions);
   };
 
-  const handlePriceChange = (min, max) => {
+  const handlePriceFilterChange = (min, max) => {
     filterOptions.minPrice = min;
     filterOptions.maxPrice = max;
     window.Seatics.MapComponent.setFilterOptions(filterOptions);
   };
-
-  useEffect(() => {
-    const getMaxAvailablePrice = () => {
-      let max = 0;
-
-      if (ticketData.ticketGroupListFormatted)
-        ticketData.ticketGroupListFormatted.forEach((ticket) => {
-          if (ticket.tgPrice > max) {
-            max = ticket.tgPrice;
-          }
-        });
-
-      return max;
-    };
-
-    setMaxPrice(getMaxAvailablePrice());
-  }, [ticketData, ticketData.ticketGroupListFormatted]);
 
   return (
     <Container>
@@ -88,7 +67,8 @@ export const FilterOptions = ({ filterOptions }) => {
           ]}
           defaultOption={'PriceAsc'}
           plain={false}
-          handleChange={handleSortChange}
+          handleChange={handleSortFilterChange}
+          width={'185px'}
         />
       </FilterItem>
       <FilterItem>
@@ -96,14 +76,14 @@ export const FilterOptions = ({ filterOptions }) => {
           options={quanityOptionsList(7)}
           defaultOption={'Any Quantity'}
           plain={false}
-          handleChange={handleQuantityChange}
+          handleChange={handleQuantityFilterChange}
         />
       </FilterItem>
       <FilterItem>
         <SliderDropdown
           minRange={0}
-          maxRange={maxPrice}
-          handleChange={handlePriceChange}
+          maxRange={window.Seatics?.eventInfo?.maxEventTicketPrice}
+          handleChange={handlePriceFilterChange}
         />
       </FilterItem>
     </Container>

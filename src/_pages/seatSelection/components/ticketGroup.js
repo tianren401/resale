@@ -6,12 +6,15 @@ import styled from 'styled-components';
 import { setPreCheckoutTicketDataAction } from '_store/checkoutTicket';
 import vfsPlaceHolder from '_images/vfsPlaceHolder.svg';
 
-const StyledTicketGroup = styled.tr`
-  outline: 1px solid #f0f0f5;
+const StyledTicketGroup = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid #f0f0f5;
   height: 72px;
 `;
 
-const TicketInformation = styled.td`
+const TicketInformation = styled.div`
+  width: 210px;
   align-content: center;
   padding: 20px;
 `;
@@ -31,8 +34,8 @@ const TicketPrice = styled.button`
   color: white;
   font-weight: 600;
   border-radius: 6px;
-  height: 35px;
-  width: 80%;
+  height: 36px;
+  width: 90px;
 `;
 
 export const TicketGroup = ({
@@ -102,11 +105,9 @@ export const TicketGroup = ({
           {`${ticketGroupData?.tgRange[0]} - ${ticketGroupData?.tgRange[1]} Tickets`}
         </TicketQuantity>
       </TicketInformation>
-      <td style={{ height: '100%' }}>
-        <TicketPrice onClick={handleBuyButton}>
-          {`$${ticketGroupData.tgPrice}/ea`}
-        </TicketPrice>
-      </td>
+      <TicketPrice onClick={handleBuyButton}>
+        {`$${ticketGroupData.tgPrice}/ea`}
+      </TicketPrice>
     </StyledTicketGroup>
   );
 };

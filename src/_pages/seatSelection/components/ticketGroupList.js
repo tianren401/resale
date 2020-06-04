@@ -4,13 +4,32 @@ import styled from 'styled-components';
 import { TicketGroup } from './ticketGroup';
 import vfsPlaceHolder from '_images/vfsPlaceHolder.svg';
 
-const StyledTicketList = styled.table`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
   width: 100%;
 `;
 
-const StyledTableBody = styled.tbody`
+const StyledTicketList = styled.div`
   width: 100%;
   height: 100%;
+  display: block;
+  overflow: auto;
+`;
+
+const StyledTicketListSection = styled.div`
+  width: 100%;
+`;
+
+const StyledTicketListSectionTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #f0f0f5;
+  height: 36px;
+  font-weight: bold;
 `;
 
 const SeatImageContainer = styled.div`
@@ -76,38 +95,32 @@ export const TicketGroupList = React.forwardRef((props, ref) => {
   const renderSegments = ticketDataSegmented.map((segment) => {
     if (segment.title) {
       return (
-        <StyledTableBody key={segment.type}>
-          <tr>
-            <td>{segment.title}</td>
-          </tr>
+        <StyledTicketListSection key={segment.type}>
+          <StyledTicketListSectionTitle>
+            {segment.title}
+          </StyledTicketListSectionTitle>
           {renderTicketGroups(segment.tickets)}
-        </StyledTableBody>
+        </StyledTicketListSection>
       );
     } else {
       return (
-        <StyledTableBody key={segment.type ?? 1}>
+        <StyledTicketListSection key={segment.type ?? 1}>
           {renderTicketGroups(segment.tickets)}
-        </StyledTableBody>
+        </StyledTicketListSection>
       );
     }
   });
 
   return (
-    <div>
+    <Container>
       {vfsImage && (
         <SeatImageContainer>
           <SeatImage src={vfsImage} alt={'view from seat'} />
           <SeatImageMessage>{seatMessage}</SeatImageMessage>
         </SeatImageContainer>
       )}
-      <StyledTicketList ref={ref}>
-        <colgroup>
-          <col span={'1'} style={{ width: '65%' }} />
-          <col span={'1'} style={{ width: '35%' }} />
-        </colgroup>
-        {renderSegments}
-      </StyledTicketList>
-    </div>
+      <StyledTicketList ref={ref}>{renderSegments}</StyledTicketList>
+    </Container>
   );
 });
 

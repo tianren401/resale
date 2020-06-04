@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { TextButton, Dropdown } from '_components';
+import { TextButton, Dropdown, Loader } from '_components';
 import {
   getLockRequestIdAction,
   setCheckoutTicketQuantityAction,
@@ -14,13 +15,27 @@ import verifiedStarCircleIcon from '_images/starCircleIcon.svg';
 import doubleCheckCircleIcon from '_images/doubleCheckCircleIcon.svg';
 import purpleArrowLeft from '_images/purpleArrowLeft.svg';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+const PreCheckoutContainer = styled.div`
   position: absolute;
-  align-items: start;
   top: 0px;
   left: 0px;
+  height: 100%;
+  width: 0%;
+  overflow: hidden;
+  transition: 0.25s;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.15);
+
+  ${({ isOpen }) =>
+    isOpen &&
+    `
+    width: 100%;
+    `};
+`;
+
+const PreCheckoutInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   width: 100%;
   height: 100%;
   background: white;
@@ -87,22 +102,19 @@ const Checkout = styled.button`
   border-radius: 6px;
 `;
 
-export const PreCheckout = () => {
+export const PreCheckout = ({ selectedTicketGroup }) => {
+  const [quantitySplitOptions, setQuantitySplitOptions] = useState(null);
+  const [loading, setLoading] = useState(true);
   const checkoutTicket = useSelector((state) => state.checkoutTicketReducer);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  useEffect(() => {
-    dispatch(
-      setCheckoutTicketQuantityAction(checkoutTicket.ticketGroupSplits[0])
-    );
-  }, [checkoutTicket.ticketGroupSplits, dispatch]);
 
   const handleQuantityChange = (option) => {
     dispatch(setCheckoutTicketQuantityAction(parseInt(option.key)));
   };
 
   const handleCheckout = () => {
+    setLoading(true);
     dispatch(
       getLockRequestIdAction({
         request: {
@@ -121,58 +133,86 @@ export const PreCheckout = () => {
     dispatch(clearPreCheckoutTicketDataAction());
   };
 
-  const quantitySplitOptions = () => {
-    const resultList = [];
-    checkoutTicket.ticketGroupSplits.forEach((split) => {
-      if (split === 1) {
-        resultList.push({ label: `${split} Ticket`, key: split });
-      } else {
-        resultList.push({ label: `${split} Tickets`, key: split });
-      }
-    });
+  useEffect(() => {
+    if (!selectedTicketGroup) {
+      setLoading(true);
+      return;
+    }
+    dispatch(
+      setCheckoutTicketQuantityAction(checkoutTicket.ticketGroupSplits[0])
+    );
 
-    return resultList;
-  };
+    const getQuantitySplitOptions = () => {
+      const resultList = [];
+      checkoutTicket.ticketGroupSplits.forEach((split) => {
+        if (split === 1) {
+          resultList.push({ label: `${split} Ticket`, key: split });
+        } else {
+          resultList.push({ label: `${split} Tickets`, key: split });
+        }
+      });
+
+      return resultList;
+    };
+
+    setQuantitySplitOptions(getQuantitySplitOptions());
+    setLoading(false);
+  }, [
+    checkoutTicket.ticketGroupSplits,
+    dispatch,
+    selectedTicketGroup,
+    setQuantitySplitOptions,
+  ]);
 
   return (
-    <Container>
-      <BackButton onClick={handleBackButton}>
-        <img src={purpleArrowLeft} alt={'back arrow'} />
-        Back
-      </BackButton>
-      <TicketTitle>
-        {`Section ${checkoutTicket.ticketGroupSection}`}
-        {`, Row ${checkoutTicket.ticketGroupRow}`}
-      </TicketTitle>
-      <TicketSubTitle>
-        {`${checkoutTicket.ticketGroupRange?.[0]} - `}
-        {`${checkoutTicket.ticketGroupRange?.[1]} Tickets`}
-      </TicketSubTitle>
-      {checkoutTicket.vfsURL && (
-        <SeatImage src={checkoutTicket.vfsURL} alt={'view from seat'} />
+    <PreCheckoutContainer isOpen={selectedTicketGroup}>
+      {loading ? (
+        <PreCheckoutInfo>
+          <Loader centered />
+        </PreCheckoutInfo>
+      ) : (
+        <PreCheckoutInfo>
+          <BackButton onClick={handleBackButton}>
+            <img src={purpleArrowLeft} alt={'back arrow'} />
+            Back
+          </BackButton>
+          <TicketTitle>
+            {`Section ${checkoutTicket.ticketGroupSection}`}
+            {`, Row ${checkoutTicket.ticketGroupRow}`}
+          </TicketTitle>
+          <TicketSubTitle>
+            {`${checkoutTicket.ticketGroupRange?.[0]} - `}
+            {`${checkoutTicket.ticketGroupRange?.[1]} Tickets`}
+          </TicketSubTitle>
+          {checkoutTicket.vfsURL && (
+            <SeatImage src={checkoutTicket.vfsURL} alt={'view from seat'} />
+          )}
+          <Price>{`$${checkoutTicket.ticketGroupPrice}/ea`}</Price>
+          <Dropdown
+            options={quantitySplitOptions}
+            defaultOption={checkoutTicket?.ticketGroupSplits[0]}
+            plain={false}
+            handleChange={handleQuantityChange}
+          />
+          <CheckoutTag>
+            <TagImage src={lockCircleIcon} />
+            <p>Secured</p>
+          </CheckoutTag>
+          <CheckoutTag>
+            <TagImage src={verifiedStarCircleIcon} />
+            <p>Verified</p>
+          </CheckoutTag>
+          <CheckoutTag>
+            <TagImage src={doubleCheckCircleIcon} />
+            <p>Money Back Guarantee</p>
+          </CheckoutTag>
+          <Checkout onClick={handleCheckout}>Checkout</Checkout>
+        </PreCheckoutInfo>
       )}
-      <Price>{`$${checkoutTicket.ticketGroupPrice}/ea`}</Price>
-      <Dropdown
-        options={quantitySplitOptions()}
-        defaultOption={checkoutTicket?.ticketGroupSplits[0]}
-        plain={false}
-        handleChange={handleQuantityChange}
-      />
-      <CheckoutTag>
-        <TagImage src={lockCircleIcon} />
-        <p>Secured</p>
-      </CheckoutTag>
-      <CheckoutTag>
-        <TagImage src={verifiedStarCircleIcon} />
-        <p>Verified</p>
-      </CheckoutTag>
-      <CheckoutTag>
-        <TagImage src={doubleCheckCircleIcon} />
-        <p>Money Back Guarantee</p>
-      </CheckoutTag>
-      <Checkout onClick={handleCheckout}>Checkout</Checkout>
-    </Container>
+    </PreCheckoutContainer>
   );
 };
 
-PreCheckout.propTypes = {};
+PreCheckout.propTypes = {
+  selectedTicketGroup: PropTypes.number,
+};

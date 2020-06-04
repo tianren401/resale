@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -6,12 +6,20 @@ import styled from 'styled-components';
 import { ajaxGet } from '../../_helpers/api';
 import { getTicketGroupListAction } from '_store/ticketGroupList';
 import { setCheckoutTicketEventDataAction } from '_store/checkoutTicket';
-import { EventLayout } from '_components';
+import { EventLayout, Loader } from '_components';
 import { Header } from './components/header';
 import { TicketGroupList } from './components/ticketGroupList';
 import { PreCheckout } from './components/preCheckout';
 import { FilterOptions } from './components/filterOptions';
 import { navigationHeight } from '../../_constants';
+
+const LoaderContainer = styled.div`
+  display: absolute;
+  top: 0px;
+  width: 100vh;
+  height: 100vw;
+  z-index: 1;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -54,11 +62,12 @@ export const SeatSelection = ({ eventId }) => {
   const checkoutTicket = useSelector((state) => state.checkoutTicketReducer);
   const dispatch = useDispatch();
 
-  const ticketListRef = React.useRef(null);
-  const mapContainerRef = React.useRef(null);
-  const [eventData, setEventData] = React.useState(null);
-  const [mapData, setMapData] = React.useState(null);
-  const [filterOptions, setFilterOptions] = React.useState(null);
+  const ticketListRef = useRef(null);
+  const mapContainerRef = useRef(null);
+  const [eventData, setEventData] = useState(null);
+  const [mapData, setMapData] = useState(null);
+  const [filterOptions, setFilterOptions] = useState(null);
+  const [loadingEventData, setLoadingEventData] = useState(true);
 
   useEffect(() => {
     dispatch(getTicketGroupListAction(eventId));
@@ -67,7 +76,21 @@ export const SeatSelection = ({ eventId }) => {
       setEventData(await seaticsData[0]);
       setMapData(await seaticsData[1]);
     };
+
+    const loadSeaticsMapFramework = () => {
+      if (!document.getElementById('seaticsMapFramework')) {
+        const script = document.createElement('script');
+        script.src = 'https://mapwidget3.seatics.com/api/framework';
+        document.body.appendChild(script);
+      }
+    };
+
+    loadSeaticsMapFramework();
     getData();
+    return function cleanup() {
+      window.Seatics.MapComponent.clear();
+      window.Seatics.unbindEvents();
+    };
   }, [dispatch, eventId]);
 
   useEffect(() => {
@@ -104,6 +127,7 @@ export const SeatSelection = ({ eventId }) => {
         enableSectionInfoPopups: true,
       });
 
+      window.Seatics.MapComponent.onTicketListDrawn(setLoadingEventData(false));
       setFilterOptions(window.Seatics.MapComponent.getFilterOptions());
     }
   }, [
@@ -118,11 +142,16 @@ export const SeatSelection = ({ eventId }) => {
 
   return (
     <EventLayout>
+      {loadingEventData && (
+        <LoaderContainer>
+          <Loader centered />
+        </LoaderContainer>
+      )}
       <Container>
-        <Header event={eventData} />
+        {!loadingEventData && <Header event={eventData} />}
         <TicketsContainer checkout={checkoutTicket.ticketGroupId}>
           <TicketGroupList ref={ticketListRef} />
-          {checkoutTicket.ticketGroupId && <PreCheckout />}
+          <PreCheckout selectedTicketGroup={checkoutTicket.ticketGroupId} />
         </TicketsContainer>
         <MapFilterContainer>
           <FilterOptions
