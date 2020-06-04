@@ -36,7 +36,7 @@ const StyledCheckbox = styled((props) => <Flex {...props} />)`
 `;
 
 const CheckboxLabel = styled.span`
-  margin-left: 12px;
+  margin: 12px auto 16px 12px;
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;

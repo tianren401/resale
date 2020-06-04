@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 
-export const Modal = ({ isOpen, onRequestClose, customStyles, children }) => {
+export const Modal = ({ isOpen, closeModal, customStyles, children }) => {
   ReactModal.setAppElement('body');
+
   return (
     <ReactModal
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      onRequestClose={closeModal}
       style={{
         ...customStyles,
       }}
@@ -19,7 +20,7 @@ export const Modal = ({ isOpen, onRequestClose, customStyles, children }) => {
 
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onRequestClose: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   customStyles: PropTypes.object,
   children: PropTypes.any,
 };

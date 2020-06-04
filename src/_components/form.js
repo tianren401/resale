@@ -16,6 +16,7 @@ export const Form = ({
   handleSubmit,
   validationSchema,
   children,
+  className,
 }) => {
   return (
     <Formik
@@ -24,7 +25,9 @@ export const Form = ({
       onSubmit={handleSubmit}
     >
       {(props) => (
-        <StyledForm onSubmit={props.handleSubmit}>{children(props)}</StyledForm>
+        <StyledForm onSubmit={props.handleSubmit} className={className}>
+          {children(props)}
+        </StyledForm>
       )}
     </Formik>
   );
@@ -35,4 +38,5 @@ Form.propTypes = {
   handleSubmit: PropTypes.func,
   validationSchema: PropTypes.object,
   children: PropTypes.any,
+  className: PropTypes.object,
 };

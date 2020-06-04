@@ -1,7 +1,19 @@
 import { post } from '_helpers/api';
 
 function login(username, password) {
-  return post('auth', { username, password });
+  return post('auth/token', { username, password });
+}
+
+function signup(firstName, lastName, email, phone, password) {
+  return post('users', {
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    enabled: true,
+    role: 'USER',
+  });
 }
 
 function setAuthInStorage(userAuth) {
@@ -22,6 +34,7 @@ function removeAuthInStorage() {
 
 export const authService = {
   login,
+  signup,
   setAuthInStorage,
   getAuthFromStorage,
   removeAuthInStorage,

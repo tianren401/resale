@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { isMobileDevice } from '_helpers';
 import { navigationHeight, deviceSize, colors } from '_constants';
 import { LoginModal } from '_pages';
-import { logout } from '_store/auth';
-import { ContentImage } from '_components/styledTags';
-import mobileNavigationIcon from '_images/mobileNavigationIcon.png';
+import { useModal } from '_hooks/useModal';
 
 const StyledNavigation = styled.div`
+  display: flex;
+  justify-content: space-around;
   height: ${navigationHeight}px;
   padding: 8px 0;
   position: absolute;
-  width: 90%;
-  left: 5%;
+  width: 100%;
   margin: auto;
-  z-index: 1;
+
+  z-index:  ${({ hidden }) => (hidden ? '0' : '1')};
+
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
+  ${({ isAuthorized }) =>
+    isAuthorized &&
+    'background: linear-gradient(144.92deg, #455FE5 -14.65%, #9545E5 79.56%);'}
 
   @media (min-width: ${deviceSize.tablet}px) {
     padding: 20px 0;
-    width: 60%;
-    left: 20%;
   }
 `;
 
@@ -50,14 +53,13 @@ const Logo = styled(Link)`
   }
 `;
 
-const MenuContainer = styled.div`
-  float: right;
-`;
+const MenuContainer = styled.div``;
 
 const UserItems = styled(Link)`
   cursor: pointer;
   display: none;
   color: ${colors.white};
+  margin-right: 10px;
 
   &:hover {
     background: ${colors.brandHover};
@@ -65,9 +67,6 @@ const UserItems = styled(Link)`
     -webkit-text-fill-color: transparent;
   }
 
-  &:not(:last-of-type) {
-    margin-right: 10px;
-  }
   color: white;
 
   @media (min-width: ${deviceSize.tablet}px) {
@@ -89,6 +88,7 @@ const ModalItems = styled.span`
   &:not(:last-of-type) {
     margin-right: 10px;
   }
+
   color: white;
 
   @media (min-width: ${deviceSize.tablet}px) {
@@ -121,44 +121,64 @@ const UserItemsMobile = styled.span`
   }
 `;
 
+const InitialsBadge = styled.div`
+  position: absolute;
+  top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.brand};
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+`;
+
 export const HomeNavigation = () => {
   const authState = useSelector(({ authReducer }) => authReducer);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [loginType, setType] = useState('');
+  const { openModal, isOpenModal } = useModal();
 
-  const dispatch = useDispatch();
-
-  const handleModalOpen = () => setIsOpenModal(true);
-  const closeModal = () => setIsOpenModal(false);
-  const handlelogout = () => {
-    setIsOpenModal(false);
-    dispatch(logout());
+  const handleModalOpen = (modal) => {
+    openModal();
+    setType(modal);
   };
-  const isAuthorised = !!authState.user;
+
+  const isAuthorized = !!authState.user;
   return (
-    <StyledNavigation>
+    <StyledNavigation isAuthorized={isAuthorized} hidden={isOpenModal}>
       <Logo to="/">SelectSeats</Logo>
-      {!isAuthorised ? (
-        <MenuContainer>
-          <UserItems to="/">Sports</UserItems>
-          <UserItems to="/">Music</UserItems>
-          <UserItems to="/">More</UserItems>
-          <UserItems to="/">Sell</UserItems>
-          <UserItems to="/">Support</UserItems>
-          <ModalItems onClick={handleModalOpen}>Sign In</ModalItems>
-          <UserItems to="/">Sign Up</UserItems>
-          <UserItemsMobile to="/" onClick={handleModalOpen}>
-            Sign In
-          </UserItemsMobile>
-          <UserItemsMobile>
-            <ContentImage src={mobileNavigationIcon} />
-          </UserItemsMobile>
-        </MenuContainer>
-      ) : (
-        <div>
-          <UserItems onClick={handlelogout}>Log Out</UserItems>
-        </div>
-      )}
-      <LoginModal isOpenModal={isOpenModal} closeModal={closeModal} />
+
+      <MenuContainer>
+        <UserItems to="/">Sports</UserItems>
+        <UserItems to="/">Music</UserItems>
+        <UserItems to="/">More</UserItems>
+        <UserItems to="/">Support</UserItems>
+        <UserItems to="/">My Tickets</UserItems>
+        {isAuthorized ? (
+          <>
+            <UserItems>
+              <InitialsBadge>AA</InitialsBadge>
+            </UserItems>
+            {/* <UserItems onClick={handlelogout}>Log Out</UserItems> */}
+          </>
+        ) : (
+          <>
+            <ModalItems onClick={() => handleModalOpen('Log In')}>
+              Sign In
+            </ModalItems>
+            <ModalItems onClick={() => handleModalOpen('Sign Up')}>
+              Sign Up
+            </ModalItems>
+            <UserItemsMobile to="/" onClick={() => handleModalOpen('Log In')}>
+              Sign In
+            </UserItemsMobile>
+          </>
+        )}
+        {isAuthorized && isMobileDevice && <InitialsBadge>AA</InitialsBadge>}
+      </MenuContainer>
+
+      <LoginModal loginType={loginType} />
     </StyledNavigation>
   );
 };

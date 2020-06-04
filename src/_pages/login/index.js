@@ -2,23 +2,40 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Modal } from '_components';
-import { loginAction } from '_store/auth';
+import { isMobileDevice } from '_helpers';
+import { loginAction, signupAction } from '_store/auth';
 import LoginForm from './components/loginForm';
+import { useModal } from '_hooks/useModal';
 
-export const Login = () => {
+export const Login = ({ loginType }) => {
   const dispatch = useDispatch();
+  const { closeModal } = useModal();
   const handleSubmit = (values) => {
     dispatch(loginAction(values));
+    closeModal();
   };
   return (
     <div>
-      <LoginForm handleSubmit={handleSubmit} />
+      <LoginForm handleSubmit={handleSubmit} loginType={loginType} />
     </div>
   );
 };
 
-const modelStyles = {
+export const Signup = ({ loginType }) => {
+  const dispatch = useDispatch();
+  const { closeModal } = useModal();
+  const handleSubmit = (values) => {
+    dispatch(signupAction(values));
+    closeModal();
+  };
+  return (
+    <div>
+      <LoginForm handleSubmit={handleSubmit} loginType={loginType} />
+    </div>
+  );
+};
+
+const modalDesktopStyles = {
   content: {
     top: '50%',
     left: '50%',
@@ -27,24 +44,48 @@ const modelStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     width: '500px',
+    height: '620px',
     borderRadius: '12px',
-    padding: '60px',
+    padding: '30px 60px 60px 60px',
   },
 };
 
-export const LoginModal = ({ isOpenModal, closeModal }) => {
+const modalMobileStyles = {
+  content: {
+    height: '100vh',
+    width: '100vw',
+    top: '0px',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
+  },
+};
+
+export const LoginModal = ({ loginType }) => {
+  const { Modal, closeModal, isOpenModal } = useModal();
   return (
     <Modal
       isOpen={isOpenModal}
-      onRequestClose={closeModal}
-      customStyles={modelStyles}
+      closeModal={closeModal}
+      customStyles={isMobileDevice ? modalMobileStyles : modalDesktopStyles}
     >
-      <Login />
+      {loginType === 'Sign Up' ? (
+        <Signup loginType={loginType} />
+      ) : (
+        <Login loginType={loginType} />
+      )}
     </Modal>
   );
 };
 
 LoginModal.propTypes = {
-  isOpenModal: PropTypes.bool,
-  closeModal: PropTypes.func,
+  loginType: PropTypes.string,
+};
+
+Signup.propTypes = {
+  loginType: PropTypes.string,
+};
+
+Login.propTypes = {
+  loginType: PropTypes.string,
 };

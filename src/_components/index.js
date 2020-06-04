@@ -1,4 +1,5 @@
 export * from './inputField';
+export * from './passwordInputField';
 export * from './modal';
 export * from './navigations';
 export * from './form';

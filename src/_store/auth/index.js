@@ -6,9 +6,22 @@ export const loginAction = createAsyncThunk('auth/login', async (data) => {
   return response;
 });
 
+export const signupAction = createAsyncThunk('signup/signup', async (data) => {
+  const firstName = data.fullName.split(' ')[0];
+  const lastName = data.fullName.split(' ')[1];
+  const response = await authService.signup(
+    firstName,
+    lastName,
+    data.email,
+    data.phone,
+    data.password
+  );
+  return response;
+});
+
 const authSlice = createSlice({
   name: 'auth',
-  initialState: { user: null, loading: 'idle' },
+  initialState: { user: null, loading: false },
   reducers: {
     logout(state) {
       state.user = null;
@@ -20,6 +33,13 @@ const authSlice = createSlice({
       localStorage.setItem('auth', JSON.stringify(action.payload));
       authService.setAuthInStorage(action.payload);
       state.user = action.payload;
+      state.loading = false;
+    },
+    [loginAction.pending]: (state) => {
+      state.loading = true;
+    },
+    [loginAction.rejected]: (state) => {
+      state.loading = false;
     },
   },
 });

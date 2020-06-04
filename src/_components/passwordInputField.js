@@ -1,7 +1,11 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { setPasswordInputType } from '_store/ui';
+import showPassword from '_images/showPassword.svg';
+import hidePassword from '_images/hidePassword.svg';
 import { colors } from '_constants';
 
 const Container = styled.div`
@@ -9,7 +13,6 @@ const Container = styled.div`
   flex-direction: column;
   width: ${(props) => (props.width ? props.width : '280px')};
   height: ${(props) => (props.height ? props.height : '92px')};
-  margin-bottom: 5px;
 `;
 
 const Label = styled.div`
@@ -21,6 +24,7 @@ const Label = styled.div`
 `;
 
 const Input = styled.input`
+  width: 100%;
   border-radius: 6px;
   font-size: ${(props) => (props.fontSize ? props.fontSize : '14px')};
   line-height: 22px;
@@ -49,7 +53,18 @@ const Error = styled.div`
   text-align: left;
 `;
 
-export const InputField = ({
+const PasswordInputContainer = styled.div`
+  width: 100%;
+`;
+
+const ShowPasswordImage = styled.img`
+  position: relative;
+  left: 150px;
+  bottom: 35px;
+  cursor: pointer;
+`;
+
+export const PasswordInputField = ({
   id,
   label,
   input,
@@ -64,28 +79,42 @@ export const InputField = ({
   labelSize,
   width,
   height,
-}) => (
-  <div>
-    {!!label && <Label fontSize={labelSize}>{label}</Label>}
-    <Container width={width} height={height}>
-      <Input
-        id={id}
-        {...input}
-        fontSize={fontSize}
-        placeholder={placeholder}
-        value={values[id]}
-        type={type}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        touched={touched[id]}
-        error={!!errors[id]}
-      />
-      <Error>{touched[id] && !!errors[id] && errors[id]}</Error>
-    </Container>
-  </div>
-);
+}) => {
+  const uiReducer = (state) => state.uiReducer;
+  const { passwordInputType } = useSelector(uiReducer);
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(setPasswordInputType());
+  };
+  return (
+    <div>
+      {!!label && <Label fontSize={labelSize}>{label}</Label>}
+      <Container width={width} height={height}>
+        <PasswordInputContainer>
+          <Input
+            id={id}
+            {...input}
+            fontSize={fontSize}
+            placeholder={placeholder}
+            value={values[id]}
+            type={type}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            touched={touched[id]}
+            error={!!errors[id]}
+          />
+          <ShowPasswordImage
+            src={passwordInputType === 'password' ? showPassword : hidePassword}
+            onClick={handleClick}
+          />
+        </PasswordInputContainer>
+        <Error>{touched[id] && !!errors[id] && errors[id]}</Error>
+      </Container>
+    </div>
+  );
+};
 
-InputField.propTypes = {
+PasswordInputField.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
   input: PropTypes.any,
