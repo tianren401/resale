@@ -40,7 +40,7 @@ export async function handleResponse(response) {
 //allows us to pass a token with every request
 function getAuthFromStorage() {
   try {
-    return JSON.parse(localStorage.getItem('auth'));
+    return JSON.parse(localStorage.getItem('auth')).token;
   } catch (err) {
     return null;
   }
@@ -53,12 +53,13 @@ function getAuthFromStorage() {
  * @param {Object} opts - options passed on to the fetch request
  */
 export function request({ path, opts = {}, rootURL = '' }) {
+  const token = getAuthFromStorage();
   return fetch(`${rootURL || baseUrl}/${path}`, {
     credentials: 'include',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: getAuthFromStorage().token,
+      Authorization: token,
     },
     ...opts,
   }).then(handleResponse);
