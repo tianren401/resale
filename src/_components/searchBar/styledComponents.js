@@ -29,13 +29,36 @@ export const SearchContainer = styled.div`
   ${SearchCommonStyle};
 
   height: 60px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
-    0px 0px 2px rgba(130, 136, 148, 0.16);
-  border-radius: 10px;
 
-  @media (max-width: ${deviceSize.laptop}px) {
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
+  @media (min-width: ${deviceSize.tablet}px) {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
+      0px 0px 2px rgba(130, 136, 148, 0.16);
+    border-radius: 10px;
+  }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    ${({ isHome }) =>
+      isHome
+        ? `
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+      border-radius: 12px;
+    `
+        : `
+      border-bottom: 1px solid #E6E6EB;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      height: 60px;
+      align-items: center;
+
+      > div {
+        height: 100%;
+        align-items: center;
+        &:first-child {
+          border-right: 1px solid #E6E6EB;  
+        }
+      }
+    `}
   }
 `;
 
@@ -48,7 +71,7 @@ export const FiltersContainer = styled.div`
   @media (max-width: ${deviceSize.tablet}px) {
     flex-direction: column;
     height: auto;
-
+    margin-top: 0;
     > div {
       width: 100%;
       margin-top: 1rem;
@@ -70,6 +93,14 @@ export const IconContainer = styled.div`
   }
 `;
 
+export const FilterIconContainer = styled.div`
+  padding-left: 1.5rem;
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding-left: 16px;
+    padding-right: 11px;
+  }
+`;
+
 export const SearchInput = styled.input`
   border: 0;
   width: 100%;
@@ -81,7 +112,7 @@ export const SearchInput = styled.input`
   border-right: ${(props) =>
     props.hasNext ? `1px solid ${colors.darkGray}` : 'none'};
   font-weight: normal;
-  font-size: 1.125rem;
+  font-size: 18px;
   line-height: 22px;
   color: ${colors.darkGray};
 
@@ -93,6 +124,9 @@ export const SearchInput = styled.input`
   @media (max-width: ${deviceSize.tablet}px) {
     padding-right: 20px;
     padding-left: 20px;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
   }
 `;
 
@@ -167,6 +201,10 @@ export const SectionHeader = styled(Flex)`
     line-height: 22px;
     color: ${colors.brand};
     text-transform: capitalize;
+    @media (max-width: ${deviceSize.tablet}px) {
+      font-size: 14px;
+      line-height: 20px;
+    }
   }
 `;
 
@@ -174,12 +212,25 @@ export const SectionContainer = styled(Flex)`
   border: ${(props) => (props.border ? `1px solid ${colors.black}` : 'none')};
   padding: 10px;
   height: 80px;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    height: 50px;
+  }
+
   h2 {
     font-weight: 600;
     font-size: 18px;
     line-height: 22px;
     color: ${colors.black};
     margin: 0;
+
+    @media (max-width: ${deviceSize.tablet}px) {
+      font-size: 10px;
+      line-height: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 100%;
+    }
   }
 
   h3 {
@@ -191,6 +242,11 @@ export const SectionContainer = styled(Flex)`
 
     &.brand-color {
       color: ${colors.brand};
+    }
+
+    @media (max-width: ${deviceSize.tablet}px) {
+      font-size: 10px;
+      line-height: 16px;
     }
   }
 
@@ -239,6 +295,11 @@ export const ShowAllResults = styled(Flex)`
 
   &:hover {
     background-color: rgba(103, 38, 241, 0.16);
+  }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    font-size: 14px;
+    line-height: 20px;
   }
 `;
 

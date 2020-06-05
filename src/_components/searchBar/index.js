@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,24 +6,38 @@ import { Autocomplete } from './autocomplete';
 import { Places } from '_components/places';
 import { EventsDropdown } from './eventsDropdown';
 import { Flex } from '_components';
-import { SearchContainer, FiltersContainer } from './styledComponents';
+import {
+  SearchContainer,
+  FiltersContainer,
+  FilterIconContainer,
+} from './styledComponents';
 
 import { setQuery, setResults } from '_store/search';
-import { useAlgoliaSearch } from '_hooks';
-
+import { useAlgoliaSearch, useViewport } from '_hooks';
 import { CategoriesDropdown } from './categoriesDropdown';
-import { DateRangeDropdown } from './dateRangeDropdown';
+import { DateRangeDropdown } from '_components/dateRangeDropdown';
+import { SearchFilterIcon } from '_components/icon/svgIcons';
+import { deviceSize } from '_constants';
 
 export const SearchBar = ({
-  showLocation,
-  showDate,
   showDropdown,
-  showFilters,
   showAutocompleteIcon,
+  isResultsPage,
   placeholder,
   config,
   ...rest
 }) => {
+  const windowSize = useViewport();
+  const isMobileDevice = windowSize.width < deviceSize.tablet;
+
+  const [showFilters, setShowFilters] = useState(
+    isResultsPage && !isMobileDevice
+  );
+
+  const onToggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
+
   const dispatch = useDispatch();
 
   const handleSetQuery = (query) => {
@@ -64,7 +78,7 @@ export const SearchBar = ({
     initialSearchState: {
       searchOptions: config,
     },
-    onResults: handleSearchResults,
+    isResultsPage: handleSearchResults,
   });
 
   useEffect(() => {
@@ -79,7 +93,7 @@ export const SearchBar = ({
 
   return (
     <>
-      <SearchContainer>
+      <SearchContainer isHome={!isResultsPage}>
         <Flex flex={3}>
           <Autocomplete
             {...rest}
@@ -89,11 +103,19 @@ export const SearchBar = ({
             renderList={({ results, dropdownEl, ...rest }) => (
               <EventsDropdown ref={dropdownEl} results={results} {...rest} />
             )}
-            hasNext={showLocation || showDate}
+            hasNext={false}
             showDropdown={showDropdown}
             showAutocompleteIcon={showAutocompleteIcon}
             options={searchResults}
+            isResultsPage={isResultsPage}
           />
+        </Flex>
+        <Flex>
+          {isMobileDevice && isResultsPage && (
+            <FilterIconContainer onClick={onToggleFilters}>
+              <SearchFilterIcon />
+            </FilterIconContainer>
+          )}
         </Flex>
       </SearchContainer>
       {showFilters && (
@@ -114,23 +136,19 @@ export const SearchBar = ({
 };
 
 SearchBar.propTypes = {
-  showLocation: PropTypes.bool,
-  showDate: PropTypes.bool,
+  isResultsPage: PropTypes.bool,
   showDropdown: PropTypes.bool,
   showAutocompleteIcon: PropTypes.bool,
   placeholder: PropTypes.string,
   value: PropTypes.any,
-  showFilters: PropTypes.bool,
   config: PropTypes.object,
 };
 
 SearchBar.defaultProps = {
-  showDate: false,
-  showLocation: false,
+  isResultsPage: false,
   showDropdown: true,
   placeholder: '',
   showAutocompleteIcon: true,
-  showFilters: false,
   config: {
     defaultIndex: 'events',
     indices: ['events', 'performers', 'venues'],

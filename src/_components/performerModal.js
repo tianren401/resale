@@ -6,13 +6,19 @@ import styled from 'styled-components';
 import closeModalButton from '_images/closeModal.svg';
 import { DateRangePicker } from './dateRangePicker/dateRangePicker';
 import { setDate, setDateRange } from '_store/search';
+import { zIndexes } from '_constants';
+import { Modal } from '_components';
 
-const Modal = styled.div`
-  position: absolute;
-  z-index: 1;
-  width: 100vw;
-  height: 100vh;
-`;
+const modalStyles = {
+  content: {
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    padding: '0px',
+    zIndex: zIndexes.OVERLAY,
+  },
+};
 
 const Header = styled.div`
   display: flex;
@@ -32,9 +38,10 @@ const Text = styled.div`
   margin: 0 auto;
 `;
 
-export const PerformerModal = ({ sendStateFromModal }) => {
-  const handleClose = () => {
+export const PerformerModal = ({ sendStateFromModal, show }) => {
+  const handleClose = (e) => {
     sendStateFromModal(false);
+    e.stopPropagation();
   };
 
   const dispatch = useDispatch();
@@ -50,10 +57,11 @@ export const PerformerModal = ({ sendStateFromModal }) => {
         end: endDate.getTime(),
       })
     );
+    sendStateFromModal(false);
   };
 
   return (
-    <Modal>
+    <Modal isOpen={show} customStyles={modalStyles} closeModal={handleClose}>
       <Header>
         <CloseButton src={closeModalButton} onClick={handleClose} />
         <Text>Calendar</Text>
@@ -67,4 +75,5 @@ export const PerformerModal = ({ sendStateFromModal }) => {
 
 PerformerModal.propTypes = {
   sendStateFromModal: PropTypes.func,
+  show: PropTypes.bool,
 };

@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 
-import { deviceSize } from '_constants';
-import { isMobileDevice } from '_helpers';
+import { deviceSize, colors } from '_constants';
 
 const FlexColumn = styled.div`
   display: flex;
@@ -17,6 +16,11 @@ const TimeColumn = styled(FlexColumn)`
   width: 20%;
   align-self: flex-start;
   text-align: left;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    width: 30%;
+    align-self: center;
+  }
 `;
 
 const InfoColumn = styled(FlexColumn)`
@@ -39,6 +43,12 @@ const MainInfo = styled.div`
     text-overflow: initial;
     white-space: initial;
     overflow: initial;
+    font-size: 11px;
+    color: ${colors.black};
+
+    &:hover {
+      color: ${colors.brand};
+    }
   }
 `;
 
@@ -50,8 +60,14 @@ const Detail = styled.span`
   white-space: nowrap;
   overflow: hidden;
   width: 100%;
-`;
 
+  @media (max-width: ${deviceSize.tablet}px) {
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 14px;
+    color: ${colors.darkGray};
+  }
+`;
 const StyledButton = styled(Link)`
   background: #6727f1;
   border-radius: 6px;
@@ -67,6 +83,7 @@ const StyledButton = styled(Link)`
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
+    white-space: nowrap;
   }
 `;
 
@@ -94,6 +111,17 @@ const Card = styled.div`
   &:active {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding: 0;
+
+    &:hover,
+    &:active {
+      box-shadow: none;
+      background: transparent;
+      border-radius: 0;
+    }
+  }
 `;
 
 export const VenueCard = ({ venue }) => {
@@ -111,9 +139,7 @@ export const VenueCard = ({ venue }) => {
           {city}, {state}
         </Detail>
       </InfoColumn>
-      <StyledButton to={`../venue/${venue.id}`}>
-        {isMobileDevice ? 'All' : 'All Events'}
-      </StyledButton>
+      <StyledButton to={`../venue/${venue.id}`}>All Events</StyledButton>
     </Card>
   );
 };

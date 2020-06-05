@@ -28,6 +28,18 @@ export const StyledDropdown = styled.div`
 
   @media (max-width: ${deviceSize.tablet}px) {
     width: 100%;
+
+    &.modal {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+
+      &:hover {
+        box-shadow: none;
+        border-color: ${colors.lightGray};
+      }
+    }
   }
 
   &:hover {
@@ -155,6 +167,7 @@ export const SearchInput = styled.input`
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
+  height: 40px;
   color: ${colors.black};
 
   &:hover {
@@ -183,3 +196,17 @@ export const SearchInput = styled.input`
     padding-left: 20px;
   }
 `;
+
+export const Header = styled.div`
+  display: flex;
+  color: #6726f1;
+  justify-content: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e6e6eb;
+`;
+
+export const Text = styled.div`
+  margin: 0 auto;
+`;
+
+export const CloseButton = styled.div``;

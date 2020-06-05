@@ -16,6 +16,11 @@ const TimeColumn = styled(FlexColumn)`
   width: 20%;
   align-self: flex-start;
   text-align: left;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    width: 30%;
+    align-self: center;
+  }
 `;
 
 const InfoColumn = styled(FlexColumn)`
@@ -38,6 +43,12 @@ const MainInfo = styled.div`
     text-overflow: initial;
     white-space: initial;
     overflow: initial;
+    font-size: 11px;
+    color: ${colors.black};
+
+    &:hover {
+      color: ${colors.brand};
+    }
   }
 `;
 
@@ -49,6 +60,13 @@ const Detail = styled.span`
   white-space: nowrap;
   overflow: hidden;
   width: 100%;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 14px;
+    color: ${colors.darkGray};
+  }
 `;
 
 const StyledButton = styled(Link)`
@@ -67,6 +85,7 @@ const StyledButton = styled(Link)`
     font-size: 12px;
     line-height: 16px;
     font-weight: 600;
+    white-space: nowrap;
   }
 `;
 
@@ -93,6 +112,17 @@ const Card = styled.div`
   &:hover,
   &:active {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding: 0;
+
+    &:hover,
+    &:active {
+      box-shadow: none;
+      background: transparent;
+      border-radius: 0;
+    }
   }
 `;
 

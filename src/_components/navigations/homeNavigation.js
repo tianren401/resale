@@ -17,9 +17,7 @@ const StyledNavigation = styled.div`
   position: absolute;
   width: 100%;
   margin: auto;
-
   z-index:  ${({ hidden }) => (hidden ? '0' : '1')};
-
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;

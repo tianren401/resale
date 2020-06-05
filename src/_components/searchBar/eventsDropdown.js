@@ -92,7 +92,11 @@ const ListItem = ({ data, indexName, ...rest }) => {
 
 ListItem.propTypes = {
   data: PropTypes.any,
-  indexName: PropTypes.string.isRequired,
+  indexName: PropTypes.string,
+};
+
+ListItem.defaultProps = {
+  indexName: 'event',
 };
 
 export const EventsDropdown = React.forwardRef((props, ref) => {

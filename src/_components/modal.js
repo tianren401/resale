@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
+import { zIndexes } from '_constants';
 
 export const Modal = ({ isOpen, closeModal, customStyles, children }) => {
   ReactModal.setAppElement('body');
@@ -11,6 +12,7 @@ export const Modal = ({ isOpen, closeModal, customStyles, children }) => {
       onRequestClose={closeModal}
       style={{
         ...customStyles,
+        overlay: { zIndex: zIndexes.OVERLAY },
       }}
     >
       {children}

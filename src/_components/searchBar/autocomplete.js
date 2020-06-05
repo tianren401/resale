@@ -5,8 +5,11 @@ import PropTypes from 'prop-types';
 import { SearchInput, IconContainer } from './styledComponents';
 import { FlexItem, Flex } from '_components';
 import { Icon } from '_components/icon';
-import { colors } from '_constants';
+import { colors, deviceSize } from '_constants';
+import { useViewport } from '_hooks';
+
 const SearchIcon = <Icon size={24} color={colors.brand} name="search" />;
+const SearchGrayIcon = <Icon size={24} color={colors.gray} name="search" />;
 
 export const Autocomplete = ({
   placeholder,
@@ -16,11 +19,15 @@ export const Autocomplete = ({
   showAutocompleteIcon,
   renderList,
   options,
+  isResultsPage,
   ...rest
 }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   const [activeOption, setActiveOption] = useState(0);
+
+  const windowSize = useViewport();
+  const isMobileDevice = windowSize.width < deviceSize.tablet;
 
   const dropdownEl = useRef(null);
   const inputEl = useRef(null);
@@ -92,8 +99,19 @@ export const Autocomplete = ({
 
   return (
     <FlexItem>
-      <Flex position="relative" align="center" justify="flex-start">
+      <Flex
+        position="relative"
+        align="center"
+        justify="flex-start"
+        onClick={() => {
+          setShowOptions(true);
+        }}
+      >
         {showAutocompleteIcon && <IconContainer>{SearchIcon}</IconContainer>}
+        {isMobileDevice && isResultsPage && (
+          <IconContainer>{SearchGrayIcon}</IconContainer>
+        )}
+
         <SearchInput
           type="text"
           onChange={handleChange}
@@ -127,5 +145,6 @@ Autocomplete.propTypes = {
   showAutocompleteIcon: PropTypes.bool.isRequired,
   onChange: PropTypes.func,
   renderList: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  options: PropTypes.object.isRequired,
+  isResultsPage: PropTypes.bool,
 };

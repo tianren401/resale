@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { Header } from './components/header';
-import { SearchRowContainer, SearchBar } from '_components';
+import { ResultsSearchRowContainer, SearchBar } from '_components';
 import { Footer } from '_pages/home/footer';
 import { ResultsList } from './components';
 import { HomeLayout } from '_components';
@@ -79,21 +79,21 @@ export const Results = () => {
   useEffect(() => {
     return () => {
       handleSetQuery('');
-      handleSearchResults([]);
+      handleSearchResults({});
     };
   }, [handleSetQuery, handleSearchResults]);
 
   return (
     <Container>
       <Header events={events.content} />
-      <SearchRowContainer>
+      <ResultsSearchRowContainer>
         <SearchBar
           showDropdown={false}
           showAutocompleteIcon={false}
-          showFilters
           config={resultsSearchConfig}
+          isResultsPage
         />
-      </SearchRowContainer>
+      </ResultsSearchRowContainer>
       <ResultsList onLoadMore={handleLoadMoreEvents} />
       <Footer />
     </Container>

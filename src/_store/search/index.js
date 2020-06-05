@@ -36,7 +36,7 @@ const searchSlice = createSlice({
     location: null,
     date: 'all',
     dateRange: null,
-    results: [],
+    results: {},
     eventPageSize: 10,
     hitsPerPage: 10,
     performersMeta: {},

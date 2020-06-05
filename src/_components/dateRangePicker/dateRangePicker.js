@@ -16,7 +16,6 @@ const StyledDayPicker = styled.div`
   background: #ffffff;
   ${!isMobileDevice && `box-shadow: ${shadows.small};`}
   border-radius: 8px;
-
   ${dateRangePickerStyleOverrides}
 `;
 
@@ -40,8 +39,14 @@ const ApplyButton = styled.div`
 
   @media (max-width: ${deviceSize.tablet}px) {
     width: initial;
-    margin: 200px 40px 0px 40px;
-    border-radius: 8px;
+    margin: 200px 20px 0px 20px;
+    background: rgba(103, 38, 241, 0.16);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    padding-top: 13px;
+    padding-bottom: 13px;
   }
 `;
 
@@ -186,7 +191,12 @@ export const DateRangePicker = ({ sendToContainer, weekendFilter }) => {
         showOutsideDays
         disabledDays={weekendFilter && { daysOfWeek: [1, 2, 3, 4, 5] }}
       />
-      <ApplyButton onClick={() => handleDateSend(includedDays)}>
+      <ApplyButton
+        onClick={(e) => {
+          handleDateSend(includedDays);
+          e.stopPropagation();
+        }}
+      >
         Apply
       </ApplyButton>
     </StyledDayPicker>

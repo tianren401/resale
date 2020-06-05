@@ -18,6 +18,7 @@ import {
   Venue,
 } from '_pages';
 import { ScrollToTop } from '_components';
+import { ViewportProvider } from '_hooks';
 import { authService } from '_services';
 import { getUserInfoAction } from '_store/auth';
 
@@ -46,25 +47,27 @@ const Routes = () => {
   }, [authState.user, dispatch]);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <GlobalStyles />
-      <Switch>
-        <Route exact path="/home" component={Home} />
-        <Route path="/performer/:performerId">
-          <DynamicPerformer />
-        </Route>
-        <Route path="/venue/:venueId">
-          <DynamicVenue />
-        </Route>
-        <Route exact path="/event/:eventId">
-          <DynamicEvent />
-        </Route>
-        <Route path="/checkout" component={Checkout} />
-        <Route path="/results" component={Results} />
-        <Redirect to="/home" />
-      </Switch>
-    </Router>
+    <ViewportProvider>
+      <Router>
+        <ScrollToTop />
+        <GlobalStyles />
+        <Switch>
+          <Route exact path="/home" component={Home} />
+          <Route path="/performer/:performerId">
+            <DynamicPerformer />
+          </Route>
+          <Route path="/venue/:venueId">
+            <DynamicVenue />
+          </Route>
+          <Route exact path="/event/:eventId">
+            <DynamicEvent />
+          </Route>
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/results" component={Results} />
+          <Redirect to="/home" />
+        </Switch>
+      </Router>
+    </ViewportProvider>
   );
 };
 

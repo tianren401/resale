@@ -50,7 +50,7 @@ export const ResultsList = ({ onLoadMore }) => {
                 </>
               ) : (
                 <SectionContainer>
-                  <h3>Not found</h3>
+                  <h3>No {category} found</h3>
                 </SectionContainer>
               )}
             </>

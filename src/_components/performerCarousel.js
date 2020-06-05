@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Carousel from 'react-elastic-carousel';
@@ -11,6 +11,7 @@ import { colors } from '_constants';
 import arrowImage from '_images/arrowImage.png';
 import mockPerformerImage from '_images/mocks/broadwayEvent14.png';
 import { deviceSize } from '_constants';
+import { Flex } from '_components';
 
 const Container = styled.div`
   display: block;
@@ -22,6 +23,19 @@ const Container = styled.div`
 const StyledCarousel = styled(Carousel)`
   padding: 0;
   margin: 0;
+  display: none;
+
+  @media (min-width: ${deviceSize.tablet}px) {
+    display: block;
+  }
+`;
+
+const StyledSnapchat = styled(Flex)`
+  display: flex;
+  padding: 7px;
+  @media (min-width: ${deviceSize.tablet}px) {
+    display: none;
+  }
 `;
 
 const CarouselItem = styled(Link)`
@@ -31,20 +45,48 @@ const CarouselItem = styled(Link)`
   cursor: pointer;
   position: relative;
   max-width: 220px;
+
   color: ${colors.black};
   &:hover {
     color: ${colors.brand};
   }
 `;
 
+const SnapchatItem = styled(Flex)`
+  width: 100%;
+  height: 100px;
+  cursor: pointer;
+  margin: 8px;
+  padding: 8px;
+  position: relative;
+  max-width: 164px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(0, 0, 0, 0.5) 100%
+    ),
+    ${(props) => props.backgroundImage};
+  background-blend-mode: multiply, normal, normal;
+  border-radius: 8px;
+`;
+
 const CarouselTitle = styled.div`
   font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: ${colors.brand};
+  font-size: 24px;
+  line-height: 32px;
+  color: black;
   text-transform: capitalize;
   margin-left: 21px;
   margin-bottom: 6px;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
 `;
 
 const CarouselItemImage = styled.div`
@@ -55,11 +97,14 @@ const CarouselItemImage = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-image: ${(props) => props.backgroundImage};
-
   &:hover {
+    background-size: cover;
+    background-color: linear-gradient(
+      180deg,
+      rgba(252, 252, 252, 0.5) 0%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
     background-blend-mode: multiply, normal;
-    /* Elevation 3 */
-
     box-shadow: 0px 7px 30px rgba(0, 0, 0, 0.25),
       0px 0px 4px rgba(91, 93, 99, 0.16), 0px 0px 2px rgba(130, 136, 148, 0.08);
   }
@@ -67,13 +112,32 @@ const CarouselItemImage = styled.div`
 
 const CarouselItemTitle = styled.span`
   display: block;
-  text-overflow: ellipsis;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 21px;
-  margin-top: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  color: {colors.black};
+  margin-top: 8px;
   white-space: nowrap;
   overflow: hidden;
+
+  &:hover {
+    color: ${colors.brand};
+  }
+`;
+
+const SnapchatItemTitle = styled.div`
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #fff;
+
+  & > span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+  }
 `;
 
 const SlideButton = styled.div`
@@ -127,6 +191,7 @@ export const PerformerCarousel = ({
   ];
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     if (performers?.length > itemCount) setShowNextBtn(true);
@@ -166,19 +231,19 @@ export const PerformerCarousel = ({
         breakPoints={breakPoints}
         itemPadding={[0, 10]}
       >
-        {performers.map((item, index) => {
+        {performers.map((performer, index) => {
           return (
             <CarouselItem
-              key={`performer-${item.objectID}-${index}`}
-              to={`performer/${item.objectID}`}
+              key={`performer-${performer.objectID}-${index}`}
+              to={`performer/${performer.objectID}`}
             >
               <CarouselItemImage
                 backgroundImage={`url(${
-                  performersMeta[item.objectID]?.images?.carouselSearch ||
+                  performersMeta[performer.objectID]?.images?.carouselSearch ||
                   mockPerformerImage
                 })`}
               />
-              <CarouselItemTitle>{item.name}</CarouselItemTitle>
+              <CarouselItemTitle>{performer.name}</CarouselItemTitle>
             </CarouselItem>
           );
         })}
@@ -197,6 +262,28 @@ export const PerformerCarousel = ({
       ) : (
         <></>
       )}
+
+      <StyledSnapchat flexWrap="wrap">
+        {performers &&
+          performers.slice(0, 6).map((performer) => {
+            return (
+              <SnapchatItem
+                key={performer.objectID}
+                direction="column"
+                justify="flex-end"
+                backgroundImage={`url(${
+                  performersMeta[performer.objectID]?.images?.carouselSearch ||
+                  mockPerformerImage
+                })`}
+                onClick={() => {
+                  history.push(`performer/${performer.objectID}`);
+                }}
+              >
+                <SnapchatItemTitle>{performer.name}</SnapchatItemTitle>
+              </SnapchatItem>
+            );
+          })}
+      </StyledSnapchat>
     </Container>
   ) : null;
 };

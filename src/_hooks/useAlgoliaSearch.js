@@ -13,7 +13,7 @@ export const useAlgoliaSearch = ({
   isMultiple = true,
   initialSearchState = {},
   initialResults = null,
-  onResults,
+  isResultsPage,
 }) => {
   if (!isMultiple && !initialSearchState.index)
     throw new Error('initialSearchState with index is required');
@@ -107,8 +107,8 @@ export const useAlgoliaSearch = ({
         clearTimeout(loadingTimeout);
         setLoading(false);
 
-        if (onResults) {
-          onResults({ searchState, results: res.results });
+        if (isResultsPage) {
+          isResultsPage({ searchState, results: res.results });
         }
       } catch (error) {
         if (error.message.toLowerCase().includes('unknown parameter')) {
@@ -127,7 +127,7 @@ export const useAlgoliaSearch = ({
       return;
     }
     getResults();
-  }, [searchState, onResults, isMultiple]);
+  }, [searchState, isResultsPage, isMultiple]);
 
   return {
     searchState,

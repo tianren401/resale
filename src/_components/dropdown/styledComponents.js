@@ -121,4 +121,31 @@ export const Option = styled.div`
       ),
       #ffffff;
   }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    border-bottom: 1px solid ${colors.lightGray};
+  }
 `;
+
+export const Modal = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: ${colors.white};
+`;
+
+export const Header = styled.div`
+  display: flex;
+  color: ${colors.brand};
+  justify-content: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e6e6eb;
+`;
+
+export const Text = styled.div`
+  margin: 0 auto;
+`;
+
+export const CloseButton = styled.div``;

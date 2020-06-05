@@ -185,3 +185,66 @@ LocationIcon.defaultProps = {
   height: 24,
   fill: 'none',
 };
+
+export const SearchFilterIcon = ({ width, height, fill }) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox={`0 0 ${width} ${height}`}
+    fill={fill}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="Icon / Filter">
+      <path
+        id="Vector 12"
+        d="M0 3H20M0 10H20M0 17H20M4.44444 0V6M15.5556 14V20M10 7V13"
+        stroke="#6726F1"
+        strokeWidth="2"
+      />
+    </g>
+  </svg>
+);
+
+SearchFilterIcon.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
+  fill: PropTypes.string,
+};
+
+SearchFilterIcon.defaultProps = {
+  ...defaultSVGProps,
+  width: 20,
+  height: 20,
+  fill: 'none',
+};
+
+export const CloseModalIcon = ({ width, height, fill }) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox={`0 0 ${width} ${height}`}
+    fill={fill}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g id="Icon">
+      <path
+        id="Shape"
+        d="M8.82141 10.0002L3.57733 4.75609C3.25189 4.43065 3.25189 3.90301 3.57733 3.57757C3.90277 3.25214 4.4304 3.25214 4.75584 3.57757L9.99992 8.82165L15.244 3.57757C15.5694 3.25214 16.0971 3.25214 16.4225 3.57757C16.7479 3.90301 16.7479 4.43065 16.4225 4.75609L11.1784 10.0002L16.4225 15.2442C16.7479 15.5697 16.7479 16.0973 16.4225 16.4228C16.0971 16.7482 15.5694 16.7482 15.244 16.4228L9.99992 11.1787L4.75584 16.4228C4.4304 16.7482 3.90277 16.7482 3.57733 16.4228C3.25189 16.0973 3.25189 15.5697 3.57733 15.2442L8.82141 10.0002Z"
+        fill={colors.brand}
+      />
+    </g>
+  </svg>
+);
+
+CloseModalIcon.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
+  fill: PropTypes.string,
+};
+
+CloseModalIcon.defaultProps = {
+  ...defaultSVGProps,
+  width: 20,
+  height: 20,
+  fill: 'none',
+};

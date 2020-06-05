@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import { deviceSize } from '_constants';
 import { Dropdown, DateRangePicker } from '_components';
 import { setDate, setDateRange } from '_store/search';
+import { useViewport } from '_hooks';
+import { deviceSize } from '_constants';
+import { PerformerModal } from '_components';
 
 const DatePickerContainer = styled.div`
   position: absolute;
@@ -19,24 +21,32 @@ const DatePickerContainer = styled.div`
   }
 `;
 
-const DatePicker = ({ show, onChangeDateRange, weekendFilter }) => {
+const DatePicker = ({ show, onChangeDateRange, weekendFilter, onClose }) => {
+  const { width } = useViewport();
+  const isMobileDevice = width < deviceSize.tablet;
   return show ? (
-    <DatePickerContainer>
-      <DateRangePicker
-        sendToContainer={onChangeDateRange}
-        weekendFilter={weekendFilter}
-      />
-    </DatePickerContainer>
+    <>
+      <DatePickerContainer>
+        <DateRangePicker
+          sendToContainer={onChangeDateRange}
+          weekendFilter={weekendFilter}
+        />
+      </DatePickerContainer>
+      {isMobileDevice && (
+        <PerformerModal sendStateFromModal={onClose} show={show} />
+      )}
+    </>
   ) : null;
 };
 
 DatePicker.propTypes = {
   show: PropTypes.bool,
+  onClose: PropTypes.func,
   onChangeDateRange: PropTypes.func,
   weekendFilter: PropTypes.bool,
 };
 
-export const DateRangeDropdown = (props) => {
+export const DateRangeDropdown = () => {
   const dispatch = useDispatch();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -54,12 +64,14 @@ export const DateRangeDropdown = (props) => {
     // calc timestamps for  start/end
     const startDate = new Date(days[0]);
     const endDate = new Date(days[days.length - 1]);
+
     dispatch(
       setDateRange({
         start: startDate.getTime(),
         end: endDate.getTime(),
       })
     );
+    setShowDatePicker(false);
   };
 
   const options = [
@@ -72,6 +84,7 @@ export const DateRangeDropdown = (props) => {
         <DatePicker
           show={showDatePicker}
           onChangeDateRange={handleSelectDateRange}
+          onClose={setShowDatePicker}
         />
       ),
     },
@@ -84,7 +97,7 @@ export const DateRangeDropdown = (props) => {
       options={options}
       defaultOption={searchDate}
       handleChange={handleSetDate}
-      {...props}
+      title="Select Date"
     />
   );
 };

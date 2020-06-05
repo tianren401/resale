@@ -150,6 +150,31 @@ export const SearchRowContainer = styled.div`
   }
 `;
 
+export const ResultsSearchRowContainer = styled.div`
+  width: 100%;
+  margin: auto;
+  padding: 30px 0;
+  max-width: 940px;
+  ${(props) => (props.absolute ? absolutePosition : relativePosition)}
+
+  @media (min-width: ${deviceSize.tablet}px) {
+    width: calc(100% - 60px);
+    padding: 30px;
+    display: block;
+  }
+
+  @media (min-width: ${deviceSize.laptop}px) {
+    width: 100%;
+    padding: 30px 0;
+  }
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    position: relative;
+    padding: 0;
+    margin-top: 0;
+  }
+`;
+
 export const MainContainer = styled.div`
   width: 100%;
   margin: auto;

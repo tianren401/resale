@@ -1,27 +1,37 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import places from 'places.js';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useClickAway, useBrowserLocation, useViewport } from '_hooks';
+import { useBrowserLocation } from '_hooks';
 import { setLocation } from '_store/search';
-import { StyledDropdown, SearchInput, IconContainer } from './styledComponents';
+import { Modal } from '_components';
+import {
+  StyledDropdown,
+  SearchInput,
+  IconContainer,
+  Header,
+  Text,
+  CloseButton,
+} from './styledComponents';
+import { LocationIcon, CloseModalIcon } from '_components/icon/svgIcons';
+import { zIndexes } from '_constants';
 
-import { LocationIcon } from '_components/icon/svgIcons';
-import { deviceSize } from '_constants';
-import { MobilePlacesModal } from './mobilePlaceModal';
+const modalStyles = {
+  content: {
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    padding: '0px',
+    zIndex: zIndexes.OVERLAY,
+  },
+};
 
 export const Places = ({ defaultRefinement, className }) => {
-  const handleClickAway = () => {
-    // hide dropdown
-    if (autocomplete.current) {
-      autocomplete.current.close();
-    }
-  };
   // create our ref
   const myInput = useRef();
   const autocomplete = useRef(null);
-  useClickAway({ ref: myInput, handleClickAway });
 
   // set location
   const dispatch = useDispatch();
@@ -37,20 +47,6 @@ export const Places = ({ defaultRefinement, className }) => {
   );
 
   const { latitude, longitude, error } = useBrowserLocation(true);
-
-  const { width } = useViewport();
-  const isMobileDevice = width < deviceSize.tablet;
-  const [showModal, setShowModal] = useState(false);
-
-  const handleClose = () => {
-    setShowModal(false);
-  };
-
-  const handleInputClick = () => {
-    if (isMobileDevice) {
-      setShowModal(true);
-    }
-  };
 
   useEffect(() => {
     if (!error && !!latitude && !!longitude) {
@@ -93,19 +89,37 @@ export const Places = ({ defaultRefinement, className }) => {
           <LocationIcon />
         </IconContainer>
         <SearchInput
-          ref={!isMobileDevice ? myInput : null}
+          ref={myInput}
           type="search"
-          id="address-input"
+          id="address-input-mobile"
           placeholder={placeHolder}
-          onClick={handleInputClick}
         />
       </StyledDropdown>
-      <MobilePlacesModal isOpen={showModal} handleClose={handleClose} />
     </>
   );
 };
 
 Places.propTypes = {
+  refine: PropTypes.func,
   defaultRefinement: PropTypes.object,
   className: PropTypes.string,
+};
+
+export const MobilePlacesModal = ({ isOpen, handleClose }) => {
+  return (
+    <Modal isOpen={isOpen} customStyles={modalStyles} closeModal={handleClose}>
+      <Header>
+        <CloseButton onClick={handleClose}>
+          <CloseModalIcon />
+        </CloseButton>
+        <Text>Change Location</Text>
+      </Header>
+      <Places className="modal" />
+    </Modal>
+  );
+};
+
+MobilePlacesModal.propTypes = {
+  isOpen: PropTypes.bool,
+  handleClose: PropTypes.func,
 };

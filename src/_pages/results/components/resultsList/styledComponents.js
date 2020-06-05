@@ -47,17 +47,22 @@ export const ItemList = styled.div`
 export const SectionHeader = styled(Flex)`
   h1 {
     font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-    color: ${colors.brand};
+    font-size: 24px;
+    line-height: 32px;
+    color: black;
     text-transform: capitalize;
     margin-left: 21px;
+
+    @media (max-width: ${deviceSize.tablet}px) {
+      font-size: 18px;
+      line-height: 24px;
+    }
   }
 `;
 
 export const SectionContainer = styled(Flex)`
   border: ${(props) => (props.border ? `1px solid ${colors.black}` : 'none')};
-  padding: 0;
+  padding: 0 21px;
 
   h2 {
     font-weight: 600;

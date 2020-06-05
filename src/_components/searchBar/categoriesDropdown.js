@@ -29,6 +29,7 @@ export const CategoriesDropdown = () => {
       options={categories}
       defaultOption={searchCategory}
       handleChange={handleSetCategory}
+      title="Select Category"
     />
   );
 };

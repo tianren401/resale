@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { DateRangeDropdown } from '_components';
+import { DateRangeDropdown } from '_components/dateRangeDropdown';
 import { Places } from '_components/places';
 import { deviceSize, colors } from '_constants';
 
