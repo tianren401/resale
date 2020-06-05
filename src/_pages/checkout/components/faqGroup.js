@@ -2,12 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { H4, H5 } from '_components';
-import { colors } from '_constants';
+import { colors, deviceSize } from '_constants';
 
 const Container = styled.div`
   width: 100%;
   padding: 60px 30%;
   background: ${colors.mLightGray};
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    display: none;
+  }
 `;
 
 const Content = styled(H5)`

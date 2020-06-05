@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { colors } from '_constants';
+import { colors, deviceSize } from '_constants';
+import { isMobileDevice } from '_helpers';
 import checkImageMobile from '_images/checkImageMobile.png';
 
 const Container = styled.div`
@@ -14,6 +15,13 @@ const Container = styled.div`
   position: absolute;
   right: 20%;
   top: 90px;
+  z-index: 2;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    position: static;
+    justify-content: flex-start;
+    padding: 16px 20px;
+  }
 `;
 const Step = styled.span`
   font-size: 12px;
@@ -48,11 +56,12 @@ const Step = styled.span`
     box-sizing: border-box;
   }
 
-  &:last-child {
-    &:after {
+  ${(props) =>
+    props.last &&
+    `&:after {
       display: none;
     }
-  }
+    `}
 
   ${(props) =>
     props.state === 'passed' &&
@@ -77,11 +86,59 @@ const Step = styled.span`
     :before {
       border-color: #edd7ff;
     }}`}
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    display: none;
+  }
 `;
 
-const stages = ['Delivery Information', 'Payment Information', 'Place Order'];
+const MobileStep = styled.span`
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: ${colors.gray};
+  text-shadow: 0px 0px 4px rgba(255, 220, 252, 0.5);
+  display: none;
+
+  &:after {
+    content: '>';
+    color: ${colors.darkGray};
+    padding: 0 13px;
+  }
+
+  ${(props) =>
+    props.last &&
+    `&:after {
+      display: none;
+    }
+    `}
+
+  ${(props) =>
+    (props.state === 'active' || props.state === 'passed') &&
+    `& { color: ${colors.brand};
+    text-shadow: 0px 0px 4px rgba(255, 220, 252, 0.5);
+    `}
+
+  ${(props) =>
+    props.stageIndex === 2 &&
+    `& {
+      color: ${colors.white};
+    }
+    &:after {
+      color: ${colors.white};
+    }
+    `}
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    display: block;
+  }
+`;
 
 export const ProgressBar = ({ stageIndex }) => {
+  const stages = isMobileDevice
+    ? ['Delivery', 'Payment', 'Place']
+    : ['Delivery Information', 'Payment Information', 'Place Order'];
+
   return (
     <Container>
       {stages.map((stage, index) => {
@@ -91,10 +148,19 @@ export const ProgressBar = ({ stageIndex }) => {
         } else if (index === stageIndex) {
           state = 'active';
         }
+        const last = index === 2 ? true : false;
         return (
-          <Step key={`checkoutStage${index}`} state={state}>
-            {stage}
-          </Step>
+          <div key={`checkoutMobileStage${index}`}>
+            {isMobileDevice ? (
+              <MobileStep state={state} last={last} stageIndex={stageIndex}>
+                {stage}
+              </MobileStep>
+            ) : (
+              <Step state={state} last={last}>
+                {stage}
+              </Step>
+            )}
+          </div>
         );
       })}
     </Container>

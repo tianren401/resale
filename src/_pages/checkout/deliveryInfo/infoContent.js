@@ -14,7 +14,7 @@ import {
   TextButton,
   Loader,
 } from '_components';
-import { colors } from '_constants';
+import { colors, deviceSize } from '_constants';
 import ticketProtectIcon from '_images/ticketProtectIcon.svg';
 import { LoginModal } from '_pages';
 
@@ -22,6 +22,14 @@ const Container = styled.div`
   width: 60%;
   max-width: 580px;
   position: relative;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    background: ${colors.white};
+    width: 100%;
+    max-width: 800px;
+    padding: 24px 20px;
+    padding-bottom: 170px;
+  }
 `;
 
 const ProtectionGroup = styled.div`
@@ -42,6 +50,11 @@ const ProtectionGroup = styled.div`
     padding: 6px;
     border-radius: 50%;
   }
+
+  @media (max-width: ${deviceSize.mobileL}px) {
+    width: 280px;
+    margin: 16px auto;
+  }
 `;
 
 const Login = styled.div`
@@ -53,11 +66,50 @@ const Login = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding: 18px 0;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    display: none;
+  }
+`;
+
+const LoginMobile = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  width: ${(props) => (props.width ? props.width : '280px')};
+  justify-content: space-around;
+  align-items: center;
+  padding: 18px 0;
+  display: none;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    display: flex;
+  }
 `;
 
 const LoginLink = styled(TextButton)`
   padding: 0;
   padding-left: 5px;
+`;
+
+const Title = styled(H2)`
+  font-weight: 500;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  @media (max-width: ${deviceSize.mobileL}px) {
+    width: 280px;
+    margin: auto;
+  }
+`;
+
+const StyledForm = styled(Form)`
+  @media (max-width: ${deviceSize.tablet}px) {
+    display: flex;
+  }
 `;
 
 export const InfoContent = ({ handleSubmit }) => {
@@ -86,12 +138,12 @@ export const InfoContent = ({ handleSubmit }) => {
 
   return (
     <Container>
-      <H2 weight="500">Delivery Information</H2>
+      <Title>Delivery Information</Title>
       <ProtectionGroup>
         <ContentImage src={ticketProtectIcon} />
         <span>Ticket Protection Guaranteed</span>
       </ProtectionGroup>
-      <Form
+      <StyledForm
         initialValues={{
           email: '',
           phoneNumber: '',
@@ -131,9 +183,15 @@ export const InfoContent = ({ handleSubmit }) => {
             >
               Continue as Guest
             </PrimaryButton>
+            <LoginMobile>
+              <span>Already have an account?</span>
+              <LoginLink type="button" onClick={handleModalOpen}>
+                Log in here
+              </LoginLink>
+            </LoginMobile>
           </>
         )}
-      </Form>
+      </StyledForm>
       <LoginModal isOpenModal={isOpenModal} closeModal={closeModal} />
     </Container>
   );

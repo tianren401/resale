@@ -4,13 +4,25 @@ import { Link } from 'react-router-dom';
 
 import { navigationHeight, colors, deviceSize } from '_constants';
 
-const Container = styled.div`
+const StyledCheckoutHeader = styled.div`
   height: ${navigationHeight}px;
-  padding: 20px 10%;
+  width: 100%;
+  background: linear-gradient(144.92deg, #455fe5 -14.65%, #9545e5 79.56%);
+  padding: 0 8%;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding: 0 20px;
+  }
+`;
+
+const Container = styled.div`
+  max-width: 1128px;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background: linear-gradient(144.92deg, #455fe5 -14.65%, #9545e5 79.56%);
+  margin: auto;
+  align-items: center;
 `;
 
 const UserItems = styled(Link)`
@@ -26,16 +38,20 @@ const UserItems = styled(Link)`
     -webkit-text-fill-color: transparent;
   }
 
-  @media (min-width: ${deviceSize.tablet}px) {
-    display: inline-block;
+  @media (max-width: ${deviceSize.tablet}px) {
+    display: ${(props) => (props.mobile ? 'block' : 'none')};
   }
 `;
 
 export const CheckoutNavigation = () => {
   return (
-    <Container>
-      <UserItems to="/">SelectSeats</UserItems>
-      <UserItems to="/">Support</UserItems>
-    </Container>
+    <StyledCheckoutHeader>
+      <Container>
+        <UserItems mobile="true" to="/">
+          SelectSeats
+        </UserItems>
+        <UserItems to="/">Support</UserItems>
+      </Container>
+    </StyledCheckoutHeader>
   );
 };

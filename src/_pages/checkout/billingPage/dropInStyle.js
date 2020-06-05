@@ -1,8 +1,11 @@
 import { css } from 'styled-components';
 
-import { colors } from '_constants';
+import { colors, deviceSize } from '_constants';
 
 export const dropInStyle = css`
+  [data-braintree-id='wrapper'] {
+    z-index: 0;
+  }
   [data-braintree-id='card'] {
     border: none;
     padding: 0;
@@ -66,10 +69,18 @@ export const dropInStyle = css`
         margin: 0;
         color: ${colors.black};
         visibility: hidden;
-
+        font-size: 2px;
+        line-height: 2px;
         &:before {
           content: 'Enter new card';
           visibility: visible;
+          font-size: 24px;
+          line-height: 32px;
+
+          @media (max-width: ${deviceSize.tablet}px) {
+            font-size: 14px;
+            line-height: 20px;
+          }
         }
       }
     }
@@ -96,10 +107,14 @@ export const dropInStyle = css`
 
         .braintree-form__label {
           visibility: hidden;
+          font-size: 2px;
+          line-height: 2px;
 
           &:before {
             content: 'Expiry Date';
             visibility: visible;
+            font-size: 12px;
+            line-height: 16px;
           }
 
           .braintree-form__descriptor {
@@ -115,13 +130,24 @@ export const dropInStyle = css`
 
         .braintree-form__label {
           visibility: hidden;
+          font-size: 2px;
+          line-height: 2px;
 
           &:before {
             content: 'Security Code';
             visibility: visible;
+            font-size: 12px;
+            line-height: 16px;
+
+            @media (max-width: ${deviceSize.tablet}px) {
+              content: 'CVV';
+            }
           }
         }
         [data-braintree-id='cvv-label-descriptor'] {
+          display: none;
+        }
+        [data-braintree-id='cvv-icon'] {
           display: none;
         }
       }
@@ -131,10 +157,14 @@ export const dropInStyle = css`
 
         .braintree-form__label {
           visibility: hidden;
+          font-size: 2px;
+          line-height: 2px;
 
           &:before {
             content: 'ZIP';
             visibility: visible;
+            font-size: 12px;
+            line-height: 16px;
           }
         }
       }

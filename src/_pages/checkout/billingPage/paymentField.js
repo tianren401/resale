@@ -6,20 +6,34 @@ import { useHistory } from 'react-router-dom';
 
 import { getPaymentMethodNonce, toggleSaveCardInfo } from '_store/checkout';
 import { PrimaryButton, H2, Checkbox } from '_components';
-import { colors } from '_constants';
+import { colors, deviceSize } from '_constants';
 import { dropInStyle } from './dropInStyle';
 
 const Container = styled.div`
   width: 100%;
   max-width: 480px;
-
+  padding: 24px 20px;
   ${dropInStyle};
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    margin: auto;
+    background: ${colors.white};
+    max-width: 100%;
+  }
 `;
 
 const StyledCheckbox = styled(Checkbox)`
   margin-bottom: 24px;
 `;
 
+const Title = styled(H2)`
+  font-weight: 500;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+`;
 //Braintree drop-in UI
 
 export const PaymentField = () => {
@@ -47,7 +61,7 @@ export const PaymentField = () => {
 
   return (
     <Container>
-      <H2 weight="500">Delivery Information</H2>
+      <Title>Payment Information</Title>
       {!!clientToken && (
         <DropIn
           options={{

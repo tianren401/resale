@@ -15,7 +15,6 @@ import { purchasePayment } from '_store/checkout';
 import { clearLockRequestId } from '_store/checkoutTicket';
 import { colors, cardLogos } from '_constants';
 import mail from '_images/mail.svg';
-import userFace from '_images/mocks/checkoutFace.png';
 
 const Container = styled.div`
   width: 60%;
@@ -54,11 +53,16 @@ const Link = styled(TextButton)`
 `;
 
 const UserImage = styled.div`
-  width: 87px;
-  height: 87px;
+  min-width: 80px;
   border-radius: 50%;
   margin-right: 20px;
-  background-image: url(${userFace});
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  padding: 24px 0;
+  background: ${colors.brand};
+  color: ${colors.white};
 `;
 
 const TicketDelivery = styled.div`
@@ -158,7 +162,7 @@ export const OrderInfo = () => {
             <Link onClick={() => moveTo('/delivery')}>Edit Info</Link>
           </H5>
           <Delivery>
-            <UserImage />
+            <UserImage>G</UserImage>
             {deliveryInfo ? (
               <DeliveryInfo>
                 <p>{deliveryInfo.name}</p>

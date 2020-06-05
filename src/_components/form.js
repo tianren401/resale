@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { deviceSize } from '_constants';
 
 const StyledForm = styled.form`
   width: 100%;
@@ -9,6 +10,11 @@ const StyledForm = styled.form`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media (max-width: ${deviceSize.mobileL}px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const Form = ({

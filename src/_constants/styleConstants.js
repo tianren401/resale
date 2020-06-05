@@ -27,6 +27,7 @@ export const colors = {
   mLightGray: '#f0f0f5',
   black: '#272729',
   black1: '#3e3e3e',
+  black2: '#606061',
   white: '#ffffff',
   whiteSmoke: '#f5f5f5',
   danger: '#FF695B',

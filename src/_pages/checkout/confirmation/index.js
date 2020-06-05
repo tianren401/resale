@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import { format } from 'date-fns';
 
 import { H1, H4, H5, ContentImage, Emoji } from '_components';
-import { colors } from '_constants';
+import { isMobileDevice } from '_helpers';
+import { colors, deviceSize } from '_constants';
 import { setCheckoutState } from '_store/checkout';
 import mail from '_images/mail.svg';
 import heroImage from '_images/confirmationHeroBackground.png';
+import heroMobileImage from '_images/confirmationHeroBackgroundMobile.png';
 
 const Container = styled.div`
   width: 100%;
@@ -20,24 +22,42 @@ const ConfirmationHero = styled.div`
   min-height: 380px;
   justify-content: center;
   padding-top: 130px;
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${heroImage});
   clip-path: polygon(0% 0%, 100% 0%, 100% 45%, 0% 100%);
   box-shadow: inset 0px -10px 40px rgba(0, 0, 0, 0.25);
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    min-height: 335px;
+    clip-path: none;
+    box-shadow: none;
+    padding: 65px 20px 0;
+    background-image: url(${heroMobileImage});
+  }
 `;
 
 const Content = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    justify-content: flex-start;
+  }
 `;
 
 const ConfrimationGroup = styled.div`
   border: 2px solid ${colors.lightGray};
   border-radius: 8px;
   padding: 25px;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    border: none;
+    padding: 0 20px;
+    border-radius: 0;
+  }
 `;
 
 const MailImage = styled(ContentImage)`
@@ -76,9 +96,17 @@ export const Confirmation = () => {
   return (
     <Container>
       <ConfirmationHero>
-        <H1 color={colors.white}>
-          <Emoji symbol="🎉" /> Let’s Goooo! <Emoji symbol="👏" />
-        </H1>
+        {isMobileDevice ? (
+          <H1 color={colors.white}>
+            Let’s <Emoji symbol="👏" /> Goooo!
+            <Emoji symbol="👏" />
+            <Emoji symbol="🔥" />
+          </H1>
+        ) : (
+          <H1 color={colors.white}>
+            <Emoji symbol="🎉" /> Let’s Goooo! <Emoji symbol="👏" />
+          </H1>
+        )}
       </ConfirmationHero>
       <Content>
         <ConfrimationGroup>

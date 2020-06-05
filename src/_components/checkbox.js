@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { colors } from '_constants';
+import { colors, deviceSize } from '_constants';
 import { Icon, Flex } from '_components';
 
 const CheckboxContainer = styled.label`
@@ -40,6 +40,11 @@ const CheckboxLabel = styled.span`
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    font-size: 12px;
+    font-weight: 400;
+  }
 `;
 
 export const Checkbox = ({ label, checked, handleChange, className }) => (

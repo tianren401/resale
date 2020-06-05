@@ -68,6 +68,26 @@ export const SuccessButton = styled(Button)`
   }
 `;
 
+export const SecondaryButton = styled(Button)`
+  color: ${colors.brand};
+  background: ${colors.lightBrand};
+
+  &:disabled {
+    color: ${colors.gray};
+    background: ${colors.lightGray};
+    opacity: 0.5;
+  }
+
+  &:active {
+    background: ${colors.lightBrandHover};
+    box-shadow: ${shadows.small};
+  }
+
+  &:hover:not(:disabled) {
+    background: ${colors.lightBrandHover};
+  }
+`;
+
 export const TextButton = styled(Button)`
   background: ${colors.brand};
   line-height: ${(props) => props.lineHight || '20px'};

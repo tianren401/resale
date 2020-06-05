@@ -9,6 +9,7 @@ import { BillingPage } from './billingPage';
 import { PlaceOrder } from './placeOrder';
 import { Confirmation } from './confirmation';
 import { Footer } from '../home/footer';
+import { isMobileDevice } from '_helpers';
 import {
   clearPreCheckoutTicketDataAction,
   deleteLockRequestIdAction,
@@ -37,8 +38,7 @@ export const Checkout = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <CheckoutLayout />
+    <CheckoutLayout>
       <Switch>
         <Route path="/checkout/delivery" component={DeliveryInfo} />
         <Route path="/checkout/billing" component={BillingPage} />
@@ -46,7 +46,7 @@ export const Checkout = () => {
         <Route path="/checkout/confirmation" component={Confirmation} />
         <Redirect to="/checkout/delivery" />
       </Switch>
-      {checkoutStage === 3 ? <Footer /> : <FAQGroup />}
-    </div>
+      {checkoutStage === 3 && !isMobileDevice ? <Footer /> : <FAQGroup />}
+    </CheckoutLayout>
   );
 };
