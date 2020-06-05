@@ -70,23 +70,38 @@ export const SeatSelection = ({ eventId }) => {
   const [loadingEventData, setLoadingEventData] = useState(true);
 
   useEffect(() => {
-    dispatch(getTicketGroupListAction(eventId));
     const getData = async () => {
       const seaticsData = await ajaxGet(`maps/${eventId}`, 'jsonp');
       setEventData(await seaticsData[0]);
       setMapData(await seaticsData[1]);
     };
 
-    const loadSeaticsMapFramework = () => {
-      if (!document.getElementById('seaticsMapFramework')) {
+    const loadSeaticsMapFramework = (callback) => {
+      const existingScript = document.getElementById('seaticsMapFramework');
+
+      if (!existingScript) {
         const script = document.createElement('script');
         script.src = 'https://mapwidget3.seatics.com/api/framework';
+        script.id = 'seaticsMapFramework';
         document.body.appendChild(script);
+
+        script.onload = () => {
+          if (callback) callback();
+        };
+
+        script.onerror = () => {
+          console.error('Failed to load seatics map framework api');
+        };
       }
+
+      if (existingScript && callback) callback();
     };
 
-    loadSeaticsMapFramework();
-    getData();
+    loadSeaticsMapFramework(() => {
+      dispatch(getTicketGroupListAction(eventId));
+      getData();
+    });
+
     return function cleanup() {
       window.Seatics.MapComponent.clear();
       window.Seatics.unbindEvents();
