@@ -16,6 +16,7 @@ import {
   Results,
   Performer,
   Venue,
+  UserProfile,
 } from '_pages';
 import { ScrollToTop } from '_components';
 import { ViewportProvider } from '_hooks';
@@ -64,6 +65,7 @@ const Routes = () => {
           </Route>
           <Route path="/checkout" component={Checkout} />
           <Route path="/results" component={Results} />
+          {authState.user && <Route path="/user" component={UserProfile} />}
           <Redirect to="/home" />
         </Switch>
       </Router>

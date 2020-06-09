@@ -8,3 +8,4 @@ export * from './home';
 export * from './seatics';
 export * from './ticketGroupList';
 export * from './checkoutTicket';
+export * from './user';

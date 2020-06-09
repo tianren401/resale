@@ -185,3 +185,20 @@ export const MainContainer = styled.div`
     margin-bottom: 38px;
   }
 `;
+
+export const UserImage = styled.div`
+  min-width: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  padding: 24px 0;
+  background: ${(props) =>
+    props.image ? `url(${props.image})` : `${colors.brand}`};
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: ${colors.white};
+`;

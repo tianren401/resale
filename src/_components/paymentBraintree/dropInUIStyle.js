@@ -2,10 +2,48 @@ import { css } from 'styled-components';
 
 import { colors, deviceSize } from '_constants';
 
-export const dropInStyle = css`
+export const dropInUIStyle = css`
   [data-braintree-id='wrapper'] {
     z-index: 0;
   }
+
+  [data-braintree-id='methods-edit'] {
+    right: 0;
+    text-decoration: none;
+    color: ${colors.brand};
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+
+    &:hover {
+      color: ${colors.lightBrand};
+    }
+  }
+
+  [data-braintree-id='methods-label'] {
+    visibility: hidden;
+    &:before {
+      content: 'Saved Cards';
+      visibility: visible;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+  [data-braintree-id='methods'] {
+    background: ${colors.white};
+    margin: 0;
+
+    [data-braintree-id='methods-container'] {
+      border-top: 2px solid ${colors.lightGray};
+      .braintree-method {
+        border: none;
+        width: 100%;
+        padding: 10px 0;
+      }
+    }
+  }
+
   [data-braintree-id='card'] {
     border: none;
     padding: 0;

@@ -31,4 +31,5 @@ export * from './performerVenueSimilarCarousel';
 export * from './dateRangeDropdown';
 export * from './faq';
 export * from './scrollToTop';
+export * from './paymentBraintree';
 export * from './places';

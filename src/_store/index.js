@@ -13,6 +13,7 @@ import seaticsReducer from './seatics';
 import ticketGroupListReducer from './ticketGroupList';
 import checkoutTicketReducer from './checkoutTicket';
 import uiReducer from './ui';
+import userProfileReducer from './userProfile';
 import { history } from '_helpers';
 
 const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   ticketGroupListReducer,
   checkoutTicketReducer,
   uiReducer,
+  userProfileReducer,
 });
 
 const store = configureStore({

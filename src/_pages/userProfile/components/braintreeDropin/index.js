@@ -2,58 +2,82 @@ import React, { useState } from 'react';
 import DropIn from 'braintree-web-drop-in-react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 
-import { getPaymentMethodNonce, toggleSaveCardInfo } from '_store/checkout';
-import { PrimaryButton, H2, Checkbox, dropInUIStyle } from '_components';
+import { getPaymentMethodNonce } from '_store/checkout';
+import { getClientToken } from '_store/checkout';
+import { dropInUIStyle, SuccessButton, TextButton } from '_components';
 import { colors, deviceSize } from '_constants';
 
 const Container = styled.div`
   width: 100%;
-  max-width: 480px;
-  padding: 24px 20px;
+  [data-braintree-id='methods-container'] {
+    .braintree-method__icon-container.braintree-method__check-container {
+      display: none;
+    }
+  }
+
+  [data-braintree-id='toggle'] {
+    margin-top: 30px;
+    padding: 0;
+    text-align: left;
+    background: ${colors.white};
+    & > span {
+      border: none;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+      color: ${colors.brand};
+      visibility: hidden;
+
+      &:before {
+        content: 'Add new card';
+        visibility: visible;
+      }
+
+      &:hover {
+        color: ${colors.lightBrand};
+      }
+    }
+  }
   ${dropInUIStyle};
 
   @media (max-width: ${deviceSize.tablet}px) {
     margin: auto;
-    background: ${colors.white};
-    max-width: 100%;
   }
 `;
 
-const StyledCheckbox = styled(Checkbox)`
-  margin-bottom: 24px;
-`;
-
-const Title = styled(H2)`
-  font-weight: 500;
-  margin-bottom: 32px;
-
-  @media (max-width: ${deviceSize.tablet}px) {
-    font-size: 18px;
-    line-height: 24px;
+const ButtonDiv = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  & > div {
+    width: 10px;
   }
 `;
+
 //Braintree drop-in UI
 
-export const PaymentField = () => {
+export const BraintreeDropIn = () => {
   const [braintreeInstance, setBraintreeInstance] = useState(null);
-  const { clientToken, saveCardInfo } = useSelector(
-    (state) => state.checkoutReducer
-  );
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const { clientToken } = useSelector((state) => state.checkoutReducer);
 
-  const toggleSaveCardInfoOption = () => {
-    dispatch(toggleSaveCardInfo());
+  const dispatch = useDispatch();
+
+  const cancelCard = () => {
+    dispatch(
+      getClientToken({
+        success: () => {},
+      })
+    );
   };
 
-  const handlePurchase = () => {
+  const saveCard = () => {
     dispatch(
       getPaymentMethodNonce({
         instance: braintreeInstance,
         success: () => {
-          history.push('/checkout/placeorder');
+          cancelCard();
         },
       })
     );
@@ -61,7 +85,6 @@ export const PaymentField = () => {
 
   return (
     <Container>
-      <Title>Payment Information</Title>
       {!!clientToken && (
         <DropIn
           options={{
@@ -93,28 +116,25 @@ export const PaymentField = () => {
                 },
               },
             },
-            venmo: {},
-            paypal: {
-              flow: 'vault',
-            },
-            vaultManager: false,
+            vaultManager: true,
+            preselectVaultedPaymentMethod: false,
           }}
           onInstance={(instance) => setBraintreeInstance(instance)}
         />
       )}
-      <StyledCheckbox
-        label="Save Credit Card for future payments"
-        checked={saveCardInfo}
-        handleChange={toggleSaveCardInfoOption}
-      />
-      <PrimaryButton
-        minWidth="100%"
-        fontSize="14px"
-        buttonSize="large"
-        onClick={handlePurchase}
-      >
-        Preview Order
-      </PrimaryButton>
+      <ButtonDiv>
+        <TextButton
+          color={colors.danger}
+          hoverColor={colors.dangerHover}
+          minWidth="120px"
+          onClick={cancelCard}
+        >
+          Cancel
+        </TextButton>
+        <SuccessButton minWidth="120px" onClick={saveCard}>
+          Save Card
+        </SuccessButton>
+      </ButtonDiv>
     </Container>
   );
 };

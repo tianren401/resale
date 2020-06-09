@@ -12,7 +12,7 @@ export const Modal = ({ isOpen, closeModal, customStyles, children }) => {
       onRequestClose={closeModal}
       style={{
         ...customStyles,
-        overlay: { zIndex: zIndexes.OVERLAY },
+        overlay: { ...customStyles.overlay, zIndex: zIndexes.OVERLAY },
       }}
     >
       {children}

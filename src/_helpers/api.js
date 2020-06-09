@@ -143,7 +143,7 @@ export function post({ path, body = {}, opts = {} }) {
 export function put({ path, body = {}, opts = {} }) {
   return request({
     path,
-    body: {
+    opts: {
       method: 'PUT',
       body: JSON.stringify(body),
       ...opts,

@@ -68,6 +68,27 @@ export const SuccessButton = styled(Button)`
   }
 `;
 
+export const DangerButton = styled(Button)`
+  transition: opacity 100ms ease-out;
+  color: ${colors.white};
+  background: ${colors.danger};
+
+  &:disabled {
+    color: ${colors.gray};
+    background: ${colors.lightGray};
+    opacity: 0.5;
+  }
+
+  &:active {
+    background: ${colors.dangerHover};
+    box-shadow: ${shadows.small};
+  }
+
+  &:hover:not(:disabled) {
+    background: ${colors.dangerHover};
+  }
+`;
+
 export const SecondaryButton = styled(Button)`
   color: ${colors.brand};
   background: ${colors.lightBrand};
@@ -89,7 +110,7 @@ export const SecondaryButton = styled(Button)`
 `;
 
 export const TextButton = styled(Button)`
-  background: ${colors.brand};
+  background: ${(props) => props.color || `${colors.brand}`};
   line-height: ${(props) => props.lineHight || '20px'};
   padding: 0;
   -webkit-background-clip: text;
@@ -103,7 +124,7 @@ export const TextButton = styled(Button)`
   }
 
   &:hover:not(:disabled) {
-    background: ${colors.brandHover};
+    background: ${(props) => props.hoverColor || `${colors.brandHover}`};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

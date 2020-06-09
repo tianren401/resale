@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -55,12 +55,13 @@ const Error = styled.div`
 
 const PasswordInputContainer = styled.div`
   width: 100%;
+  position: relative;
 `;
 
 const ShowPasswordImage = styled.img`
-  position: relative;
-  left: 150px;
-  bottom: 35px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
   cursor: pointer;
 `;
 
@@ -86,6 +87,11 @@ export const PasswordInputField = ({
   const handleClick = () => {
     dispatch(setPasswordInputType());
   };
+
+  useEffect(() => {
+    dispatch(setPasswordInputType(true));
+  }, [dispatch]);
+
   return (
     <div>
       {!!label && <Label fontSize={labelSize}>{label}</Label>}

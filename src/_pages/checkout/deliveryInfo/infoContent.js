@@ -17,6 +17,7 @@ import {
 import { colors, deviceSize } from '_constants';
 import ticketProtectIcon from '_images/ticketProtectIcon.svg';
 import { LoginModal } from '_pages';
+import { phoneRegExp } from '_helpers';
 
 const Container = styled.div`
   width: 60%;
@@ -118,7 +119,6 @@ export const InfoContent = ({ handleSubmit }) => {
 
   const handleModalOpen = () => setIsOpenModal(true);
   const closeModal = () => setIsOpenModal(false);
-  const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
   const schema = Yup.object().shape({
     email: Yup.string()

@@ -165,7 +165,7 @@ export const HomeNavigation = () => {
         {isAuthorized ? (
           <>
             <UserItems onClick={handleLogout}>Log Out</UserItems>
-            <UserItems>
+            <UserItems to="/user">
               <InitialsBadge>
                 {firstInitial}
                 {lastInitial}

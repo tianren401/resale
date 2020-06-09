@@ -53,7 +53,7 @@ export const TicketModal = ({ isOpenModal, closeModal }) => {
   return (
     <Modal
       isOpen={isOpenModal}
-      onRequestClose={closeModal}
+      closeModal={closeModal}
       customStyles={modelStyles}
     >
       {!!vfsURL && <VFS image={`url(${vfsURL})`} />}

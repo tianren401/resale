@@ -32,6 +32,9 @@ const authSlice = createSlice({
       state.user = null;
       authService.removeAuthInStorage();
     },
+    setUser(state, action) {
+      state.user = action.payload;
+    },
   },
   extraReducers: {
     [loginAction.fulfilled]: (state, action) => {
@@ -52,5 +55,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setUser } = authSlice.actions;
 export default authSlice.reducer;
