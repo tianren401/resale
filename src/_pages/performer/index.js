@@ -19,10 +19,15 @@ export const Performer = ({ performerId }) => {
   const { performer } = useSelector(reducer);
 
   const dispatch = useDispatch();
+  const searchLocation = useSelector(
+    ({ searchReducer }) => searchReducer.location
+  );
 
   useEffect(() => {
-    dispatch(getPerformerEventsAction({ id: performerId }));
-  }, [dispatch, performerId]);
+    dispatch(
+      getPerformerEventsAction({ id: performerId, location: searchLocation })
+    );
+  }, [dispatch, performerId, searchLocation]);
 
   const [modalOpen, setModalOpen] = useState(false);
 

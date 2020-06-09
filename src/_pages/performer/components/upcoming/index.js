@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import 'react-day-picker/lib/style.css';
 
-import { isMobileDevice } from '_helpers';
 import { TabbedContent } from '_components/tabbedContent';
 import {
   EventList,
@@ -17,12 +16,13 @@ import {
   ComponentContainer,
   DayPickerRow,
   UpcomingText,
-  ColoredLocationText,
-  LocationText,
   TextContainer,
   StyledDateRangeDropdown,
   StyledPlaces,
 } from './styledComponents';
+import { useViewport } from '_hooks';
+import { deviceSize } from '_constants';
+import { searchService } from '_services';
 
 export const Upcoming = ({ events, sendToPage }) => {
   const dateRange = useSelector(({ searchReducer }) => searchReducer.dateRange);
@@ -48,6 +48,9 @@ export const Upcoming = ({ events, sendToPage }) => {
         new Date(Date.parse(event.timestamp)).getDay() === 6 ||
         new Date(Date.parse(event.timestamp)).getDay() === 0
     );
+
+  const { width } = useViewport();
+  const isMobileDevice = width < deviceSize.tablet;
 
   useEffect(() => {
     //checking if filtered events already match the input date range
@@ -150,6 +153,10 @@ export const Upcoming = ({ events, sendToPage }) => {
     sendToPage(state);
   };
 
+  const searchLocation = useSelector(
+    ({ searchReducer }) => searchReducer.location
+  );
+
   return (
     <ComponentContainer>
       {modalOpen ? (
@@ -167,21 +174,21 @@ export const Upcoming = ({ events, sendToPage }) => {
                     onClick={() => handleModalOpen(!modalOpen)}
                   />
                   <StyledPlaces
-                    defaultRefinement={{
-                      lat: 32.8203525,
-                      lng: -97.011731,
-                    }}
+                    defaultRefinement={
+                      searchLocation || searchService.defaultLocation
+                    }
                   />
                 </DayPickerRow>
               ) : (
                 <DayPickerRow>
                   <TextContainer>
                     <UpcomingText>Upcoming Events</UpcomingText>
-                    <LocationText>
-                      Events near
-                      <ColoredLocationText>Dallas, TX</ColoredLocationText>
-                    </LocationText>
                   </TextContainer>
+                  <StyledPlaces
+                    defaultRefinement={
+                      searchLocation || searchService.defaultLocation
+                    }
+                  />
                   <StyledDateRangeDropdown />
                 </DayPickerRow>
               )}

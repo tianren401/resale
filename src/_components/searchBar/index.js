@@ -18,6 +18,7 @@ import { CategoriesDropdown } from './categoriesDropdown';
 import { DateRangeDropdown } from '_components/dateRangeDropdown';
 import { SearchFilterIcon } from '_components/icon/svgIcons';
 import { deviceSize } from '_constants';
+import { searchService } from '_services/search';
 
 export const SearchBar = ({
   showDropdown,
@@ -67,11 +68,6 @@ export const SearchBar = ({
   const searchResults = useSelector(
     ({ searchReducer }) => searchReducer.results
   );
-
-  const defaultLocation = {
-    lat: 32.8203525,
-    lng: -97.011731,
-  };
 
   const { setSearchState } = useAlgoliaSearch({
     isMultiple: true,
@@ -124,7 +120,11 @@ export const SearchBar = ({
             <CategoriesDropdown />
           </Flex>
           <Flex flex={1} justify="center">
-            <Places defaultRefinement={searchLocation || defaultLocation} />
+            <Places
+              defaultRefinement={
+                searchLocation || searchService.defaultLocation
+              }
+            />
           </Flex>
           <Flex flex={1} justify="center">
             <DateRangeDropdown />

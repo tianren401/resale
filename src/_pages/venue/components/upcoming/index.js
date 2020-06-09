@@ -17,8 +17,6 @@ import {
   ComponentContainer,
   DayPickerRow,
   UpcomingText,
-  ColoredLocationText,
-  LocationText,
   TextContainer,
   StyledDateRangeDropdown,
   StyledPlaces,
@@ -144,8 +142,8 @@ export const Upcoming = ({ events, sendToPage }) => {
                   />
                   <StyledPlaces
                     defaultRefinement={{
-                      lat: 32.8203525,
-                      lng: -97.011731,
+                      latitude: 32.8203525,
+                      longitude: -97.011731,
                     }}
                   />
                 </DayPickerRow>
@@ -153,10 +151,6 @@ export const Upcoming = ({ events, sendToPage }) => {
                 <DayPickerRow>
                   <TextContainer>
                     <UpcomingText>Upcoming Events</UpcomingText>
-                    <LocationText>
-                      Events near
-                      <ColoredLocationText>Dallas, TX</ColoredLocationText>
-                    </LocationText>
                   </TextContainer>
                   <StyledDateRangeDropdown />
                 </DayPickerRow>

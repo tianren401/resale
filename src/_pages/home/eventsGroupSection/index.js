@@ -1,26 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { TiledSection } from '_components';
+import { Places } from '_components/places';
+import { useViewport } from '_hooks';
+import { deviceSize } from '_constants';
 import {
   StyledGroup,
   TriangleOverlay,
   Container,
-  Title,
   EventTypeNavigation,
   SelectedTypeBtn,
   UnselectedTypeBtn,
+  LocationContainer,
 } from './styledComponents';
 import { groupEventTypeOptions } from '_constants';
+import { searchService } from '_services';
 
 export const EventsGroup = ({ events, gutter, onChangeType, eventType }) => {
+  const searchLocation = useSelector(
+    ({ searchReducer }) => searchReducer.location
+  );
+
+  const windowSize = useViewport();
+  const isMobileDevice = windowSize.width < deviceSize.tablet;
   return (
     <StyledGroup>
       <TriangleOverlay />
       <Container>
-        <Title>
-          Events near <span>Dallas, TX</span>
-        </Title>
+        {isMobileDevice && (
+          <LocationContainer>
+            <Places
+              defaultRefinement={
+                searchLocation || searchService.defaultLocation
+              }
+              isHome
+            />
+          </LocationContainer>
+        )}
         <EventTypeNavigation>
           {groupEventTypeOptions.map((item) => {
             const Component =
@@ -34,6 +52,16 @@ export const EventsGroup = ({ events, gutter, onChangeType, eventType }) => {
               </Component>
             );
           })}
+          {!isMobileDevice && (
+            <LocationContainer>
+              <Places
+                defaultRefinement={
+                  searchLocation || searchService.defaultLocation
+                }
+                isHome
+              />
+            </LocationContainer>
+          )}
         </EventTypeNavigation>
         <TiledSection
           events={

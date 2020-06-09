@@ -9,8 +9,7 @@ import { Box } from '_components/styledTags';
 import { colors, deviceSize } from '_constants';
 
 export const StyledDropdown = styled.div`
-  background-color: white;
-  padding: 4px 12px;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,7 +24,22 @@ export const StyledDropdown = styled.div`
   border: 1px solid ${colors.lightGray};
   box-sizing: border-box;
   border-radius: 6px;
+  max-height: 48px;
 
+  ${({ isHome }) =>
+    isHome &&
+    `
+  background-color: transparent;
+    border-color: white;
+    color: white;
+
+    &:hover {
+      border-color: white;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
+      0px 0px 2px rgba(130, 136, 148, 0.16);
+  }
+  `}
+  
   @media (max-width: ${deviceSize.tablet}px) {
     width: 100%;
 
@@ -43,8 +57,13 @@ export const StyledDropdown = styled.div`
   }
 
   &:hover {
+
+    ${({ isHome }) =>
+      !isHome &&
+      `
     border-color: ${colors.brand};
     color: ${colors.brand};
+    `}
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
       0px 0px 2px rgba(130, 136, 148, 0.16);
   }
@@ -79,13 +98,27 @@ export const StyledDropdown = styled.div`
     display: none !important;
   }
 
-  input.ap-input {
-    border: none !important;
+  input {
+    background-color: transparent;
+
+    &.ap-input {
+      border: none !important;
+      border-radius: 6px;
+    }
+
+    &:focus {
+      background-color: white;
+    }
+  }
+
+  .ap-name {
+    color: ${colors.brand};
   }
 
   .ap-input-icon {
+    right: 0px !important;
     &.ap-icon-clear {
-      right: 0 !important;
+      margin-right: 5px !important;
     }
 
     &.ap-icon-pin {
@@ -93,9 +126,13 @@ export const StyledDropdown = styled.div`
     }
   }
 
+  .ap-input-icon:hover svg {
+    display: none !important;
+  }
+
   .ap-dropdown-menu {
-    left: -36px !important;
-    width: calc(100% + 48px) !important;
+    left: 0;
+    width: 100%;
     margin-top: 13px;
   }
 
@@ -118,6 +155,11 @@ export const StyledDropdown = styled.div`
 export const IconContainer = styled(Box)`
   display: flex;
   align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 12px;
+  z-index: 1;
 `;
 
 export const DropdownArrowDown = styled(DropdownExpandIcon)`
@@ -158,6 +200,7 @@ export const SearchInput = styled.input`
   border: 0;
   width: 100%;
   box-sizing: border-box;
+  border-radius: 6px;
   padding: 1px;
   transition: width 0.3s;
   padding-left: 15px;
@@ -167,11 +210,18 @@ export const SearchInput = styled.input`
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
-  height: 40px;
+  height: 46px;
+  padding: 10px 18px 10px 44px;
   color: ${colors.black};
 
   &:hover {
+
+    ${({ isHome }) =>
+      !isHome &&
+      `
     color: ${colors.brand};
+    `}
+    
   }
 
   &:focus {
@@ -191,9 +241,26 @@ export const SearchInput = styled.input`
     }
   }
 
+  ${({ isHome }) =>
+    isHome &&
+    `
+    color: white;
+
+    &::placeholder {
+      color: white;
+
+      @media (max-width: ${deviceSize.tablet}px) {
+        color: ${colors.brand};
+      }
+      &:hover {
+        color: ${colors.brand};
+      }
+    }
+  `}
+
   @media (max-width: ${deviceSize.tablet}px) {
     padding-right: 20px;
-    padding-left: 20px;
+    padding-left: 44px;
   }
 `;
 

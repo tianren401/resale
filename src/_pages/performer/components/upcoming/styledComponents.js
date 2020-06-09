@@ -15,6 +15,14 @@ export const DayPickerRow = styled.div`
   justify-content: space-between;
   margin: 10px auto;
   padding: 20px;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding: 10px;
+
+    > div:nth-child(2n) {
+      margin-left: 20px;
+    }
+  }
 `;
 
 export const UpcomingText = styled.div`

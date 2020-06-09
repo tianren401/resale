@@ -49,14 +49,14 @@ export const Places = ({ defaultRefinement, className }) => {
   const { latitude, longitude, error } = useBrowserLocation(true);
 
   useEffect(() => {
-    if (!error && !!latitude && !!longitude) {
+    if (!error && !!latitude && !!longitude && !searchLocation) {
       handleSetLocation({
-        lat: latitude,
-        lng: longitude,
+        latitude,
+        longitude,
       });
     }
     return () => {};
-  }, [latitude, longitude, error, handleSetLocation]);
+  }, [latitude, longitude, error, handleSetLocation, searchLocation]);
 
   useEffect(() => {
     if (myInput.current && !autocomplete.current) {
@@ -65,8 +65,15 @@ export const Places = ({ defaultRefinement, className }) => {
       });
 
       autocomplete.current.on('change', (event) => {
-        // not use global search geosearch config
-        handleSetLocation(event.suggestion.latlng);
+        const {
+          latlng: { lat, lng },
+          value,
+        } = event.suggestion;
+        handleSetLocation({
+          latitude: lat,
+          longitude: lng,
+          address: value,
+        });
         autocomplete.current.close();
       });
 
@@ -77,10 +84,9 @@ export const Places = ({ defaultRefinement, className }) => {
     }
   }, [handleSetLocation, defaultRefinement]);
 
-  const placeHolder =
-    searchLocation?.lat && searchLocation?.lng
-      ? 'Current Location'
-      : 'Any Location';
+  const placeHolder = !searchLocation?.address
+    ? 'Current Location'
+    : searchLocation.address || 'Any Location';
 
   return (
     <>
@@ -90,7 +96,7 @@ export const Places = ({ defaultRefinement, className }) => {
         </IconContainer>
         <SearchInput
           ref={myInput}
-          type="search"
+          type="text"
           id="address-input-mobile"
           placeholder={placeHolder}
         />

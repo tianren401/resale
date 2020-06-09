@@ -1,20 +1,8 @@
-import { getESResults } from '_helpers/api';
-
-function searchLocation(query) {
-  return getESResults({
-    path: 'search/venues/_search',
-    parameters: { q: query.trim() },
-  });
-}
-
-function searchQuery(query) {
-  return getESResults({
-    path: 'search/_search',
-    parameters: { q: query.trim() },
-  });
-}
+const defaultLocation = {
+  latitude: 32.8203525,
+  longitude: -97.011731,
+};
 
 export const searchService = {
-  searchLocation,
-  searchQuery,
+  defaultLocation,
 };

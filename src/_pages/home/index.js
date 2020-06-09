@@ -21,6 +21,10 @@ export const Home = () => {
 
   const { home } = useSelector((state) => state.homeReducer);
 
+  const searchLocation = useSelector(
+    ({ searchReducer }) => searchReducer.location
+  );
+
   const dispatch = useDispatch();
 
   const handleChangeType = (type) => {
@@ -29,8 +33,8 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    dispatch(getHomeAction());
-  }, [dispatch]);
+    dispatch(getHomeAction(searchLocation));
+  }, [dispatch, searchLocation]);
   return (
     <Container>
       {home && <Hero events={home.hero} />}

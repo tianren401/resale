@@ -2,10 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { homeService } from '_services';
 
-export const getHomeAction = createAsyncThunk('content/home/get', async () => {
-  const response = await homeService.getHome();
-  return response;
-});
+export const getHomeAction = createAsyncThunk(
+  'content/home/get',
+  async (location) => {
+    const response = await homeService.getHome(location);
+    return response;
+  }
+);
 
 const homeSlice = createSlice({
   name: 'home',

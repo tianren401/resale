@@ -1,12 +1,11 @@
 import { get } from '_helpers/api';
 
-function getPerformerEvents(id) {
+function getPerformerEvents(id, location) {
   return get({
     path: `content/performer/${id}`,
     parameters: {
-      //temporarily hard coded until we pass in values from the browser
-      latitude: 32.7767,
-      longitude: -96.797,
+      latitude: location?.latitude || 32.8203525,
+      longitude: location?.longitude || -97.011731,
     },
   });
 }

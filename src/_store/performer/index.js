@@ -6,7 +6,8 @@ export const getPerformerEventsAction = createAsyncThunk(
   'content/performer/get',
   async (payload) => {
     const response = await performerEventsService.getPerformerEvents(
-      payload.id
+      payload.id,
+      payload.location
     );
     return response;
   }

@@ -25,7 +25,8 @@ export const StyledDropdown = styled.div`
   border: 1px solid ${colors.lightGray};
   box-sizing: border-box;
   border-radius: 6px;
-
+  max-height: 48px;
+  
   &:hover {
     border-color: ${colors.brand};
     color: ${colors.brand};
@@ -54,7 +55,8 @@ export const StyledDropdown = styled.div`
   `}
 
   @media (max-width: ${deviceSize.tablet}px) {
-    width: 100%
+    width: 100%;
+    min-width: auto;
   }
 `;
 

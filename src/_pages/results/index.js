@@ -9,6 +9,7 @@ import { ResultsList } from './components';
 import { HomeLayout } from '_components';
 import { loadMoreEvents, setQuery, setResults } from '_store/search';
 import { deviceSize } from '_constants';
+import { searchService } from '_services';
 
 const Container = styled(HomeLayout)`
   width: 100%;
@@ -54,11 +55,6 @@ export const Results = () => {
     [dispatch]
   );
 
-  const defaultLocation = {
-    lat: 32.8203525,
-    lng: -97.011731,
-  };
-
   const resultsSearchConfig = {
     defaultIndex: 'events',
     indices: ['events', 'performers', 'venues'],
@@ -69,8 +65,8 @@ export const Results = () => {
       date: searchDate,
       dateRange: searchDateRange,
       location: searchLocation
-        ? Object.values(searchLocation).join(', ')
-        : Object.values(defaultLocation).join(', '),
+        ? [searchLocation.latitude, searchLocation.longitude].join(', ')
+        : Object.values(searchService.defaultLocation).join(', '),
       eventPageSize: searchEventPageSize,
     },
   };

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { EventCarousel } from '_components';
-import { Container, Header, Filter, Title } from './styledComponents';
+import { Container, Header, Title } from './styledComponents';
 
 export const UpcomingSection = ({ events }) => {
   const sports = events?.sports;
@@ -14,9 +14,6 @@ export const UpcomingSection = ({ events }) => {
   return (
     <Container>
       <Header>
-        <Filter>
-          Events near <span>Dallas, TX</span>
-        </Filter>
         <Title>Upcoming events near you</Title>
       </Header>
       {events &&

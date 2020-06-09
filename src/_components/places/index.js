@@ -8,15 +8,17 @@ import { setLocation } from '_store/search';
 import { StyledDropdown, SearchInput, IconContainer } from './styledComponents';
 
 import { LocationIcon } from '_components/icon/svgIcons';
-import { deviceSize } from '_constants';
+import { deviceSize, colors } from '_constants';
 import { MobilePlacesModal } from './mobilePlaceModal';
 
-export const Places = ({ defaultRefinement, className }) => {
+export const Places = ({ defaultRefinement, isHome }) => {
+  const [isFocused, setIsFocused] = useState(false);
   const handleClickAway = () => {
     // hide dropdown
     if (autocomplete.current) {
       autocomplete.current.close();
     }
+    setIsFocused(false);
   };
   // create our ref
   const myInput = useRef();
@@ -50,17 +52,18 @@ export const Places = ({ defaultRefinement, className }) => {
     if (isMobileDevice) {
       setShowModal(true);
     }
+    setIsFocused(true);
   };
 
   useEffect(() => {
-    if (!error && !!latitude && !!longitude) {
+    if (!error && !!latitude && !!longitude && !searchLocation) {
       handleSetLocation({
-        lat: latitude,
-        lng: longitude,
+        latitude,
+        longitude,
       });
     }
     return () => {};
-  }, [latitude, longitude, error, handleSetLocation]);
+  }, [latitude, longitude, error, handleSetLocation, searchLocation]);
 
   useEffect(() => {
     if (myInput.current && !autocomplete.current) {
@@ -69,8 +72,15 @@ export const Places = ({ defaultRefinement, className }) => {
       });
 
       autocomplete.current.on('change', (event) => {
-        // not use global search geosearch config
-        handleSetLocation(event.suggestion.latlng);
+        const {
+          latlng: { lat, lng },
+          value,
+        } = event.suggestion;
+        handleSetLocation({
+          latitude: lat,
+          longitude: lng,
+          address: value,
+        });
         autocomplete.current.close();
       });
 
@@ -81,23 +91,27 @@ export const Places = ({ defaultRefinement, className }) => {
     }
   }, [handleSetLocation, defaultRefinement]);
 
-  const placeHolder =
-    searchLocation?.lat && searchLocation?.lng
-      ? 'Current Location'
-      : 'Any Location';
+  const placeHolder = !searchLocation?.address
+    ? 'Current Location'
+    : searchLocation.address || 'Any Location';
 
   return (
     <>
-      <StyledDropdown className={className}>
+      <StyledDropdown isHome={!isMobileDevice ? isHome : ''}>
         <IconContainer>
-          <LocationIcon />
+          <LocationIcon
+            fill={
+              !isMobileDevice && isHome && !isFocused ? '#ffffff' : colors.brand
+            }
+          />
         </IconContainer>
         <SearchInput
           ref={!isMobileDevice ? myInput : null}
-          type="search"
+          type="text"
           id="address-input"
           placeholder={placeHolder}
           onClick={handleInputClick}
+          isHome={isHome}
         />
       </StyledDropdown>
       <MobilePlacesModal isOpen={showModal} handleClose={handleClose} />
@@ -107,5 +121,5 @@ export const Places = ({ defaultRefinement, className }) => {
 
 Places.propTypes = {
   defaultRefinement: PropTypes.object,
-  className: PropTypes.string,
+  isHome: PropTypes.bool,
 };

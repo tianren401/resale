@@ -31,7 +31,7 @@ export const TriangleOverlay = styled.div`
 export const Container = styled.div`
   width: 100%;
   margin: auto;
-  padding: 80px 0 30px;
+  padding: 50px 0 30px;
   max-width: 940px;
 
   @media (min-width: ${deviceSize.tablet}px) {
@@ -129,5 +129,16 @@ export const UnselectedTypeBtn = styled.div`
   @media (min-width: ${deviceSize.tablet}px) {
     color: #d3bef7;
     border: none;
+  }
+`;
+
+export const LocationContainer = styled.div`
+  flex: 1;
+  margin-right: 0 !important;
+  display: flex;
+  justify-content: flex-end;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    padding: 12px 16px;
   }
 `;
