@@ -34,3 +34,4 @@ export * from './searchBar';
 export * from './styledTags';
 export * from './tiledSection';
 export * from './venueCard';
+export * from './rangeSlider';

@@ -3,29 +3,38 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { ajaxGet } from '../../_helpers/api';
+import {
+  FilterOptions,
+  PreCheckout,
+  TicketGroupList,
+  RedirectModal,
+} from './components';
+import { EventLayout, Loader } from '_components';
 import { getTicketGroupListAction } from '_store/ticketGroupList';
 import { setCheckoutTicketEventDataAction } from '_store/checkoutTicket';
-import { EventLayout, Loader } from '_components';
-import { TicketGroupList } from './components/ticketGroupList';
-import { PreCheckout } from './components/preCheckout';
-import { FilterOptions } from './components/filterOptions';
-import { navigationHeight } from '../../_constants';
+import { ajaxGet } from '_helpers/api';
+import { navigationHeight } from '_constants';
+import { isMobileDevice } from '_helpers';
+import { deviceSize } from '_constants';
 
 const LoaderContainer = styled.div`
   display: absolute;
-  top: 0px;
-  width: 100vh;
-  height: 100vw;
-  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
 `;
 
 const Container = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: column wrap;
   align-content: flex-start;
   width: 100%;
-  height: calc(100vh - ${navigationHeight}px);
+  height: calc(100% - ${navigationHeight}px);
+  overflow: hidden;
+
+  @media (max-width: ${deviceSize.mobileL}px) {
+    flex-flow: column nowrap;
+  }
 `;
 
 const TicketsContainer = styled.div`
@@ -33,27 +42,35 @@ const TicketsContainer = styled.div`
   width: 320px;
   height: 100%;
   box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.15);
-  overflow: auto;
+  background-color: white;
+  overflow: hidden;
+
+  @media (max-width: ${deviceSize.mobileL}px) {
+    order: 2;
+    width: 100%;
+    min-height: calc(55% - ${navigationHeight}px);
+    box-shadow: none;
+  }
 
   ${({ checkout }) =>
     checkout &&
     `
-    overflow: hidden;
+    @media (min-width: ${deviceSize.tablet}px) {
+      overflow: hidden;
+    }
     `};
 `;
 
-const MapFilterContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 320px);
-  height: 93%;
-`;
-
 const MapContainer = styled.div`
+  width: calc(100% - 340px);
+  height: calc(100% - 70px - ${navigationHeight}px);
   margin: 10px;
-  width: calc(100% - 20px);
-  height: calc(100% - 10px);
-  z-index: 0;
+
+  @media (max-width: ${deviceSize.mobileL}px) {
+    width: 100%;
+    min-height: calc(45% - ${navigationHeight}px);
+    margin: 0px 0px 5px;
+  }
 `;
 
 export const SeatSelection = ({ eventId }) => {
@@ -66,13 +83,18 @@ export const SeatSelection = ({ eventId }) => {
   const [eventData, setEventData] = useState(null);
   const [mapData, setMapData] = useState(null);
   const [filterOptions, setFilterOptions] = useState(null);
-  const [loadingEventData, setLoadingEventData] = useState(true);
+  const [loadingEvent, setLoadingEvent] = useState(true);
+  const [loadingFailed, setLoadingfailed] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
-      const seaticsData = await ajaxGet(`maps/${eventId}`, 'jsonp');
-      setEventData(await seaticsData[0]);
-      setMapData(await seaticsData[1]);
+      try {
+        const seaticsData = await ajaxGet(`maps/${eventId}`, 'jsonp');
+        setEventData(await seaticsData[0]);
+        setMapData(await seaticsData[1]);
+      } catch {
+        setLoadingfailed(true);
+      }
     };
 
     const loadSeaticsMapFramework = (callback) => {
@@ -102,8 +124,10 @@ export const SeatSelection = ({ eventId }) => {
     });
 
     return function cleanup() {
-      window.Seatics.MapComponent.clear();
-      window.Seatics.unbindEvents();
+      if (window.Seatics?.MapComponent?.clear) {
+        window.Seatics.MapComponent.clear();
+        window.Seatics.unbindEvents();
+      }
     };
   }, [dispatch, eventId]);
 
@@ -135,30 +159,49 @@ export const SeatSelection = ({ eventId }) => {
             );
           },
         },
-        mapWidth: 1,
-        mapHeight: 1,
+        mapWidth: 525,
+        mapHeight: 545,
         mapName: eventData.mapName,
-        enableSectionInfoPopups: true,
       });
 
-      window.Seatics.MapComponent.onTicketListDrawn(setLoadingEventData(false));
+      if (isMobileDevice) {
+        window.Seatics.config.showResetControl = false;
+        window.Seatics.config.showZoomControls = false;
+      }
+
+      var mapLoadingListener = (eventType, eventData) => {
+        if (eventData === 'FinishedDrawingMap') {
+          setLoadingEvent(false);
+
+          // Zoom Controls seem to need to be removed manually
+          if (isMobileDevice) {
+            const zoom = document.getElementById('venue-map-zoom-controls');
+            if (zoom) {
+              zoom.parentNode.removeChild(zoom);
+            }
+          }
+        }
+      };
+
+      window.Seatics.TrackingEvents.registerEventListener(mapLoadingListener);
       setFilterOptions(window.Seatics.MapComponent.getFilterOptions());
     }
   }, [
-    mapData,
-    ticketData.ticketGroups,
-    eventData,
-    setFilterOptions,
-    ticketData.ticketGroupListFormatted,
-    dispatch,
     eventId,
+    mapData,
+    eventData,
+    ticketData.ticketGroups,
+    ticketData.ticketGroupListFormatted,
+    setFilterOptions,
+    dispatch,
   ]);
 
   return (
     <EventLayout>
-      {loadingEventData && (
+      {loadingEvent && (
         <LoaderContainer>
           <Loader centered />
+          {loadingFailed && <RedirectModal />}
         </LoaderContainer>
       )}
       <Container>
@@ -166,13 +209,11 @@ export const SeatSelection = ({ eventId }) => {
           <TicketGroupList ref={ticketListRef} />
           <PreCheckout selectedTicketGroup={checkoutTicket.ticketGroupId} />
         </TicketsContainer>
-        <MapFilterContainer>
-          <FilterOptions
-            filterOptions={filterOptions}
-            setFilterOptions={setFilterOptions}
-          />
-          <MapContainer ref={mapContainerRef} />
-        </MapFilterContainer>
+        <FilterOptions
+          filterOptions={filterOptions}
+          setFilterOptions={setFilterOptions}
+        />
+        <MapContainer ref={mapContainerRef} />
       </Container>
     </EventLayout>
   );

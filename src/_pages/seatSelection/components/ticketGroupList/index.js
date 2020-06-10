@@ -1,60 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
+import {
+  StyledTicketGroupListContainer,
+  StyledTicketGroupList,
+  StyledTicketListSection,
+  StyledTicketListSectionTitle,
+  VFSImageContainer,
+  VFSImage,
+  VFSImageMessage,
+  NoTicketsContainer,
+  StyledTextDiv,
+} from './styledComponents';
 import { TicketGroup } from './ticketGroup';
+import { isMobileDevice } from '_helpers';
 import vfsPlaceHolder from '_images/vfsPlaceHolder.svg';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-`;
-
-const StyledTicketList = styled.div`
-  width: 100%;
-  height: 100%;
-  display: block;
-  overflow: auto;
-`;
-
-const StyledTicketListSection = styled.div`
-  width: 100%;
-`;
-
-const StyledTicketListSectionTitle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #f0f0f5;
-  height: 36px;
-  font-weight: bold;
-`;
-
-const SeatImageContainer = styled.div`
-  height: 162px;
-  width: 280px;
-  margin: 30px 20px;
-`;
-
-const SeatImage = styled.img`
-  height: 100%;
-  width: 100%;
-  border-radius: 8px;
-`;
-
-const SeatImageMessage = styled.p`
-  position: absolute;
-  top: 81px;
-  height: 81px;
-  width: 280px;
-  text-align: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #babbc2;
-`;
 
 export const TicketGroupList = React.forwardRef((props, ref) => {
   const [ticketDataSegmented, setTicketDataSegmentd] = React.useState([]);
@@ -78,7 +37,7 @@ export const TicketGroupList = React.forwardRef((props, ref) => {
     },
   }));
 
-  const renderTicketGroups = (tickets) => {
+  const renderTicketGroups = ({ tickets, isOnMap }) => {
     return tickets.map((ticketGroup) => {
       return (
         <TicketGroup
@@ -87,6 +46,7 @@ export const TicketGroupList = React.forwardRef((props, ref) => {
           vfsImage={vfsImage}
           setVFSImage={setVFSImage}
           setSeatMessage={setSeatMessage}
+          isOnMap={isOnMap}
         />
       );
     });
@@ -97,30 +57,37 @@ export const TicketGroupList = React.forwardRef((props, ref) => {
       return (
         <StyledTicketListSection key={segment.type}>
           <StyledTicketListSectionTitle>
-            {segment.title}
+            Tickets not shown on map
           </StyledTicketListSectionTitle>
-          {renderTicketGroups(segment.tickets)}
+          {renderTicketGroups({ tickets: segment.tickets, isOnMap: false })}
         </StyledTicketListSection>
       );
     } else {
       return (
         <StyledTicketListSection key={segment.type ?? 1}>
-          {renderTicketGroups(segment.tickets)}
+          {renderTicketGroups({ tickets: segment.tickets, isOnMap: true })}
         </StyledTicketListSection>
       );
     }
   });
 
-  return (
-    <Container>
-      {vfsImage && (
-        <SeatImageContainer>
-          <SeatImage src={vfsImage} alt={'view from seat'} />
-          <SeatImageMessage>{seatMessage}</SeatImageMessage>
-        </SeatImageContainer>
+  return ticketDataSegmented[0]?.tickets.length === 0 ? (
+    <NoTicketsContainer>
+      <StyledTextDiv fontWeight={'600'}>
+        No tickets available for event
+      </StyledTextDiv>
+      <StyledTextDiv>Try modifying filters</StyledTextDiv>
+    </NoTicketsContainer>
+  ) : (
+    <StyledTicketGroupListContainer>
+      {vfsImage && !isMobileDevice && (
+        <VFSImageContainer>
+          <VFSImage src={vfsImage} alt={'view from seat'} />
+          <VFSImageMessage>{seatMessage}</VFSImageMessage>
+        </VFSImageContainer>
       )}
-      <StyledTicketList ref={ref}>{renderSegments}</StyledTicketList>
-    </Container>
+      <StyledTicketGroupList ref={ref}>{renderSegments}</StyledTicketGroupList>
+    </StyledTicketGroupListContainer>
   );
 });
 

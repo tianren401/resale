@@ -1,48 +1,23 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
+import {
+  StyledTicketGroup,
+  TicketInformation,
+  TicketSectionRow,
+  TicketQuantity,
+  TicketPriceButton,
+} from './styledComponents';
 import { setPreCheckoutTicketDataAction } from '_store/checkoutTicket';
 import vfsPlaceHolder from '_images/vfsPlaceHolder.svg';
-
-const StyledTicketGroup = styled.div`
-  display: flex;
-  align-items: center;
-  border: 1px solid #f0f0f5;
-  height: 72px;
-`;
-
-const TicketInformation = styled.div`
-  width: 210px;
-  align-content: center;
-  padding: 20px;
-`;
-
-const TicketSectionRow = styled.p`
-  font-size: 14px;
-  font-weight: bold;
-`;
-
-const TicketQuantity = styled.p`
-  font-size: 12px;
-  color: #757575;
-`;
-
-const TicketPrice = styled.button`
-  background-color: #6726f1;
-  color: white;
-  font-weight: 600;
-  border-radius: 6px;
-  height: 36px;
-  width: 90px;
-`;
 
 export const TicketGroup = ({
   ticketGroupData,
   vfsImage,
   setVFSImage,
   setSeatMessage,
+  isOnMap,
 }) => {
   const ticketData = useSelector((state) => state.ticketGroupListReducer);
   const dispatch = useDispatch();
@@ -54,7 +29,7 @@ export const TicketGroup = ({
     }
 
     if (!ticketGroupData.section) {
-      setSeatMessage('No image for selected seat');
+      setSeatMessage('No seat preview available');
     } else {
       setVFSImage(ticketGroupData.section?.vfsUrl || vfsPlaceHolder);
       setSeatMessage('');
@@ -78,7 +53,7 @@ export const TicketGroup = ({
 
     dispatch(
       setPreCheckoutTicketDataAction({
-        ticketGroupID: ticketGroupData.tgID,
+        ticketGroupId: ticketGroupData.tgID,
         ticketGroupPrice: ticketGroupData.tgPrice,
         ticketGroupSection: ticketGroupData.tgUserSec,
         ticketGroupRow: ticketGroupData.tgUserRow,
@@ -96,18 +71,24 @@ export const TicketGroup = ({
     <StyledTicketGroup
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      isOnMap={isOnMap}
     >
       <TicketInformation>
         <TicketSectionRow>
-          {`Section ${ticketGroupData.tgUserSec} • Row ${ticketGroupData.tgUserRow}`}
+          Section {ticketGroupData.tgUserSec} • Row {ticketGroupData.tgUserRow}
         </TicketSectionRow>
         <TicketQuantity>
-          {`${ticketGroupData?.tgRange[0]} - ${ticketGroupData?.tgRange[1]} Tickets`}
+          {ticketGroupData?.tgRange[0]} - {ticketGroupData?.tgRange[1]} Tickets
         </TicketQuantity>
       </TicketInformation>
-      <TicketPrice onClick={handleBuyButton}>
-        {`$${ticketGroupData.tgPrice}/ea`}
-      </TicketPrice>
+      <TicketPriceButton
+        buttonSize="small"
+        minWidth={'85px'}
+        fontWeight={'600'}
+        onClick={handleBuyButton}
+      >
+        ${ticketGroupData.tgPrice}/ea
+      </TicketPriceButton>
     </StyledTicketGroup>
   );
 };
@@ -117,4 +98,5 @@ TicketGroup.propTypes = {
   setVFSImage: PropTypes.any,
   vfsImage: PropTypes.any,
   setSeatMessage: PropTypes.any,
+  isOnMap: PropTypes.bool,
 };

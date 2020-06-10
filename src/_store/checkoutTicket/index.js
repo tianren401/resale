@@ -4,12 +4,17 @@ import { checkoutTickeService } from '_services';
 
 export const getLockRequestIdAction = createAsyncThunk(
   'checkoutTicket/get',
-  async (payload) => {
-    const response = await checkoutTickeService.getLockRequestId(
-      payload.request
-    );
-    payload.success();
-    return response;
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await checkoutTickeService.getLockRequestId(
+        payload.request
+      );
+      payload.success();
+      return response;
+    } catch (err) {
+      payload.failure();
+      return rejectWithValue(err);
+    }
   }
 );
 
@@ -49,7 +54,7 @@ const checkoutTicketSlice = createSlice({
   },
   reducers: {
     setPreCheckoutTicketDataAction(state, action) {
-      state.ticketGroupId = action.payload.ticketGroupID;
+      state.ticketGroupId = action.payload.ticketGroupId;
       state.ticketGroupPrice = action.payload.ticketGroupPrice;
       state.deliveryTypeId = action.payload.deliveryTypeId;
       state.deliveryTypeName = action.payload.deliveryTypeName;
@@ -90,6 +95,9 @@ const checkoutTicketSlice = createSlice({
   extraReducers: {
     [getLockRequestIdAction.fulfilled]: (state, action) => {
       state.lockRequestId = action.payload.lockRequestId;
+    },
+    [getLockRequestIdAction.rejected]: (state, action) => {
+      console.log(action.payload.message);
     },
     [deleteLockRequestIdAction.fulfilled]: (state) => {
       state.lockRequestId = null;
