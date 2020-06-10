@@ -332,15 +332,3 @@ export const ShowAllResults = styled(Flex)`
     line-height: 20px;
   }
 `;
-
-export const DatePickerContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 100%;
-
-  @media (max-width: ${deviceSize.tablet}px) {
-    left: 0;
-    top: 100%;
-    position: absolute;
-  }
-`;

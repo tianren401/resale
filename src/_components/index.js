@@ -28,6 +28,7 @@ export * from './performerModal';
 export * from './performerVenueHeader';
 export * from './performerVenueSimilarCarousel';
 export * from './places';
+export * from './orderCard';
 export * from './scrollToTop';
 export * from './searchBar';
 export * from './styledTags';

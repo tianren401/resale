@@ -6,3 +6,4 @@ export * from './seatSelection';
 export * from './results';
 export * from './checkout';
 export * from './userProfile';
+export * from './orders';

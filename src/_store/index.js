@@ -14,6 +14,7 @@ import ticketGroupListReducer from './ticketGroupList';
 import checkoutTicketReducer from './checkoutTicket';
 import uiReducer from './ui';
 import userProfileReducer from './userProfile';
+import ordersReducer from './orders';
 import { history } from '_helpers';
 
 const middleware = [...getDefaultMiddleware(), routerMiddleware(history)];
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   checkoutTicketReducer,
   uiReducer,
   userProfileReducer,
+  ordersReducer,
 });
 
 const store = configureStore({

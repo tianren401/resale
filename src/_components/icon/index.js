@@ -35,6 +35,15 @@ export const Icon = ({ onClick, className, name, size, color, viewBox }) => {
   );
 };
 
+Icon.propTypes = {
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  name: PropTypes.string,
+  size: PropTypes.number,
+  color: PropTypes.string,
+  viewBox: PropTypes.string,
+};
+
 export const GroupSvgIcon = ({
   onClick,
   className,
@@ -68,15 +77,6 @@ export const GroupSvgIcon = ({
       </g>
     </StyledIcon>
   );
-};
-
-Icon.propTypes = {
-  onClick: PropTypes.func,
-  className: PropTypes.string,
-  name: PropTypes.string,
-  size: PropTypes.number,
-  color: PropTypes.string,
-  viewBox: PropTypes.string,
 };
 
 GroupSvgIcon.propTypes = {
