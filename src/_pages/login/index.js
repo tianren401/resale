@@ -1,30 +1,60 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { isMobileDevice } from '_helpers';
 import { loginAction, signupAction } from '_store/auth';
 import LoginForm from './components/loginForm';
 import { useModal } from '_hooks/useModal';
 
-export const Login = ({ loginType }) => {
+export const Login = () => {
+  const uiReducer = (state) => state.uiReducer;
+  const { loginType } = useSelector(uiReducer);
+  const [loginMessage, setLoginMessage] = useState('');
+  const [signupMessage, setSignupMessage] = useState('');
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const handleSubmit = (values) => {
-    dispatch(loginAction(values));
-    closeModal();
-  };
-  return <LoginForm handleSubmit={handleSubmit} loginType={loginType} />;
-};
 
-export const Signup = ({ loginType }) => {
-  const dispatch = useDispatch();
-  const { closeModal } = useModal();
-  const handleSubmit = (values) => {
-    dispatch(signupAction(values));
-    closeModal();
+  async function tryLogin(values) {
+    return dispatch(loginAction(values));
+  }
+
+  async function trySignup(values) {
+    return dispatch(signupAction(values));
+  }
+
+  const handleLoginSubmit = (values) => {
+    tryLogin(values).then((data) => {
+      if (data.type === 'auth/login/fulfilled') {
+        setLoginMessage('Sign in Successful!');
+        setTimeout(() => closeModal(), 1000);
+      } else {
+        if (isMobileDevice) {
+          setLoginMessage('Invalid email or password');
+        } else {
+          setLoginMessage('You have entered an invalid email or password');
+        }
+      }
+    });
   };
-  return <LoginForm handleSubmit={handleSubmit} loginType={loginType} />;
+
+  const handleSignupSubmit = (values) => {
+    trySignup(values).then((data) => {
+      if (data.type === 'auth/signup/fulfilled') {
+        setSignupMessage('Sign Up Successful!');
+        setTimeout(() => closeModal(), 1000);
+      } else {
+        setSignupMessage('That email is already registered');
+      }
+    });
+  };
+  return (
+    <LoginForm
+      handleSubmit={
+        loginType === 'Sign In' ? handleLoginSubmit : handleSignupSubmit
+      }
+      loginMessage={loginType === 'Sign In' ? loginMessage : signupMessage}
+    />
+  );
 };
 
 const modalDesktopStyles = {
@@ -53,7 +83,7 @@ const modalMobileStyles = {
   },
 };
 
-export const LoginModal = ({ loginType }) => {
+export const LoginModal = () => {
   const { Modal, closeModal, isOpenModal } = useModal();
   return (
     <Modal
@@ -61,23 +91,7 @@ export const LoginModal = ({ loginType }) => {
       closeModal={closeModal}
       customStyles={isMobileDevice ? modalMobileStyles : modalDesktopStyles}
     >
-      {loginType === 'Sign Up' ? (
-        <Signup loginType={loginType} />
-      ) : (
-        <Login loginType={loginType} />
-      )}
+      <Login />
     </Modal>
   );
-};
-
-LoginModal.propTypes = {
-  loginType: PropTypes.string,
-};
-
-Signup.propTypes = {
-  loginType: PropTypes.string,
-};
-
-Login.propTypes = {
-  loginType: PropTypes.string,
 };

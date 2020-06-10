@@ -9,7 +9,7 @@ import { Navigation } from '_components';
 export const UserProfile = () => {
   return (
     <>
-      <Navigation />
+      <Navigation page="user" />
       <UserProfileLayout>
         <Switch>
           <Route path="/user/account" component={Account} />

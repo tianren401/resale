@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { HomeNavigation } from '_components';
+import { Navigation } from '_components';
 
 export const HomeLayout = ({ children }) => (
   <>
-    <HomeNavigation />
+    <Navigation page="home" />
     {children}
   </>
 );

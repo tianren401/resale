@@ -7,7 +7,8 @@ const SearchCommonStyle = css`
   text-align: left;
   position: relative;
   margin: 0 auto;
-  background: ${colors.white};
+  background: ${({ navbarSearch }) =>
+    navbarSearch ? `#7b36eb` : colors.white};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -21,14 +22,16 @@ const SearchCommonStyle = css`
   }
 
   @media (min-width: ${deviceSize.laptop}px) {
-    width: 846px;
+    width: ${({ navbarSearch }) => (navbarSearch ? `auto` : `846px`)};
   }
 `;
 
 export const SearchContainer = styled.div`
   ${SearchCommonStyle};
 
-  height: 60px;
+  ${({ navbarSearch }) => navbarSearch && `padding : 5px;`}
+
+  height: ${({ navbarSearch }) => (navbarSearch ? `auto` : `60px`)};
 
   @media (min-width: ${deviceSize.tablet}px) {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
@@ -87,14 +90,18 @@ export const SearchInputContainer = styled(Flex)`
 `;
 
 export const IconContainer = styled.div`
-  padding-left: 1.5rem;
+  ${(props) =>
+    !props.navbarSearch &&
+    `padding-left: 1.5rem;
+
   @media (max-width: ${deviceSize.tablet}px) {
     padding-left: 10px;
-  }
+  }`}
 `;
 
 export const FilterIconContainer = styled.div`
   padding-left: 1.5rem;
+
   @media (max-width: ${deviceSize.tablet}px) {
     padding-left: 16px;
     padding-right: 11px;
@@ -107,14 +114,37 @@ export const SearchInput = styled.input`
   box-sizing: border-box;
   padding: 1px;
   transition: width 0.3s;
-  padding-left: 26px;
-  padding-right: 26px;
+  ${(props) =>
+    props.navbarSearch
+      ? `
+  padding-left: 10px; padding-right: 0px;`
+      : `padding-left: 26px; padding-right: 26px;`}
   border-right: ${(props) =>
     props.hasNext ? `1px solid ${colors.darkGray}` : 'none'};
   font-weight: normal;
   font-size: 18px;
   line-height: 22px;
   color: ${colors.darkGray};
+
+  ${(props) =>
+    props.navbarSearch
+      ? `
+      background: #7b36eb;
+      font-size: 14px;
+      line-height: 22px;
+      color: white;
+      padding-left: 10px;
+      padding-right: 0px;
+
+      ::placeholder {
+        color: white;
+        font-size: 14px;
+        line-height: 22px;
+      }`
+      : `
+      padding-left: 26px; padding-right: 26px; font-size: 18px;
+      line-height: 22px;
+      color: ${colors.darkGray};`}
 
   &:focus {
     width: 100%;

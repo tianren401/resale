@@ -9,6 +9,7 @@ import { colors, deviceSize } from '_constants';
 import { useViewport } from '_hooks';
 
 const SearchIcon = <Icon size={24} color={colors.brand} name="search" />;
+const SearchNavIcon = <Icon size={24} color={colors.white} name="search" />;
 const SearchGrayIcon = <Icon size={24} color={colors.gray} name="search" />;
 
 export const Autocomplete = ({
@@ -19,6 +20,7 @@ export const Autocomplete = ({
   showAutocompleteIcon,
   renderList,
   options,
+  navbarSearch,
   isResultsPage,
   ...rest
 }) => {
@@ -107,7 +109,11 @@ export const Autocomplete = ({
           setShowOptions(true);
         }}
       >
-        {showAutocompleteIcon && <IconContainer>{SearchIcon}</IconContainer>}
+        {showAutocompleteIcon && (
+          <IconContainer navbarSearch={navbarSearch}>
+            {navbarSearch ? SearchNavIcon : SearchIcon}
+          </IconContainer>
+        )}
         {isMobileDevice && isResultsPage && (
           <IconContainer>{SearchGrayIcon}</IconContainer>
         )}
@@ -119,6 +125,7 @@ export const Autocomplete = ({
           value={inputValue}
           placeholder={placeholder}
           ref={inputEl}
+          navbarSearch={navbarSearch}
           {...rest}
         />
         {showDropdown &&
@@ -147,4 +154,5 @@ Autocomplete.propTypes = {
   renderList: PropTypes.func,
   options: PropTypes.object.isRequired,
   isResultsPage: PropTypes.bool,
+  navbarSearch: PropTypes.bool,
 };

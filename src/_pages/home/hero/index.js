@@ -13,6 +13,7 @@ import {
 import leftArrow from '_images/leftArrow.svg';
 import rightArrow from '_images/rightArrow.svg';
 import { SearchRowContainer, SearchBar } from '_components';
+import { isMobileDevice } from '_helpers';
 
 export const Hero = ({ events }) => {
   const [timer, setTimer] = useState(null);
@@ -84,16 +85,19 @@ export const Hero = ({ events }) => {
         style={{ margin: 0 }}
       >
         {events.map(({ event, images }) => {
-          let imgUri = images[0].imageUrl || '';
-          if (!imgUri.startsWith('http')) {
-            imgUri = require(`../../../${imgUri}`);
-          }
+          const desktopImage =
+            images?.length &&
+            images.find((image) => image.imageType === 'heroHome').imageUrl;
+          const mobileImage =
+            images?.length &&
+            images.find((image) => image.imageType === 'heroHomeMobile')
+              .imageUrl;
           return (
             <CarouselItem
               key={event.id}
               title={event.name}
               desc={event.venue?.name}
-              backgroundImage={imgUri}
+              backgroundImage={isMobileDevice ? mobileImage : desktopImage}
               time={event.timestamp}
               id={event.id}
             />

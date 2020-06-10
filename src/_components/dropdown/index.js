@@ -12,6 +12,7 @@ import {
   Header,
   Text,
   CloseButton,
+  HompeageDropdownText,
 } from './styledComponents';
 
 import { Box } from '_components/styledTags';
@@ -40,6 +41,7 @@ export const DropdownMenu = ({
   auto,
   title,
   selectedOption,
+  showNavigation,
   onClose,
 }) => {
   const ref = useRef();
@@ -72,51 +74,79 @@ export const DropdownMenu = ({
 
             <Text>{title}</Text>
           </Header>
-          {options.map((option, index) => (
-            <Option
-              key={index}
-              onClick={() => handleSelect(option)}
-              hasChildren={!!option.children}
-            >
-              {option.label}
-              {option.key === selectedOption.key && !option.children && (
-                <Box style={{ position: 'absolute', right: '20px' }}>
-                  <TickIcon />
-                </Box>
-              )}
-              {option.children && (
-                <Box style={{ position: 'absolute', right: '20px' }}>
-                  <ChevronRightIcon />
-                </Box>
-              )}
-              {option.children}
-            </Option>
-          ))}
+          {options
+            .filter((option) => option.key !== 'initials')
+            .map((option, index) => (
+              <Option
+                key={index}
+                onClick={() => handleSelect(option)}
+                hasChildren={!!option.children}
+                to={option.key === 'settings' ? '/user' : '#'}
+              >
+                {option.label}
+                {showNavigation ? (
+                  <Box style={{ position: 'absolute', right: '20px' }}>
+                    <img src={option.image} alt={option.label} />
+                  </Box>
+                ) : (
+                  option.key === selectedOption.key &&
+                  !option.children && (
+                    <Box style={{ position: 'absolute', right: '20px' }}>
+                      <TickIcon />
+                    </Box>
+                  )
+                )}
+                {option.children && (
+                  <Box style={{ position: 'absolute', right: '20px' }}>
+                    <ChevronRightIcon />
+                  </Box>
+                )}
+                {option.children}
+              </Option>
+            ))}
         </Modal>
       )}
 
       {!isMobileDevice && (
-        <StyledDropdownMenu ref={ref} auto={auto}>
-          {options.map((option, index) => (
-            <Option
-              key={index}
-              onClick={() => handleSelect(option)}
-              hasChildren={!!option.children}
-            >
-              {option.label}
-              {option.key === selectedOption.key && !option.children && (
-                <Box style={{ position: 'absolute', right: '20px' }}>
-                  <TickIcon />
-                </Box>
-              )}
-              {option.children && (
-                <Box style={{ position: 'absolute', right: '20px' }}>
-                  <ChevronRightIcon />
-                </Box>
-              )}
-              {option.children}
-            </Option>
-          ))}
+        <StyledDropdownMenu
+          ref={ref}
+          auto={auto}
+          showNavigation={showNavigation}
+        >
+          {options
+            .filter((option) => option.key !== 'initials')
+            .map((option, index) => (
+              <Option
+                key={index}
+                onClick={() => handleSelect(option)}
+                hasChildren={!!option.children}
+                showNavigation={showNavigation}
+                to={option.key === 'settings' ? '/user' : '#'}
+              >
+                {!showNavigation && option.label}
+                {showNavigation ? (
+                  <Box style={{ position: 'absolute', left: '20px' }}>
+                    <img src={option.image} alt={option.label} />
+                  </Box>
+                ) : (
+                  option.key === selectedOption.key &&
+                  !option.children && (
+                    <Box style={{ position: 'absolute', right: '20px' }}>
+                      <TickIcon />
+                    </Box>
+                  )
+                )}
+                {showNavigation && (
+                  <HompeageDropdownText>{option.label}</HompeageDropdownText>
+                )}
+                {option.children && (
+                  <Box style={{ position: 'absolute', right: '20px' }}>
+                    <ChevronRightIcon />
+                  </Box>
+                )}
+                {option.children}
+              </Option>
+            ))}
         </StyledDropdownMenu>
       )}
     </>
@@ -129,7 +159,8 @@ DropdownMenu.propTypes = {
   handleClickAway: PropTypes.func.isRequired,
   auto: PropTypes.bool,
   selectedOption: PropTypes.any,
-  title: PropTypes.string.isRequired,
+  showNavigation: PropTypes.any,
+  title: PropTypes.string,
   onClose: PropTypes.func,
 };
 
@@ -138,6 +169,7 @@ export const Dropdown = ({
   defaultOption,
   plain,
   handleChange,
+  showNavigation,
   title,
   ...rest
 }) => {
@@ -157,7 +189,9 @@ export const Dropdown = ({
 
   const handleSelect = (option) => {
     handleChange(option);
-    setSelectedOption(option);
+    if (!showNavigation) {
+      setSelectedOption(option);
+    }
 
     if (!option.children) {
       setIsOpen(false);
@@ -176,9 +210,10 @@ export const Dropdown = ({
       plain={plain}
       className={className}
       {...rest}
+      showNavigation={showNavigation}
     >
       {selectedOption?.label}
-      {isOpen ? (
+      {showNavigation ? null : isOpen ? (
         <Box marginLeft="15px">
           <DropdownArrowUp width={10} />
         </Box>
@@ -194,6 +229,7 @@ export const Dropdown = ({
           options={options}
           handleSelect={handleSelect}
           handleClickAway={handleClickAway}
+          showNavigation={showNavigation}
           title={title}
           onClose={handleClickAway}
         />
@@ -207,5 +243,6 @@ Dropdown.propTypes = {
   defaultOption: PropTypes.any,
   plain: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
+  showNavigation: PropTypes.bool,
+  title: PropTypes.string,
 };

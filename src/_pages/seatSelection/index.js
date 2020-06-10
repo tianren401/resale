@@ -7,7 +7,6 @@ import { ajaxGet } from '../../_helpers/api';
 import { getTicketGroupListAction } from '_store/ticketGroupList';
 import { setCheckoutTicketEventDataAction } from '_store/checkoutTicket';
 import { EventLayout, Loader } from '_components';
-import { Header } from './components/header';
 import { TicketGroupList } from './components/ticketGroupList';
 import { PreCheckout } from './components/preCheckout';
 import { FilterOptions } from './components/filterOptions';
@@ -163,7 +162,6 @@ export const SeatSelection = ({ eventId }) => {
         </LoaderContainer>
       )}
       <Container>
-        {!loadingEventData && <Header event={eventData} />}
         <TicketsContainer checkout={checkoutTicket.ticketGroupId}>
           <TicketGroupList ref={ticketListRef} />
           <PreCheckout selectedTicketGroup={checkoutTicket.ticketGroupId} />

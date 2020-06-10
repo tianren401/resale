@@ -11,7 +11,7 @@ export const getUserInfoAction = createAsyncThunk('users/me', async () => {
   return response;
 });
 
-export const signupAction = createAsyncThunk('signup/signup', async (data) => {
+export const signupAction = createAsyncThunk('auth/signup', async (data) => {
   const firstName = data.fullName.split(' ')[0];
   const lastName = data.fullName.split(' ')[1];
   const response = await authService.signup(

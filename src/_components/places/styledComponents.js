@@ -213,6 +213,7 @@ export const SearchInput = styled.input`
   height: 46px;
   padding: 10px 18px 10px 44px;
   color: ${colors.black};
+  ${(props) => props.navbarSearch && `background: ${colors.lightBrand};`}
 
   &:hover {
 

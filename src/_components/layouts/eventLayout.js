@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { EventNavigation } from '_components';
+import { Navigation } from '_components';
 
 export const EventLayout = ({ children }) => (
   <>
-    <EventNavigation />
+    <Navigation page="event" />
     {children}
   </>
 );

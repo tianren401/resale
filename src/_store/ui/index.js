@@ -2,7 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
   name: 'ui',
-  initialState: { isOpenModal: false, passwordInputType: 'password' },
+  initialState: {
+    isOpenModal: false,
+    passwordInputType: 'password',
+    loginType: '',
+  },
   reducers: {
     setModalOpen(state, action) {
       state.isOpenModal = action.payload;
@@ -15,9 +19,16 @@ const uiSlice = createSlice({
           state.passwordInputType === 'password' ? 'text' : 'password';
       }
     },
+    setLoginType(state, action) {
+      state.loginType = action.payload;
+    },
   },
 });
 
-export const { setModalOpen, setPasswordInputType } = uiSlice.actions;
+export const {
+  setModalOpen,
+  setPasswordInputType,
+  setLoginType,
+} = uiSlice.actions;
 
 export default uiSlice.reducer;

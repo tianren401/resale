@@ -7,7 +7,8 @@ import { format } from 'date-fns';
 
 import arrowImage from '_images/arrowImage.png';
 import { deviceSize } from '_constants';
-import { Flex } from '_components';
+import { Flex } from '_components/flex';
+import { isMobileDevice } from '_helpers';
 
 const Container = styled.div`
   display: block;
@@ -218,6 +219,16 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
         >
           {events &&
             events.map((event) => {
+              const desktopImage =
+                event?.images?.length &&
+                event.images.find((image) => image.imageType === 'carouselHome')
+                  .imageUrl;
+              const mobileImage =
+                event?.images?.length &&
+                event.images.find(
+                  (image) => image.imageType === 'carouselHomeMobile'
+                ).imageUrl;
+
               const date = format(new Date(event.event.timestamp), 'MMM d');
               return (
                 <CarouselItem
@@ -225,7 +236,9 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
                   to={`event/${event.event.id}`}
                 >
                   <CarouselItemImage
-                    backgroundImage={`url(${event.images[0].imageUrl})`}
+                    backgroundImage={`url(${
+                      isMobileDevice ? mobileImage : desktopImage
+                    })`}
                   />
                   <CarouselItemTitle>{event.event.name}</CarouselItemTitle>
                   <CarouselItemDesc>
@@ -255,6 +268,15 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
       <StyledSnapchat flexWrap="wrap">
         {events &&
           events.map((event) => {
+            const desktopImage =
+              event?.images?.length &&
+              event.images.find((image) => image.imageType === 'carouselHome')
+                .imageUrl;
+            const mobileImage =
+              event?.images?.length &&
+              event.images.find(
+                (image) => image.imageType === 'carouselHomeMobile'
+              ).imageUrl;
             const date = format(new Date(event.event.timestamp), 'MMM d');
 
             return (
@@ -262,7 +284,9 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
                 key={event.event.id}
                 direction="column"
                 justify="space-between"
-                backgroundImage={`url(${event.images[0].imageUrl})`}
+                backgroundImage={`url(${
+                  isMobileDevice ? mobileImage : desktopImage
+                })`}
               >
                 <SnapchatItemDate>
                   {date}

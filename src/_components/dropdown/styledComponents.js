@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import {
   DropdownExpandIcon,
@@ -26,12 +27,13 @@ export const StyledDropdown = styled.div`
   box-sizing: border-box;
   border-radius: 6px;
   max-height: 48px;
-  
-  &:hover {
+  ${({ showNavigation }) =>
+    !showNavigation &&
+    `&:hover {
     border-color: ${colors.brand};
     color: ${colors.brand};
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(130, 136, 148, 0.16);
-  }
+  }`}
 
   &:focus{
     box-shadow: none;
@@ -71,8 +73,8 @@ export const DropdownArrowUp = styled(DropdownCollapseIcon)`
 export const StyledDropdownMenu = styled.div`
   background-color: white;
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: ${({ showNavigation }) => (showNavigation ? `40px` : `100%`)};
+  left: auto;
   right: 0;
   z-index: 1;
   margin-top: 10px;
@@ -81,9 +83,9 @@ export const StyledDropdownMenu = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  width: 100%;
   border-radius: 6px;
-
+  ${({ showNavigation }) =>
+    showNavigation ? ` min-width: 180px;` : `width: 100%;`};
   ${({ auto }) =>
     auto &&
     `
@@ -94,21 +96,18 @@ export const StyledDropdownMenu = styled.div`
     `};
 `;
 
-export const Option = styled.div`
+export const Option = styled(Link)`
   display: flex;
   align-items: center;
-  padding: 14px 20px;
+  ${({ showNavigation }) =>
+    showNavigation ? `padding: 20px;` : `padding: 14px 20px;`};
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
   color: ${colors.black};
 
-  ${({ hasChildren }) =>
-    hasChildren &&
-    `
-    position: relative;
-    `}
+  ${({ hasChildren }) => hasChildren && `position: relative;`}
 
   &:hover {
     .DayPicker {
@@ -122,6 +121,7 @@ export const Option = styled.div`
         rgba(103, 38, 241, 0.16)
       ),
       #ffffff;
+    border-radius: 6px;
   }
 
   @media (max-width: ${deviceSize.tablet}px) {
@@ -151,3 +151,11 @@ export const Text = styled.div`
 `;
 
 export const CloseButton = styled.div``;
+
+export const HompeageDropdownText = styled.div`
+  position: absolute;
+  left: 60px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+`;

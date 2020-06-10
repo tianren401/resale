@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CheckoutNavigation } from '_components';
+import { Navigation } from '_components';
 
 export const CheckoutLayout = ({ children }) => (
   <>
-    <CheckoutNavigation />
+    <Navigation page="checkout" />
     {children}
   </>
 );

@@ -44,5 +44,5 @@ Form.propTypes = {
   handleSubmit: PropTypes.func,
   validationSchema: PropTypes.object,
   children: PropTypes.any,
-  className: PropTypes.object,
+  className: PropTypes.any,
 };

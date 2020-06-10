@@ -12,6 +12,7 @@ import {
   SlideButton,
   ButtonImage,
 } from './styledComponents';
+import { isMobileDevice } from '_helpers';
 
 export const PerformerVenueSimilarCarousel = ({
   itemsToShow,
@@ -61,13 +62,26 @@ export const PerformerVenueSimilarCarousel = ({
         >
           {similar &&
             similar.map((attraction) => {
-              const imgUri = attraction.images[0].imageUrl;
+              const desktopImage =
+                attraction?.images?.length &&
+                attraction.images.find(
+                  (image) => image.imageType === 'carouselSearch'
+                ).imageUrl;
+              const mobileImage =
+                attraction?.images?.length &&
+                attraction.images.find(
+                  (image) => image.imageType === 'carouselSearchMobile'
+                ).imageUrl;
               const id = attraction[type].id;
               const route = `../${type}/${id}`;
 
               return (
                 <CarouselItem key={id} to={route}>
-                  <CarouselItemImage backgroundImage={`url(${imgUri})`} />
+                  <CarouselItemImage
+                    backgroundImage={`url(${
+                      isMobileDevice ? mobileImage : desktopImage
+                    })`}
+                  />
                   <CarouselItemTitle>{attraction[type].name}</CarouselItemTitle>
                   <CarouselItemDesc></CarouselItemDesc>
                 </CarouselItem>

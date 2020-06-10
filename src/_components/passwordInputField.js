@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { setPasswordInputType } from '_store/ui';
+import { isMobileDevice } from '_helpers';
 import showPassword from '_images/showPassword.svg';
 import hidePassword from '_images/hidePassword.svg';
 import { colors } from '_constants';
@@ -51,6 +52,8 @@ const Error = styled.div`
   margin-bottom: 4px;
   color: ${colors.danger};
   text-align: left;
+  position: relative;
+  bottom: 25px;
 `;
 
 const PasswordInputContainer = styled.div`
@@ -60,9 +63,15 @@ const PasswordInputContainer = styled.div`
 
 const ShowPasswordImage = styled.img`
   position: absolute;
-  right: 12px;
-  top: 12px;
   cursor: pointer;
+  position: relative;
+  ${isMobileDevice
+    ? `
+    left: 40%;
+    bottom: 35px;`
+    : `
+    left: 150px;
+    bottom: 35px;`}
 `;
 
 export const PasswordInputField = ({

@@ -113,7 +113,7 @@ export const absolutePosition = css`
   position: relative;
   text-align: center;
   margin: 0 auto;
-  margin-top: -200px;
+  ${(props) => !props.navbarSearch && `margin-top: -200px;`}
   left: 0;
   right: 0;
 `;
@@ -122,7 +122,7 @@ export const relativePosition = css`
   position: relative;
   text-align: center;
   margin: 0 auto;
-  margin-top: -60px;
+  ${(props) => !props.navbarSearch && `margin-top: -60px;`}
 `;
 
 export const SearchRowContainer = styled.div`
@@ -146,7 +146,7 @@ export const SearchRowContainer = styled.div`
   @media (max-width: ${deviceSize.tablet}px) {
     position: relative !important;
     padding: 0;
-    margin-top: -30px !important;
+    ${(props) => !props.navbarSearch && `margin-top: -30px !important;`}
   }
 `;
 

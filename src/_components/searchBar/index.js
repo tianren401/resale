@@ -26,6 +26,7 @@ export const SearchBar = ({
   isResultsPage,
   placeholder,
   config,
+  navbarSearch,
   ...rest
 }) => {
   const windowSize = useViewport();
@@ -89,13 +90,14 @@ export const SearchBar = ({
 
   return (
     <>
-      <SearchContainer isHome={!isResultsPage}>
+      <SearchContainer isHome={!isResultsPage} navbarSearch={navbarSearch}>
         <Flex flex={3}>
           <Autocomplete
             {...rest}
             value={searchQuery}
             placeholder={placeholder}
             onChange={handleSetQuery}
+            navbarSearch={navbarSearch}
             renderList={({ results, dropdownEl, ...rest }) => (
               <EventsDropdown ref={dropdownEl} results={results} {...rest} />
             )}
@@ -139,6 +141,7 @@ SearchBar.propTypes = {
   isResultsPage: PropTypes.bool,
   showDropdown: PropTypes.bool,
   showAutocompleteIcon: PropTypes.bool,
+  navbarSearch: PropTypes.bool,
   placeholder: PropTypes.string,
   value: PropTypes.any,
   config: PropTypes.object,
