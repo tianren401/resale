@@ -55,7 +55,7 @@ const Routes = () => {
         <ScrollToTop />
         <GlobalStyles />
         <Switch>
-          <Route exact path="/home" component={Home} />
+          <Route exact path="/" component={Home} />
           <Route path="/performer/:performerId">
             <DynamicPerformer />
           </Route>
@@ -73,7 +73,7 @@ const Routes = () => {
               <Route path="/orders" component={Orders} />
             </>
           )}
-          <Redirect to="/home" />
+          <Redirect to="/" />
         </Switch>
       </Router>
     </ViewportProvider>

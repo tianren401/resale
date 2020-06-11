@@ -4,6 +4,10 @@ function login(username, password) {
   return post({ path: 'auth/token', body: { username, password } });
 }
 
+function passwordVerify(body) {
+  return post({ path: 'auth/verify', body });
+}
+
 function signup(firstName, lastName, email, phone, password) {
   return post({
     path: 'users',
@@ -48,4 +52,5 @@ export const authService = {
   setAuthInStorage,
   getAuthFromStorage,
   removeAuthInStorage,
+  passwordVerify,
 };

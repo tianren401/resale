@@ -125,6 +125,7 @@ export const Option = styled(Link)`
   }
 
   @media (max-width: ${deviceSize.tablet}px) {
+    position: relative;
     border-bottom: 1px solid ${colors.lightGray};
   }
 `;

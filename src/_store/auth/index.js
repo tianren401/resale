@@ -1,10 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import { authService } from '_services';
+import { formatPhoneNumber } from '_helpers';
 
 export const loginAction = createAsyncThunk('auth/login', async (data) => {
   const response = await authService.login(data.email, data.password);
   return response;
 });
+
+export const passwordVerify = createAsyncThunk(
+  'auth/verify',
+  async (payload) => {
+    await authService.passwordVerify(payload.body);
+    payload.success();
+  }
+);
 
 export const getUserInfoAction = createAsyncThunk('users/me', async () => {
   const response = await authService.getUserInfo();
@@ -34,13 +44,15 @@ const authSlice = createSlice({
     },
     setUser(state, action) {
       state.user = action.payload;
+      state.user.phone = formatPhoneNumber(action.payload.phone);
     },
   },
   extraReducers: {
     [loginAction.fulfilled]: (state, action) => {
-      localStorage.setItem('auth', JSON.stringify(action.payload));
-      authService.setAuthInStorage(action.payload);
-      state.user = action.payload.user;
+      const auth = action.payload;
+      auth.user.phone = formatPhoneNumber(action.payload.user.phone);
+      authService.setAuthInStorage(auth);
+      state.user = auth.user;
       state.loading = false;
     },
     [loginAction.pending]: (state) => {
@@ -51,6 +63,7 @@ const authSlice = createSlice({
     },
     [getUserInfoAction.fulfilled]: (state, action) => {
       state.user = action.payload;
+      state.user.phone = formatPhoneNumber(action.payload.phone);
     },
   },
 });

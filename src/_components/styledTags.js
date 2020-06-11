@@ -189,7 +189,6 @@ export const MainContainer = styled.div`
 export const UserImage = styled.div`
   min-width: 80px;
   border-radius: 50%;
-  margin-right: 20px;
   font-weight: 600;
   font-size: 24px;
   line-height: 32px;

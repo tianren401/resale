@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Field } from 'formik';
 import * as Yup from 'yup';
@@ -13,13 +13,11 @@ import {
   H6,
   Loader,
 } from '_components';
-import { authService } from '_services';
 import { colors } from '_constants';
-import { phoneRegExp, formatPhoneNumber } from '_helpers';
+import { phoneRegExp } from '_helpers';
 import { updateUserInfo } from '_store/userProfile';
 import { setUser } from '_store/auth';
 import { PasswordModal } from '../components';
-import { useModal } from '_hooks';
 
 const StyledAccount = styled.div`
   background: ${colors.white};
@@ -53,11 +51,13 @@ const SubmitDiv = styled.div`
 `;
 
 export const Account = () => {
-  const user = authService.getAuthFromStorage()?.user;
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const handleModalOpen = () => setIsOpenModal(true);
+  const closeModal = () => setIsOpenModal(false);
+
+  const { user } = useSelector((state) => state.authReducer);
   const { loading } = useSelector((state) => state.userProfileReducer);
   const dispatch = useDispatch();
-
-  const { closeModal, isOpenModal, openModal } = useModal();
 
   const schema = Yup.object().shape({
     firstName: Yup.string().required('First name cannot be blank'),
@@ -81,7 +81,7 @@ export const Account = () => {
     );
   };
 
-  if (loading)
+  if (loading || !user)
     return (
       <StyledAccount>
         <Loader centered />
@@ -96,7 +96,7 @@ export const Account = () => {
           firstName: user.firstName || '',
           lastName: user.lastName || '',
           email: user.email || '',
-          phone: formatPhoneNumber(user.phone) || '',
+          phone: user.phone || '',
         }}
         handleSubmit={handleSubmit}
         validationSchema={schema}
@@ -122,6 +122,7 @@ export const Account = () => {
               label="Email"
               type="text"
               component={StyledInputField}
+              input={{ disabled: true }}
               {...props}
             />
             <Field
@@ -133,7 +134,7 @@ export const Account = () => {
             />
             <PasswordDiv>
               <H6 color={colors.darkGray}>Password</H6>
-              <TextButton type="button" onClick={openModal}>
+              <TextButton type="button" onClick={handleModalOpen}>
                 Change my password
               </TextButton>
             </PasswordDiv>

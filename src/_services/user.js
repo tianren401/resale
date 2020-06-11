@@ -1,7 +1,7 @@
 import { put } from '_helpers/api';
 
 function updateUserInfo(body) {
-  return put({ path: 'users/update/info', body: body });
+  return put({ path: 'users/update/info', body });
 }
 
 function updatePassword(body) {

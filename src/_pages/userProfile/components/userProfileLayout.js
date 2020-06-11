@@ -4,17 +4,16 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { authService } from '_services';
-import { Flex, FlexItem, UserImage, H3, Emoji } from '_components';
-import { colors } from '_constants';
+import { Flex, FlexItem, Loader, UserImage, H3, Emoji } from '_components';
+import { colors, navigationHeight } from '_constants';
 import userProfileBackground from '_images/userProfileBackground.png';
 import { UserProfileSidebar } from './userProfileSidebar';
 import { setSidebarStage } from '_store/userProfile';
-import { formatPhoneNumber } from '_helpers';
 
 const StyledBackground = styled.div`
   width: 100%;
-  min-height: 840px;
+  height: calc(100vh - ${navigationHeight}px);
+  min-height: 800px;
   background-image: ${`url(${userProfileBackground})`},
     linear-gradient(
       0deg,
@@ -45,6 +44,7 @@ const Title = styled(H3)`
 const UserContent = styled.div`
   font-size: 12px;
   line-height: 16px;
+  margin-left: 20px;
   color: ${colors.darkGray};
 
   > span {
@@ -61,10 +61,11 @@ const UserInfo = styled.div`
   align-items: center;
   margin-bottom: 45px;
 `;
+
 export const UserProfileLayout = ({ children }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = authService.getAuthFromStorage()?.user;
+  const { user } = useSelector((state) => state.authReducer);
   const { sidebarStage } = useSelector((state) => state.userProfileReducer);
 
   useEffect(() => {
@@ -77,6 +78,13 @@ export const UserProfileLayout = ({ children }) => {
     dispatch(setSidebarStage(index));
     history.push(url);
   };
+
+  if (!user)
+    return (
+      <StyledBackground>
+        <Loader centered />
+      </StyledBackground>
+    );
 
   return (
     <StyledBackground>
@@ -97,7 +105,7 @@ export const UserProfileLayout = ({ children }) => {
                     {user.firstName} {user.lastName}
                   </span>
                   <p>{user.email}</p>
-                  <p>{formatPhoneNumber(user.phone)}</p>
+                  <p>{user.phone}</p>
                 </UserContent>
               )}
             </UserInfo>

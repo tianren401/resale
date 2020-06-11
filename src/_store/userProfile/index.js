@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { userService } from '_services';
+import { authService } from '_services';
 
 export const updateUserInfo = createAsyncThunk(
   'userProfile/update/user',
@@ -35,7 +36,10 @@ export const userProfileSlice = createSlice({
     [updateUserInfo.pending]: (state) => {
       state.loading = true;
     },
-    [updateUserInfo.fulfilled]: (state) => {
+    [updateUserInfo.fulfilled]: (state, action) => {
+      const auth = authService.getAuthFromStorage();
+      auth.user = action.payload;
+      authService.setAuthInStorage(auth);
       state.loading = false;
     },
     [updateUserInfo.rejected]: (state) => {

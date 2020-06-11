@@ -22,12 +22,13 @@ export const dropInUIStyle = css`
 
   [data-braintree-id='methods-label'] {
     visibility: hidden;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+
     &:before {
       content: 'Saved Cards';
       visibility: visible;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
     }
   }
   [data-braintree-id='methods'] {
@@ -35,11 +36,19 @@ export const dropInUIStyle = css`
     margin: 0;
 
     [data-braintree-id='methods-container'] {
-      border-top: 2px solid ${colors.lightGray};
+      border-top: 1px solid ${colors.lightGray};
       .braintree-method {
         border: none;
         width: 100%;
         padding: 10px 0;
+
+        .braintree-method__label {
+          color: ${colors.darkGray};
+          font-size: 14px;
+        }
+        .braintree-method__label--small {
+          display: none;
+        }
       }
     }
   }

@@ -39,6 +39,9 @@ const Input = styled.input`
     background: ${colors.white};
     border: 1px solid ${colors.brand};
   }
+  &:disabled {
+    color: ${colors.darkGray};
+  }
 `;
 
 const Error = styled.div`

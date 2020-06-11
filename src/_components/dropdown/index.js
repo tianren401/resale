@@ -85,19 +85,37 @@ export const DropdownMenu = ({
               >
                 {option.label}
                 {showNavigation ? (
-                  <Box style={{ position: 'absolute', right: '20px' }}>
+                  <Box
+                    style={{
+                      position: 'absolute',
+                      right: '20px',
+                      bottom: '5px',
+                    }}
+                  >
                     <img src={option.image} alt={option.label} />
                   </Box>
                 ) : (
                   option.key === selectedOption.key &&
                   !option.children && (
-                    <Box style={{ position: 'absolute', right: '20px' }}>
+                    <Box
+                      style={{
+                        position: 'absolute',
+                        right: '20px',
+                        bottom: '5px',
+                      }}
+                    >
                       <TickIcon />
                     </Box>
                   )
                 )}
                 {option.children && (
-                  <Box style={{ position: 'absolute', right: '20px' }}>
+                  <Box
+                    style={{
+                      position: 'absolute',
+                      right: '20px',
+                      bottom: '5px',
+                    }}
+                  >
                     <ChevronRightIcon />
                   </Box>
                 )}

@@ -110,22 +110,17 @@ export const SecondaryButton = styled(Button)`
 `;
 
 export const TextButton = styled(Button)`
-  background: ${(props) => props.color || `${colors.brand}`};
+  background: transparent;
+  color: ${(props) => props.color || `${colors.brand}`};
   line-height: ${(props) => props.lineHight || '20px'};
   padding: 0;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 
   &:disabled {
-    background: ${colors.lightGray};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: ${colors.darkGray};
     opacity: 0.5;
   }
 
   &:hover:not(:disabled) {
-    background: ${(props) => props.hoverColor || `${colors.brandHover}`};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: ${(props) => props.hoverColor || `${colors.brandHover}`};
   }
 `;

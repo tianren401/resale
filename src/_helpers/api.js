@@ -26,7 +26,10 @@ export async function handleResponse(response) {
     if (contentType && contentType.includes('text')) {
       return response.blob();
     }
-    return response.json();
+    return response
+      .json()
+      .catch(() => null)
+      .then((body) => body);
   }
 
   return response

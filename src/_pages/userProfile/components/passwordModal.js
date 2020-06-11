@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
@@ -9,13 +10,15 @@ import {
   H3,
   InputField,
   Loader,
+  Modal,
   PasswordInputField,
   PrimaryButton,
 } from '_components';
 import { colors, shadows } from '_constants';
-import { useModal } from '_hooks';
 import closeModalButton from '_images/closeModal.svg';
 import { updateUserPassword } from '_store/userProfile';
+import { passwordVerify } from '_store/auth';
+import { authService } from '_services';
 
 const modelStyles = {
   content: {
@@ -80,11 +83,10 @@ const Line = styled.div`
   border: 1px solid ${colors.lightGray};
   margin-bottom: 24px;
 `;
-export const PasswordModal = () => {
+export const PasswordModal = ({ isOpenModal, closeModal }) => {
   const dispatch = useDispatch();
-  const { Modal, isOpenModal, closeModal } = useModal();
   const { passwordInputType } = useSelector((state) => state.uiReducer);
-  const { user } = useSelector((state) => state.authReducer);
+  const user = authService.getAuthFromStorage()?.user;
   const { loading } = useSelector((state) => state.userProfileReducer);
 
   const schema = Yup.object().shape({
@@ -97,12 +99,26 @@ export const PasswordModal = () => {
 
   const handleSubmit = (values) => {
     dispatch(
-      updateUserPassword({
+      passwordVerify({
         body: {
-          email: user.email,
-          newPassword: values.newPassword,
-          oldPassword: values.oldPassword,
+          username: user.email,
+          password: values.oldPassword,
         },
+        success: () => {
+          updatePassword({
+            email: user.email,
+            newPassword: values.newPassword,
+            oldPassword: values.oldPassword,
+          });
+        },
+      })
+    );
+  };
+
+  const updatePassword = (body) => {
+    dispatch(
+      updateUserPassword({
+        body,
         success: () => {
           closeModal();
         },
@@ -175,4 +191,9 @@ export const PasswordModal = () => {
       </Form>
     </Modal>
   );
+};
+
+PasswordModal.propTypes = {
+  isOpenModal: PropTypes.bool,
+  closeModal: PropTypes.func,
 };
