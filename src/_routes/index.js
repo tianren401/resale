@@ -40,6 +40,7 @@ const DynamicEvent = () => {
 };
 
 const Routes = () => {
+  const user = authService.getAuthFromStorage()?.user;
   const authState = useSelector(({ authReducer }) => authReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -66,7 +67,7 @@ const Routes = () => {
           </Route>
           <Route path="/checkout" component={Checkout} />
           <Route path="/results" component={Results} />
-          {authState.user && (
+          {user && (
             <>
               <Route path="/user" component={UserProfile} />
               <Route path="/orders" component={Orders} />

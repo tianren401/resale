@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { authService } from '_services';
 import { Flex, FlexItem, UserImage, H3, Emoji } from '_components';
 import { colors } from '_constants';
 import userProfileBackground from '_images/userProfileBackground.png';
@@ -63,7 +64,7 @@ const UserInfo = styled.div`
 export const UserProfileLayout = ({ children }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { user } = useSelector((state) => state.authReducer);
+  const user = authService.getAuthFromStorage()?.user;
   const { sidebarStage } = useSelector((state) => state.userProfileReducer);
 
   useEffect(() => {

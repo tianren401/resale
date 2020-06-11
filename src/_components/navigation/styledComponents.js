@@ -5,6 +5,7 @@ import { Dropdown } from '_components/dropdown';
 import { navigationHeight, deviceSize, colors } from '_constants';
 
 export const StyledNavigation = styled.div`
+  position: ${({ page }) => (page === 'home' ? 'absolute' : 'static')};
   width: 100%;
   z-index: 2;
   background: ${({ page }) =>
@@ -23,7 +24,6 @@ export const StyledNavigation = styled.div`
   justify-content: space-between;
   height: ${navigationHeight}px;
   padding: 8px 0;
-  position: absolute;
   left: 0;
   right: 0;
   text-align: center;

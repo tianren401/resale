@@ -13,6 +13,7 @@ import {
   H6,
   Loader,
 } from '_components';
+import { authService } from '_services';
 import { colors } from '_constants';
 import { phoneRegExp, formatPhoneNumber } from '_helpers';
 import { updateUserInfo } from '_store/userProfile';
@@ -52,7 +53,7 @@ const SubmitDiv = styled.div`
 `;
 
 export const Account = () => {
-  const { user } = useSelector((state) => state.authReducer);
+  const user = authService.getAuthFromStorage()?.user;
   const { loading } = useSelector((state) => state.userProfileReducer);
   const dispatch = useDispatch();
 
