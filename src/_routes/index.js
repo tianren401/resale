@@ -17,6 +17,7 @@ import {
   Performer,
   Venue,
   UserProfile,
+  ResetPassword,
   Orders,
 } from '_pages';
 import { ScrollToTop } from '_components';
@@ -67,6 +68,7 @@ const Routes = () => {
           </Route>
           <Route path="/checkout" component={Checkout} />
           <Route path="/results" component={Results} />
+          <Route path="/password-reset" component={ResetPassword} />
           <PrivateRoute path="/user" component={UserProfile} />
           <Route path="/orders" component={Orders} />
           <Redirect to="/" />

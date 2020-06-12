@@ -32,7 +32,6 @@ const InfoColumn = styled(FlexColumn)`
 const MainInfo = styled.div`
   font-weight: 500;
   font-size: 16px;
-  color: #121212;
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -44,10 +43,9 @@ const MainInfo = styled.div`
     white-space: initial;
     overflow: initial;
     font-size: 11px;
-    color: ${colors.black};
 
     &:hover {
-      color: ${colors.brand};
+      color: ${({ cardClicked }) => (cardClicked ? '#6726f1' : 'black')};
     }
   }
 `;
@@ -100,6 +98,11 @@ const Card = styled.div`
   margin: 10px auto;
   padding: 20px;
 
+  &:hover {
+    border-radius: none;
+  }
+
+  &:hover,
   &:active {
     background: linear-gradient(
         0deg,
@@ -107,10 +110,6 @@ const Card = styled.div`
         rgba(103, 38, 241, 0.16)
       ),
       #ffffff;
-  }
-
-  &:hover,
-  &:active {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
 
@@ -120,7 +119,12 @@ const Card = styled.div`
     &:hover,
     &:active {
       box-shadow: none;
-      background: transparent;
+      background: linear-gradient(
+          0deg,
+          rgba(103, 38, 241, 0.16),
+          rgba(103, 38, 241, 0.16)
+        ),
+        #ffffff;
       border-radius: 0;
     }
   }
@@ -138,7 +142,7 @@ export const EventCard = ({ event, name, venueName, venueState }) => {
       onMouseUp={() => setCardClicked(false)}
     >
       <TimeColumn>
-        <MainInfo>{date}</MainInfo>
+        <MainInfo cardClicked={cardClicked}>{date}</MainInfo>
         <Detail>{timeDate}</Detail>
       </TimeColumn>
       <InfoColumn>

@@ -26,11 +26,13 @@ import {
   Subtitle,
   GridContent,
 } from './styledComponents';
+import { useHistory } from 'react-router-dom';
 
 export const Navigation = ({ page }) => {
   const authState = useSelector(({ authReducer }) => authReducer);
   const { openModal, closeModal, isOpenModal } = useModal();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleModalOpen = (loginType) => {
     dispatch(setLoginType(loginType));
@@ -62,6 +64,9 @@ export const Navigation = ({ page }) => {
     if (menuOption.key === 'signOut') {
       handleLogout();
     }
+    if (menuOption.url) {
+      history.push(menuOption.url);
+    }
   };
 
   const checkoutTicketReducer = (state) => state.checkoutTicketReducer;
@@ -72,6 +77,7 @@ export const Navigation = ({ page }) => {
     switch (page) {
       case 'home':
       case 'user':
+      default:
         return (
           <>
             <UserItems to="/">Support</UserItems>
@@ -202,56 +208,6 @@ export const Navigation = ({ page }) => {
                   </UserItemsMobile>
                 </>
               ))}
-          </>
-        );
-
-      default:
-        return (
-          <>
-            <UserItems to="/">Support</UserItems>
-            {isAuthorized ? (
-              <>
-                <UserItems to="/orders" tab="myTickets">
-                  My Tickets
-                </UserItems>
-                <UserItems to="#" tab="noHover">
-                  <StyledDropdown
-                    showNavigation={page && true}
-                    options={options}
-                    defaultOption="initials"
-                    handleChange={getUserItemClicked}
-                  />
-                </UserItems>
-              </>
-            ) : (
-              <>
-                <UserItems
-                  onClick={() => handleModalOpen('Find Ticket')}
-                  tab="myTickets"
-                  to="/"
-                >
-                  My Tickets
-                </UserItems>
-                <ModalItems
-                  onClick={() => handleModalOpen('Sign Up')}
-                  tab="signUp"
-                >
-                  Sign Up
-                </ModalItems>
-                <ModalItems onClick={() => handleModalOpen('Sign In')}>
-                  Sign In
-                </ModalItems>
-                <UserItemsMobile
-                  to="/"
-                  onClick={() => handleModalOpen('Sign In')}
-                >
-                  Sign In
-                </UserItemsMobile>
-                <UserItemsMobile>
-                  <ContentImage src={mobileNavigationIcon} />
-                </UserItemsMobile>
-              </>
-            )}
           </>
         );
     }

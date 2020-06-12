@@ -21,7 +21,7 @@ import {
   StyledPlaces,
 } from './styledComponents';
 import { useViewport } from '_hooks';
-import { deviceSize } from '_constants';
+import { deviceSize, colors } from '_constants';
 import { searchService } from '_services';
 
 export const Upcoming = ({ events, sendToPage }) => {
@@ -172,6 +172,7 @@ export const Upcoming = ({ events, sendToPage }) => {
                 <DayPickerRow>
                   <StyledDateRangeDropdown
                     onClick={() => handleModalOpen(!modalOpen)}
+                    datesSearched={dateRange && colors.brand}
                   />
                   <StyledPlaces
                     defaultRefinement={
@@ -189,7 +190,9 @@ export const Upcoming = ({ events, sendToPage }) => {
                       searchLocation || searchService.defaultLocation
                     }
                   />
-                  <StyledDateRangeDropdown />
+                  <StyledDateRangeDropdown
+                    datesSearched={dateRange && colors.brand}
+                  />
                 </DayPickerRow>
               )}
 

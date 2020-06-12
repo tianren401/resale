@@ -21,6 +21,7 @@ import {
   StyledDateRangeDropdown,
   StyledPlaces,
 } from './styledComponents';
+import { colors } from '_constants';
 
 export const Upcoming = ({ events, sendToPage }) => {
   const dateRange = useSelector(({ searchReducer }) => searchReducer.dateRange);
@@ -139,6 +140,7 @@ export const Upcoming = ({ events, sendToPage }) => {
                 <DayPickerRow>
                   <StyledDateRangeDropdown
                     onClick={() => handleModalOpen(!modalOpen)}
+                    datesSearched={dateRange && colors.brand}
                   />
                   <StyledPlaces
                     defaultRefinement={{
@@ -152,7 +154,9 @@ export const Upcoming = ({ events, sendToPage }) => {
                   <TextContainer>
                     <UpcomingText>Upcoming Events</UpcomingText>
                   </TextContainer>
-                  <StyledDateRangeDropdown />
+                  <StyledDateRangeDropdown
+                    datesSearched={dateRange && colors.brand}
+                  />
                 </DayPickerRow>
               )}
 

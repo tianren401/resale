@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import { deviceSize, colors } from '_constants';
-import { isMobileDevice } from '_helpers';
 import { Form } from '_components';
 
 export const StyledModal = styled.div`
@@ -48,17 +47,10 @@ export const CloseButton = styled.img`
 
 export const Title = styled.div`
   text-align: center;
-  padding-top: 18px;
-  padding-bottom: ${({ loginType }) =>
-    loginType === 'Reset Password' && isMobileDevice
-      ? '84px'
-      : loginType === 'Reset Instructions Sent'
-      ? '50px'
-      : '20px'};
+  padding-bottom: 20px;
   font-weight: 600;
   font-size: 36px;
   line-height: 42px;
-  white-space: nowrap;
 `;
 
 export const ForgotPasswordText = styled.div`
@@ -82,20 +74,17 @@ export const NoAccountText = styled.div`
 export const Button = styled.button`
   cursor: pointer;
   width: 100%;
-  padding: 20px 32px;
+  padding: 20px 32px 18px 32px;
   background-color: ${colors.brand};
   border-radius: 6px;
   border: none;
   font-size: 16px;
   color: white;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
-  ${({ position }) =>
-    position === 'bottom' &&
-    `position: absolute; bottom: 30px; right: 0; left: 0; margin: 0 auto; width: calc(100% - 40px);`}
 `;
 
-export const SignupFromSigninButton = styled.div`
+export const SwitchButton = styled.div`
   cursor: pointer;
   width: 100%;
   padding: 20px 32px 18px 32px;
@@ -106,13 +95,12 @@ export const SignupFromSigninButton = styled.div`
   color: ${colors.brand};
 `;
 
-export const SignupFromSigninText = styled.span`
+export const SwitchText = styled.span`
   cursor: pointer;
   color: ${colors.brand};
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;
-  margin-left 5px;
 `;
 
 export const ErrorMessage = styled.div`
@@ -144,47 +132,13 @@ export const SuccessMessage = styled.div`
 `;
 
 export const ResetPasswordText = styled.div`
-  padding 10px;
   font-size: 14px;
   line-height: 22px;
   color: #8d8d94;
 `;
 
 export const BackToSignInText = styled.span`
-  cursor: pointer;
   font-size: 14px;
   line-height: 22px;
   color: ${colors.brand};
-  margin-left: 5px;
-`;
-
-export const EmailSentImage = styled.img`
-  margin-bottom: 20px;
-`;
-
-export const ExtraTextBlock = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
-
-  hr {
-    color: ${colors.darkGray};
-    height: 0.5px;
-    width: 80px;
-  }
-  span {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 16px;
-    margin-left: 10px;
-    margin-right: 10px;
-    /* identical to box height, or 133% */
-
-    text-align: center;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: ${colors.darkGray};
-  }
 `;

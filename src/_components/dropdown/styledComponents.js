@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 import {
   DropdownExpandIcon,
@@ -18,12 +17,14 @@ export const StyledDropdown = styled.div`
   cursor: pointer;
   user-select: none;
   width: ${(props) => (props.width ? props.width : '179px')};
-  color: ${colors.black};
+  color: ${({ datesSearched }) =>
+    datesSearched ? datesSearched : colors.black};
   min-width: 179px;
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
-  border: 1px solid ${colors.lightGray};
+  border: 1px solid ${({ datesSearched }) =>
+    datesSearched ? datesSearched : colors.lightGray};
   box-sizing: border-box;
   border-radius: 6px;
   max-height: 48px;
@@ -96,7 +97,7 @@ export const StyledDropdownMenu = styled.div`
     `};
 `;
 
-export const Option = styled(Link)`
+export const Option = styled.div`
   display: flex;
   align-items: center;
   ${({ showNavigation }) =>

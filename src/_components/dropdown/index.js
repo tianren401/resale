@@ -81,7 +81,6 @@ export const DropdownMenu = ({
                 key={index}
                 onClick={() => handleSelect(option)}
                 hasChildren={!!option.children}
-                to={option.url ? option.url : '#'}
               >
                 {option.label}
                 {showNavigation ? (
@@ -139,7 +138,6 @@ export const DropdownMenu = ({
                 onClick={() => handleSelect(option)}
                 hasChildren={!!option.children}
                 showNavigation={showNavigation}
-                to={option.url ? option.url : '#'}
               >
                 {!showNavigation && option.label}
                 {showNavigation ? (
@@ -189,6 +187,7 @@ export const Dropdown = ({
   handleChange,
   showNavigation,
   title,
+  datesSearched,
   ...rest
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -229,6 +228,7 @@ export const Dropdown = ({
       className={className}
       {...rest}
       showNavigation={showNavigation}
+      datesSearched={datesSearched}
     >
       {selectedOption?.label}
       {showNavigation ? null : isOpen ? (
@@ -263,4 +263,5 @@ Dropdown.propTypes = {
   handleChange: PropTypes.func.isRequired,
   showNavigation: PropTypes.bool,
   title: PropTypes.string,
+  datesSearched: PropTypes.string,
 };

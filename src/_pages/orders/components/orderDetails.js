@@ -337,8 +337,8 @@ export const OrderDetails = (props) => {
                   ) : (
                     <Flex align="center" width="70%">
                       <Text>
-                        Your tickets are being processed. We'll email you when
-                        they're ready.
+                        Your tickets are being processed. We&apos;ll email you
+                        when they&apos;re ready.
                         <StyledLink href="#">Learn more.</StyledLink>
                       </Text>
                     </Flex>

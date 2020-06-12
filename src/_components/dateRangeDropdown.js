@@ -46,7 +46,7 @@ DatePicker.propTypes = {
   weekendFilter: PropTypes.bool,
 };
 
-export const DateRangeDropdown = () => {
+export const DateRangeDropdown = ({ datesSearched }) => {
   const dispatch = useDispatch();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -98,6 +98,11 @@ export const DateRangeDropdown = () => {
       defaultOption={searchDate}
       handleChange={handleSetDate}
       title="Select Date"
+      datesSearched={datesSearched}
     />
   );
+};
+
+DateRangeDropdown.propTypes = {
+  datesSearched: PropTypes.string,
 };

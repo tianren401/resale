@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 
 import closeModalButton from '_images/closeModal.svg';
 import leftArrow from '_images/purpleArrowLeft.svg';
+import emailSent from '_images/emailSent.svg';
 import { InputField, PasswordInputField } from '_components';
 import { setLoginType } from '_store/ui';
 import { useModal } from '_hooks/useModal';
@@ -19,10 +20,13 @@ import {
   ForgotPasswordText,
   NoAccountText,
   Button,
-  SwitchButton,
-  SwitchText,
+  SignupFromSigninButton,
+  SignupFromSigninText,
   ErrorMessage,
   SuccessMessage,
+  ResetPasswordText,
+  BackToSignInText,
+  EmailSentImage,
   ExtraTextBlock,
 } from './styledComponents';
 
@@ -35,21 +39,207 @@ const LoginForm = (props) => {
   const { passwordInputType, loginType } = useSelector(uiReducer);
   const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
   const dispatch = useDispatch();
-  const handleModalSwitch = () => {
-    dispatch(setLoginType('Sign Up'));
+  const handleModalSwitch = (loginType) => {
+    dispatch(setLoginType(loginType));
   };
 
-  const handleModalSwitchSignIn = () => {
-    dispatch(setLoginType('Sign In'));
+  const formContent = {
+    fields: [],
+    statusIndicator: null,
+    button: {},
+    initialValues: {},
+    validationSchema: {},
+    signupFromSigninButton: false,
+    findTicketsText: false,
+  };
+  const generateFormContent = () => {
+    switch (loginType) {
+      case 'Sign Up':
+        formContent.fields = [
+          {
+            id: 'fullName',
+            type: 'text',
+            height: 'auto',
+            placeholder: 'Full Name',
+            component: InputField,
+          },
+          {
+            id: 'email',
+            type: 'text',
+            height: 'auto',
+            placeholder: 'Email',
+            component: InputField,
+          },
+          {
+            id: 'phone',
+            type: 'text',
+            height: 'auto',
+            placeholder: 'Phone',
+            component: InputField,
+          },
+          {
+            id: 'password',
+            type: passwordInputType,
+            height: '50px',
+            placeholder: 'Password',
+            component: PasswordInputField,
+          },
+        ];
+        formContent.statusIndicator =
+          loginMessage && loginMessage.includes('Successful') ? (
+            <SuccessMessage>{loginMessage}</SuccessMessage>
+          ) : (
+            loginMessage && <ErrorMessage>{loginMessage}</ErrorMessage>
+          );
+        formContent.button = { buttonText: loading ? '...' : loginType };
+        formContent.initialValues = {
+          fullName: '',
+          email: '',
+          phone: '',
+          password: '',
+        };
+        formContent.validationSchema = Yup.object().shape({
+          fullName: Yup.string().required('Name is Required'),
+          email: Yup.string()
+            .email('Please enter correct email')
+            .required('Email is Required.'),
+          phone: Yup.string()
+            .matches(phoneRegExp, 'Phone number is not valid')
+            .required('Phone number is Required'),
+          password: Yup.string().required('Password is Required'),
+        });
+
+        break;
+
+      case 'Sign In':
+        formContent.fields = [
+          {
+            id: 'email',
+            type: 'text',
+            height: 'auto',
+            placeholder: 'Email',
+            component: InputField,
+          },
+          {
+            id: 'password',
+            type: passwordInputType,
+            height: '50px',
+            placeholder: 'Password',
+            component: PasswordInputField,
+          },
+        ];
+        formContent.statusIndicator =
+          loginMessage && loginMessage.includes('Successful') ? (
+            <SuccessMessage>{loginMessage}</SuccessMessage>
+          ) : (
+            loginMessage && <ErrorMessage>{loginMessage}</ErrorMessage>
+          );
+        formContent.button = { buttonText: loading ? '...' : loginType };
+        formContent.initialValues = { email: '', password: '' };
+        formContent.validationSchema = Yup.object().shape({
+          email: Yup.string()
+            .email('Please enter correct email.')
+            .required('Email is Required.'),
+          password: Yup.string().required('Password is Required.'),
+        });
+        formContent.forgotPasswordText = 'Forgot Password?';
+        formContent.signupFromSigninButton = true;
+        break;
+
+      case 'Reset Password':
+        formContent.fields = [
+          {
+            id: 'email',
+            type: 'text',
+            height: 'auto',
+            placeholder: 'Email',
+            component: InputField,
+          },
+        ];
+        formContent.initialValues = {
+          email: '',
+        };
+        formContent.validationSchema = Yup.object().shape({
+          email: Yup.string()
+            .email('Please enter correct email.')
+            .required('Email is Required.'),
+        });
+        formContent.statusIndicator =
+          loginMessage && loginMessage.includes('Successful') ? (
+            <SuccessMessage>{loginMessage}</SuccessMessage>
+          ) : (
+            loginMessage && <ErrorMessage>{loginMessage}</ErrorMessage>
+          );
+        formContent.button = {
+          buttonText: 'Send Reset Instructions',
+          position: isMobileDevice && 'bottom',
+        };
+        break;
+
+      case 'Reset Instructions Sent':
+        formContent.statusIndicator = (
+          <>
+            <EmailSentImage src={emailSent} />
+            <ResetPasswordText>
+              Reset instructions have been sent.
+            </ResetPasswordText>
+          </>
+        );
+        formContent.button = {
+          buttonText: 'Sign In',
+          position: isMobileDevice && 'bottom',
+        };
+        break;
+
+      case 'Find Ticket':
+        formContent.fields = [
+          {
+            id: 'email',
+            type: 'text',
+            height: 'auto',
+            placeholder: 'Email',
+            component: InputField,
+          },
+          {
+            id: 'phone',
+            type: 'text',
+            height: 'auto',
+            placeholder: 'Phone',
+            component: InputField,
+          },
+          {
+            id: 'orderId',
+            type: 'text',
+            height: 'auto',
+            placeholder: 'Order Id',
+            component: InputField,
+          },
+        ];
+        formContent.initialValues = { email: '', phone: '', orderId: '' };
+        formContent.validationSchema = Yup.object().shape({
+          phone: Yup.string()
+            .matches(phoneRegExp, 'Phone number is not valid')
+            .required('Phone Number is Required.'),
+          email: Yup.string()
+            .email('Please enter correct email.')
+            .required('Email is Required.'),
+          orderId: Yup.string().required('Order ID is Required.'),
+        });
+        formContent.statusIndicator = <div>{loginMessage}</div>;
+        formContent.button = {
+          buttonText: 'Find My Tickets',
+          // position: isMobileDevice && 'bottom',
+        };
+        formContent.findTicketsText = true;
+        break;
+
+      default:
+        break;
+    }
   };
 
-  let loginTitle = loginType;
-  let loginActionTitle = loginType;
+  generateFormContent();
 
-  if (loginType === 'Find Ticket') {
-    loginTitle = "Let's find your tickets";
-    loginActionTitle = 'Find my Tickets';
-  }
   return (
     <StyledModal>
       <Header>
@@ -59,133 +249,95 @@ const LoginForm = (props) => {
         />
         {isMobileDevice && <div>Back</div>}
       </Header>
-      <Title>{loginTitle}</Title>
+      <Title loginType={loginType}>
+        {loginType === 'Reset Instructions Sent'
+          ? 'Reset Password'
+          : loginType === 'Find Ticket'
+          ? "Let's Find Your Tickets"
+          : loginType}
+        {/* loginTitle? */}
+      </Title>
+      {loginType === 'Reset Password' && !isMobileDevice && (
+        <ResetPasswordText>
+          Enter the email address you used when signing up for SelectSeats to
+          reset your password.
+          <BackToSignInText onClick={() => handleModalSwitch('Sign In')}>
+            Back to Sign in
+          </BackToSignInText>
+        </ResetPasswordText>
+      )}
+      {/* <Title>{loginTitle}</Title> */}
       <StyledForm
-        initialValues={{ email: '', password: '', fullName: '', phone: '' }}
+        initialValues={formContent.initialValues}
         handleSubmit={handleSubmit}
-        validationSchema={
-          loginType === 'Sign Up'
-            ? Yup.object().shape({
-                email: Yup.string()
-                  .email('Please enter correct email.')
-                  .required('Email is Required.'),
-                password: Yup.string().required('Password is Required.'),
-                fullName: Yup.string().required('Name is Required.'),
-                phone: Yup.string()
-                  .matches(phoneRegExp, 'Phone number is not valid')
-                  .required('Phone Number is Required.'),
-              })
-            : loginType === 'Sign In'
-            ? Yup.object().shape({
-                email: Yup.string()
-                  .email('Please enter correct email.')
-                  .required('Email is Required.'),
-                password: Yup.string().required('Password is Required.'),
-              })
-            : Yup.object().shape({
-                phone: Yup.string()
-                  .matches(phoneRegExp, 'Phone number is not valid')
-                  .required('Phone Number is Required.'),
-                email: Yup.string()
-                  .email('Please enter correct email.')
-                  .required('Email is Required.'),
-                orderId: Yup.string().required('Order ID is Required.'),
-              })
-        }
+        validationSchema={formContent.validationSchema}
       >
         {(props) => (
-          <>
-            {loginMessage && loginMessage.includes('Successful') ? (
-              <SuccessMessage>{loginMessage}</SuccessMessage>
+          <div>
+            {formContent.statusIndicator}
+            {formContent.fields?.map((field) => (
+              // {(loginType === 'Sign Up' || loginType === 'Find Ticket') && (
+              <Field
+                key={field.id}
+                id={field.id}
+                type={field.type}
+                width={isMobileDevice ? '100%' : '380px'}
+                height={field.height}
+                placeholder={field.placeholder}
+                component={field.component}
+                {...props}
+              />
+            ))}
+            {formContent.forgotPasswordText && (
+              <ForgotPasswordText
+                onClick={() => handleModalSwitch('Reset Password')}
+              >
+                {formContent.forgotPasswordText}
+              </ForgotPasswordText>
+            )}
+            {
+              <Button
+                type="submit"
+                position={
+                  formContent.button.position && formContent.button.position
+                }
+              >
+                {formContent?.button?.buttonText}
+              </Button>
+            }
+            {formContent.signupFromSigninButton && isMobileDevice ? (
+              <SignupFromSigninButton
+                onClick={() => handleModalSwitch('Sign Up')}
+              >
+                Sign Up
+              </SignupFromSigninButton>
             ) : (
-              loginMessage && <ErrorMessage>{loginMessage}</ErrorMessage>
-            )}
-
-            {loginType === 'Sign Up' && (
-              <Field
-                id="fullName"
-                type="text"
-                width={isMobileDevice ? '100%' : '380px'}
-                height="auto"
-                placeholder="Full Name"
-                component={InputField}
-                {...props}
-              />
-            )}
-            <Field
-              id="email"
-              type="text"
-              width={isMobileDevice ? '100%' : '380px'}
-              height="auto"
-              placeholder="Email"
-              component={InputField}
-              {...props}
-            />
-            {(loginType === 'Sign Up' || loginType === 'Find Ticket') && (
-              <Field
-                id="phone"
-                type="text"
-                width={isMobileDevice ? '100%' : '380px'}
-                height="auto"
-                placeholder="Phone"
-                component={InputField}
-                {...props}
-              />
-            )}
-            {loginType !== 'Find Ticket' && (
-              <Field
-                id="password"
-                type={passwordInputType}
-                width={isMobileDevice ? '100%' : '380px'}
-                height="50px"
-                placeholder="Password"
-                component={PasswordInputField}
-                {...props}
-              />
-            )}
-
-            {loginType === 'Find Ticket' && (
-              <Field
-                id="orderId"
-                type="text"
-                width={isMobileDevice ? '100%' : '380px'}
-                height="auto"
-                placeholder="Order Id"
-                component={InputField}
-                {...props}
-              />
-            )}
-
-            {loginType === 'Sign In' && (
-              <ForgotPasswordText>Forgot Password?</ForgotPasswordText>
-            )}
-            <Button type="submit">{loading ? '...' : loginActionTitle}</Button>
-
-            {loginType === 'Sign In' && isMobileDevice ? (
-              <SwitchButton onClick={handleModalSwitch}>Sign Up</SwitchButton>
-            ) : (
-              loginType === 'Sign In' &&
+              formContent.signupFromSigninButton &&
               !isMobileDevice && (
                 <NoAccountText>
-                  Need a SelectSeats account?{' '}
-                  <SwitchText onClick={handleModalSwitch}>
+                  Need a SelectSeats account?
+                  <SignupFromSigninText
+                    onClick={() => handleModalSwitch('Sign Up')}
+                  >
                     Sign up here
-                  </SwitchText>{' '}
+                  </SignupFromSigninText>
                 </NoAccountText>
               )
             )}
 
-            {loginType === 'Find Ticket' && (
+            {formContent.findTicketsText && (
               <>
                 <ExtraTextBlock>
                   <hr></hr>
                   <span>Or</span>
                   <hr></hr>
                 </ExtraTextBlock>
-                <Button onClick={handleModalSwitchSignIn}>Sign In</Button>
+                <Button onClick={() => handleModalSwitch('Sign In')}>
+                  Sign In
+                </Button>
               </>
             )}
-          </>
+          </div>
         )}
       </StyledForm>
     </StyledModal>
