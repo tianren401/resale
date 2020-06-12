@@ -22,6 +22,7 @@ export const Orders = () => {
       <Navigation page="home" />
       <Switch>
         <Route exact path="/orders/:orderId" component={OrderDetails} />
+        <Redirect to="/" />
       </Switch>
     </>
   );
