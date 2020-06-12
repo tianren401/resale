@@ -135,7 +135,12 @@ const LoginForm = (props) => {
             loginMessage && <ErrorMessage>{loginMessage}</ErrorMessage>
           );
         formContent.button = { buttonText: loading ? '...' : loginType };
-        formContent.initialValues = { email: '', password: '' };
+        formContent.initialValues = {
+          email: '',
+          password: '',
+          phone: '',
+          fullName: '',
+        };
         formContent.validationSchema = Yup.object().shape({
           email: Yup.string()
             .email('Please enter correct email.')
@@ -228,7 +233,6 @@ const LoginForm = (props) => {
         formContent.statusIndicator = <div>{loginMessage}</div>;
         formContent.button = {
           buttonText: 'Find My Tickets',
-          // position: isMobileDevice && 'bottom',
         };
         formContent.findTicketsText = true;
         break;
@@ -255,7 +259,6 @@ const LoginForm = (props) => {
           : loginType === 'Find Ticket'
           ? "Let's Find Your Tickets"
           : loginType}
-        {/* loginTitle? */}
       </Title>
       {loginType === 'Reset Password' && !isMobileDevice && (
         <ResetPasswordText>
@@ -266,7 +269,6 @@ const LoginForm = (props) => {
           </BackToSignInText>
         </ResetPasswordText>
       )}
-      {/* <Title>{loginTitle}</Title> */}
       <StyledForm
         initialValues={formContent.initialValues}
         handleSubmit={handleSubmit}
@@ -276,7 +278,6 @@ const LoginForm = (props) => {
           <div>
             {formContent.statusIndicator}
             {formContent.fields?.map((field) => (
-              // {(loginType === 'Sign Up' || loginType === 'Find Ticket') && (
               <Field
                 key={field.id}
                 id={field.id}
