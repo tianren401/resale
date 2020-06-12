@@ -11,12 +11,12 @@ import {
   Form,
   InputField,
   PrimaryButton,
-  TextButton,
+  // TextButton,
   Loader,
 } from '_components';
 import { colors, deviceSize } from '_constants';
 import ticketProtectIcon from '_images/ticketProtectIcon.svg';
-import { LoginModal } from '_pages';
+import { CheckoutLoginModal } from '../components';
 import { phoneRegExp } from '_helpers';
 
 const Container = styled.div`
@@ -58,40 +58,40 @@ const ProtectionGroup = styled.div`
   }
 `;
 
-const Login = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  width: ${(props) => (props.width ? props.width : '280px')};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 18px 0;
+// const Login = styled.div`
+//   font-weight: 500;
+//   font-size: 14px;
+//   line-height: 20px;
+//   width: ${(props) => (props.width ? props.width : '280px')};
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   padding: 18px 0;
 
-  @media (max-width: ${deviceSize.tablet}px) {
-    display: none;
-  }
-`;
+//   @media (max-width: ${deviceSize.tablet}px) {
+//     display: none;
+//   }
+// `;
 
-const LoginMobile = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  width: ${(props) => (props.width ? props.width : '280px')};
-  justify-content: space-around;
-  align-items: center;
-  padding: 18px 0;
-  display: none;
+// const LoginMobile = styled.div`
+//   font-weight: 500;
+//   font-size: 14px;
+//   line-height: 20px;
+//   width: ${(props) => (props.width ? props.width : '280px')};
+//   justify-content: space-around;
+//   align-items: center;
+//   padding: 18px 0;
+//   display: none;
 
-  @media (max-width: ${deviceSize.tablet}px) {
-    display: flex;
-  }
-`;
+//   @media (max-width: ${deviceSize.tablet}px) {
+//     display: flex;
+//   }
+// `;
 
-const LoginLink = styled(TextButton)`
-  padding: 0;
-  padding-left: 5px;
-`;
+// const LoginLink = styled(TextButton)`
+//   padding: 0;
+//   padding-left: 5px;
+// `;
 
 const Title = styled(H2)`
   font-weight: 500;
@@ -117,7 +117,7 @@ export const InfoContent = ({ handleSubmit }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { loading } = useSelector((state) => state.checkoutReducer);
 
-  const handleModalOpen = () => setIsOpenModal(true);
+  // const handleModalOpen = () => setIsOpenModal(true);
   const closeModal = () => setIsOpenModal(false);
 
   const schema = Yup.object().shape({
@@ -169,12 +169,12 @@ export const InfoContent = ({ handleSubmit }) => {
               component={InputField}
               {...props}
             />
-            <Login>
+            {/* <Login>
               <span>Already have an account?</span>
               <LoginLink type="button" onClick={handleModalOpen}>
-                Log in here
+                Sign in here
               </LoginLink>
-            </Login>
+            </Login> */}
             <PrimaryButton
               minWidth="280px"
               fontSize="14px"
@@ -183,16 +183,16 @@ export const InfoContent = ({ handleSubmit }) => {
             >
               Continue as Guest
             </PrimaryButton>
-            <LoginMobile>
+            {/* <LoginMobile>
               <span>Already have an account?</span>
               <LoginLink type="button" onClick={handleModalOpen}>
-                Log in here
+                Sign in here
               </LoginLink>
-            </LoginMobile>
+            </LoginMobile> */}
           </>
         )}
       </StyledForm>
-      <LoginModal isOpenModal={isOpenModal} closeModal={closeModal} />
+      <CheckoutLoginModal isOpenModal={isOpenModal} closeModal={closeModal} />
     </Container>
   );
 };

@@ -7,6 +7,15 @@ export const loginAction = createAsyncThunk('auth/login', async (data) => {
   const response = await authService.login(data.email, data.password);
   return response;
 });
+// TODO: integrate loginAction and loginCheckoutAction in the future
+export const loginCheckoutAction = createAsyncThunk(
+  'auth/login/checkout',
+  async (paylaod) => {
+    const response = await authService.login(paylaod.email, paylaod.password);
+    paylaod.success();
+    return response;
+  }
+);
 
 export const passwordVerify = createAsyncThunk(
   'auth/verify',
@@ -59,6 +68,19 @@ const authSlice = createSlice({
       state.loading = true;
     },
     [loginAction.rejected]: (state) => {
+      state.loading = false;
+    },
+    [loginCheckoutAction.fulfilled]: (state, action) => {
+      const auth = action.payload;
+      auth.user.phone = formatPhoneNumber(action.payload.user.phone);
+      authService.setAuthInStorage(auth);
+      state.user = auth.user;
+      state.loading = false;
+    },
+    [loginCheckoutAction.pending]: (state) => {
+      state.loading = true;
+    },
+    [loginCheckoutAction.rejected]: (state) => {
       state.loading = false;
     },
     [getUserInfoAction.fulfilled]: (state, action) => {

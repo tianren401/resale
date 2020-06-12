@@ -3,14 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import {
-  H2,
-  H5,
-  TextButton,
-  ContentImage,
-  SuccessButton,
-  Loader,
-} from '_components';
+import { H2, H5, ContentImage, SuccessButton, Loader } from '_components';
 import { purchasePayment } from '_store/checkout';
 import { clearLockRequestId } from '_store/checkoutTicket';
 import { colors, cardLogos } from '_constants';
@@ -44,12 +37,6 @@ const DeliveryInfo = styled.div`
 
 const PaymentInfo = styled.div`
   margin-top: 32px;
-`;
-
-const Link = styled(TextButton)`
-  font-size: 12px;
-  font-weight: 400;
-  padding-left: 15px;
 `;
 
 const UserImage = styled.div`
@@ -101,6 +88,7 @@ export const OrderInfo = () => {
     paymentMethod,
     saveCardInfo,
   } = useSelector((state) => state.checkoutReducer);
+  const { user } = useSelector((state) => state.authReducer);
 
   const {
     ticketGroupId,
@@ -111,10 +99,6 @@ export const OrderInfo = () => {
     deliveryTypeName,
     event,
   } = useSelector((state) => state.checkoutTicketReducer);
-
-  const moveTo = (link) => {
-    history.push('/checkout' + link);
-  };
 
   const placeOrder = () => {
     if (!deliveryInfo) return;
@@ -157,12 +141,11 @@ export const OrderInfo = () => {
       <H2 weight="500">Place Order</H2>
       <Info>
         <div>
-          <H5 weight="600">
-            Delivery Information
-            <Link onClick={() => moveTo('/delivery')}>Edit Info</Link>
-          </H5>
+          <H5 weight="600">Delivery Information</H5>
           <Delivery>
-            <UserImage>G</UserImage>
+            <UserImage>
+              {user ? user.firstName[0] + user.lastName[0] : 'G'}
+            </UserImage>
             {deliveryInfo ? (
               <DeliveryInfo>
                 <p>{deliveryInfo.name}</p>
@@ -175,10 +158,7 @@ export const OrderInfo = () => {
           </Delivery>
         </div>
         <PaymentInfo>
-          <H5 weight="600">
-            Payment Information
-            <Link onClick={() => moveTo('/billing')}>Edit Payment</Link>
-          </H5>
+          <H5 weight="600">Payment Information</H5>
           <H5 lineHeight="22px" marginTop="8px">
             <ContentImage src={cardLogos[paymentMethod.type]} height="22" />{' '}
             {paymentMethod.type} ending in {paymentMethod.lastFour}{' '}

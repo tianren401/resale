@@ -136,12 +136,6 @@ const PaymentInfo = styled.div`
   margin-top: 32px;
 `;
 
-const Link = styled(TextButton)`
-  font-size: 12px;
-  font-weight: 400;
-  padding-left: 15px;
-`;
-
 const UserImage = styled.div`
   min-width: 50px;
   border-radius: 50%;
@@ -192,7 +186,7 @@ export const OrderInfoMobile = () => {
     paymentMethod,
     saveCardInfo,
   } = useSelector((state) => state.checkoutReducer);
-
+  const { user } = useSelector((state) => state.authReducer);
   const {
     vfsURL,
     ticketGroupId,
@@ -205,10 +199,6 @@ export const OrderInfoMobile = () => {
     ticketGroupSection,
     ticketGroupRow,
   } = useSelector((state) => state.checkoutTicketReducer);
-
-  const moveTo = (link) => {
-    history.push('/checkout' + link);
-  };
 
   const date = format(new Date(event.date), "EEEE MMM do 'at' h:mma");
 
@@ -264,12 +254,11 @@ export const OrderInfoMobile = () => {
         {!!vfsURL && <VFS image={`url(${vfsURL})`} />}
         <Info>
           <div>
-            <H5 weight="600">
-              Delivery Information
-              <Link onClick={() => moveTo('/delivery')}>Edit Info</Link>
-            </H5>
+            <H5 weight="600">Delivery Information</H5>
             <Delivery>
-              <UserImage>G</UserImage>
+              <UserImage>
+                {user ? user.firstName[0] + user.lastName[0] : 'G'}
+              </UserImage>
               {deliveryInfo ? (
                 <DeliveryInfo>
                   <p>{deliveryInfo.name}</p>
@@ -282,10 +271,7 @@ export const OrderInfoMobile = () => {
             </Delivery>
           </div>
           <PaymentInfo>
-            <H5 weight="600">
-              Payment Information
-              <Link onClick={() => moveTo('/billing')}>Edit Payment</Link>
-            </H5>
+            <H5 weight="600">Payment Information</H5>
             <H5 lineHeight="22px" marginTop="8px">
               <ContentImage src={cardLogos[paymentMethod.type]} height="22" />{' '}
               {paymentMethod.type} ending in {paymentMethod.lastFour}{' '}
