@@ -32,9 +32,9 @@ export const CarouselItem = ({ backgroundImage, title, desc, time, id }) => {
             textAlign="center"
             minWidth="160px"
           >
-            Buy Tickets
+            Get Tickets
           </StyledButton>
-          <BuyTicketBtn>Buy now from $99 →</BuyTicketBtn>
+          <BuyTicketBtn>Get Tickets →</BuyTicketBtn>
         </Link>
       </EventInfo>
     </StyledCarouselItem>

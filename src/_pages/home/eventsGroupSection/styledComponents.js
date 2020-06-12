@@ -46,7 +46,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.div`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 12px;
   line-height: 16px;
   display: flex;
@@ -112,24 +112,33 @@ export const EventTypeNavigation = styled.div`
   }
 `;
 
-export const SelectedTypeBtn = styled.div`
-  color: #ffffff;
+export const EventTypeTypeBtn = styled.div`
+  color: #d3bef7;
   background: #6726f1;
-  border: 1px solid #8245e5;
-  @media (min-width: ${deviceSize.tablet}px) {
-    border-bottom: 4px solid #ffffff;
-  }
-`;
-
-export const UnselectedTypeBtn = styled.div`
-  color: #6726f1;
-  background: #fff;
+  font-weight: 600;
   cursor: pointer;
-  border: 1px solid #8245e5;
-  @media (min-width: ${deviceSize.tablet}px) {
-    color: #d3bef7;
-    border: none;
+  transition: 0.2s;
+  transition-timing-function: ease-in-out;
+
+  @media (max-width: ${deviceSize.tablet}px) {
+    color: #6726f1;
+    background: #fff;
+    border: 1px solid #8245e5;
   }
+
+  ${({ selected }) =>
+    selected &&
+    `
+    color: #ffffff;
+    cursor: default;
+    border-bottom: 4px solid #ffffff;
+
+    @media (max-width: ${deviceSize.tablet}px) {
+      background: #6726f1;
+      color: #fff;
+      border: 1px solid #8245e5;
+    }
+  `};
 `;
 
 export const LocationContainer = styled.div`

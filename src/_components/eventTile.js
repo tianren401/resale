@@ -18,10 +18,11 @@ const Tile = styled(Link)`
   background-repeat: no-repeat;
   background-image: ${(props) => props.image};
   position: relative;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1),
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25),
     0px 0px 2px rgba(130, 136, 148, 0.16);
   width: 100%;
   margin: 8px 16px;
+  padding: 20px;
   border-radius: 12px;
 
   @media (min-width: ${deviceSize.tablet}px) {
@@ -37,7 +38,6 @@ const Title = styled.div`
   font-size: 24px;
   line-height: 32px;
   color: #fbfbfb;
-  padding-left: 18px;
 `;
 
 const Description = styled.div`
@@ -45,7 +45,6 @@ const Description = styled.div`
   font-size: 14px;
   line-height: 20px;
   color: #fbfbfb;
-  padding: 0 0px 18px 18px;
 `;
 
 export const EventTile = ({ event, width, margin, cardImage }) => {

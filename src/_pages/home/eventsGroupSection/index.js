@@ -11,8 +11,7 @@ import {
   TriangleOverlay,
   Container,
   EventTypeNavigation,
-  SelectedTypeBtn,
-  UnselectedTypeBtn,
+  EventTypeTypeBtn,
   LocationContainer,
 } from './styledComponents';
 import { groupEventTypeOptions } from '_constants';
@@ -41,15 +40,14 @@ export const EventsGroup = ({ events, gutter, onChangeType, eventType }) => {
         )}
         <EventTypeNavigation>
           {groupEventTypeOptions.map((item) => {
-            const Component =
-              eventType === item.value ? SelectedTypeBtn : UnselectedTypeBtn;
             return (
-              <Component
+              <EventTypeTypeBtn
+                selected={eventType === item.value}
                 key={item.value}
                 onClick={() => onChangeType(item.value)}
               >
                 {item.label}
-              </Component>
+              </EventTypeTypeBtn>
             );
           })}
           {!isMobileDevice && (

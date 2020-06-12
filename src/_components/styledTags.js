@@ -127,9 +127,6 @@ export const relativePosition = css`
 
 export const SearchRowContainer = styled.div`
   width: 100%;
-  margin: auto;
-  padding: 30px 0;
-  max-width: 940px;
   ${(props) => (props.absolute ? absolutePosition : relativePosition)}
 
   @media (min-width: ${deviceSize.tablet}px) {
@@ -139,7 +136,7 @@ export const SearchRowContainer = styled.div`
   }
 
   @media (min-width: ${deviceSize.laptop}px) {
-    width: 100%;
+    width: 50%;
     padding: 30px 0;
   }
 

@@ -22,7 +22,7 @@ const SearchCommonStyle = css`
   }
 
   @media (min-width: ${deviceSize.laptop}px) {
-    width: ${({ navbarSearch }) => (navbarSearch ? `auto` : `846px`)};
+    width: ${({ navbarSearch }) => (navbarSearch ? `auto` : `100%`)};
   }
 `;
 
@@ -58,7 +58,7 @@ export const SearchContainer = styled.div`
         height: 100%;
         align-items: center;
         &:first-child {
-          border-right: 1px solid #E6E6EB;  
+          border-right: 1px solid #E6E6EB;
         }
       }
     `}
@@ -172,7 +172,7 @@ const dropdownPosition = css`
 export const AutocompleteList = styled.ul`
   display: block;
   list-style: none;
-  
+
   transition: width 0.3s;
   background-color: ${colors.white};
   margin: auto;

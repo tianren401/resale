@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 100%;
   margin: auto;
   padding: 30px 0;
-  max-width: 980px;
+  max-width: 960px;
 
   > div {
     margin-bottom: 38px;
@@ -13,12 +13,12 @@ export const Container = styled.div`
 
 export const Header = styled.span`
   margin-bottom: 28px;
-  margin-left: 20px;
+  margin-left: 10px;
   display: block;
 `;
 
 export const Title = styled.div`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
 `;

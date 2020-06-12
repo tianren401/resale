@@ -68,7 +68,7 @@ const CarouselTitle = styled.div`
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
-  margin-left: 21px;
+  margin-left: 10px;
   margin-bottom: 6px;
 `;
 
@@ -101,7 +101,7 @@ const SnapchatItemTitle = styled.div`
   line-height: 20px;
   color: #fff;
 
-  & > span {
+  & > div {
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
@@ -209,6 +209,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
       {events && (
         <StyledCarousel
           itemsToShow={itemCount}
+          itemsToScroll={4}
           renderArrow={blankElement}
           renderPagination={blankElement}
           ref={carousel}
@@ -295,7 +296,7 @@ export const EventCarousel = ({ title, itemsToShow, events }) => {
                 </SnapchatItemDate>
                 <SnapchatItemTitle>
                   {event.event.name}
-                  <span>{event.event.venue.name}</span>
+                  <div>{event.event.venue.name}</div>
                 </SnapchatItemTitle>
               </SnapchatItem>
             );

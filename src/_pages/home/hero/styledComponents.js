@@ -33,6 +33,7 @@ export const LeftArrow = styled.img`
   top: 45%;
   left: 2%;
   cursor: pointer;
+  opacity: 0.6;
 
   @media (min-width: ${deviceSize.tablet}px) {
     top: 40%;
@@ -45,6 +46,7 @@ export const RightArrow = styled.img`
   top: 45%;
   right: 2%;
   cursor: pointer;
+  opacity: 0.6;
 
   @media (min-width: ${deviceSize.tablet}px) {
     top: 40%;
@@ -91,7 +93,7 @@ export const StyledCarouselItem = styled.div`
 
   @media (max-width: ${deviceSize.tablet}px) {
     min-height: 420px;
-    padding: 0 5%;
+    padding: 0 30px;
   }
 `;
 
@@ -104,16 +106,22 @@ export const EventBackground = styled.div`
   bottom: 0;
   background-size: cover;
   background-position: center;
-  background-image: url(${({ backgroundImage }) => backgroundImage});
+  background-image: linear-gradient(
+      179.2deg,
+      rgba(130, 69, 229, 0.32) 10.71%,
+      rgba(0, 0, 0, 0.59) 109.25%
+    ),
+    url(${({ backgroundImage }) => backgroundImage});
 `;
 
 export const EventInfo = styled.div`
-  width: 100%;
+  width: 95%;
   position: absolute;
-  top: 60%;
+  bottom: 60px;
   z-index: 0;
 
   @media (min-width: ${deviceSize.tablet}px) {
+    width: 65%;
     top: calc(40% - 10px);
     z-index: 0;
   }
