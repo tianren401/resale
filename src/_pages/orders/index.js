@@ -1,21 +1,28 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { OrdersLayout } from './components/ordersLayout';
 import { AllOrders } from './components/allOrders';
+import { OrderDetails } from './components/orderDetails';
 import { Navigation } from '_components';
+import { authService } from '_services';
 
 export const Orders = () => {
-  return (
+  const user = authService.getAuthFromStorage()?.user;
+  return user ? (
     <>
-      <Navigation />
-      <OrdersLayout>
-        <Switch>
-          <Route path="/orders/upcoming" component={AllOrders} />
-          <Route path="/orders/past" component={AllOrders} />
-          <Redirect to="/orders/upcoming" />
-        </Switch>
-      </OrdersLayout>
+      <Navigation page="user" />
+      <Switch>
+        <Route exact path="/orders" component={AllOrders} />
+        <Route exact path="/orders/:orderId" component={OrderDetails} />
+        <Redirect to="/orders" />
+      </Switch>
+    </>
+  ) : (
+    <>
+      <Navigation page="home" />
+      <Switch>
+        <Route exact path="/orders/:orderId" component={OrderDetails} />
+      </Switch>
     </>
   );
 };

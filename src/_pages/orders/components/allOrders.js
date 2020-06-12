@@ -6,6 +6,8 @@ import { H4, H5, Loader, OrderCard, FlexItem, Flex, Icon } from '_components';
 import { colors, deviceSize } from '_constants';
 import { getUserOrdersAction } from '_store/orders';
 import { useViewport } from '_hooks';
+import { authService } from '_services';
+import { OrdersLayout } from './ordersLayout';
 
 const StyledOrderContainer = styled.div`
   background: ${colors.white};
@@ -147,8 +149,8 @@ export const AllOrders = () => {
     (state) => state.ordersReducer
   );
 
-  const authState = useSelector(({ authReducer }) => authReducer);
-  const userEmail = authState?.user?.email;
+  const user = authService.getAuthFromStorage()?.user;
+  const { email: userEmail } = user;
   const handleFetchOrders = useCallback(() => {
     dispatch(getUserOrdersAction(userEmail));
   }, [dispatch, userEmail]);
@@ -183,57 +185,59 @@ export const AllOrders = () => {
     );
 
   return (
-    <StyledOrderContainer>
-      {!isMobileDevice ? (
-        <>
-          <Flex width="100%" justify="space-between">
-            <FlexItem flex="1">
-              <Title>{title}</Title>
-            </FlexItem>
-            <FlexItem flex="0">
-              <SearchInputContainer>
-                <IconContainer>{SearchIcon}</IconContainer>
-                <SearchInput
-                  type="text"
-                  onChange={(e) => setQuery(e.target.value)}
-                  value={query}
-                  placeholder="Search"
-                />
-              </SearchInputContainer>
-            </FlexItem>
-          </Flex>
-          <Content>
-            {orders.map((order) => (
-              <OrderCard key={order.orderId} order={order} />
-            ))}
-            {orders.length === 0 && (
-              <EmptyTitle>Your tickets will appear here</EmptyTitle>
-            )}
-          </Content>
-        </>
-      ) : (
-        <>
-          <Title>My Tickets</Title>
-          <Content>
-            {upcomingOrders.map((order) => (
-              <OrderCard key={order.orderId} order={order} />
-            ))}
-            {upcomingOrders.length === 0 && (
-              <EmptyTitle>Your tickets will appear here</EmptyTitle>
-            )}
-          </Content>
+    <OrdersLayout>
+      <StyledOrderContainer>
+        {!isMobileDevice ? (
+          <>
+            <Flex width="100%" justify="space-between">
+              <FlexItem flex="1">
+                <Title>{title}</Title>
+              </FlexItem>
+              <FlexItem flex="0">
+                <SearchInputContainer>
+                  <IconContainer>{SearchIcon}</IconContainer>
+                  <SearchInput
+                    type="text"
+                    onChange={(e) => setQuery(e.target.value)}
+                    value={query}
+                    placeholder="Search"
+                  />
+                </SearchInputContainer>
+              </FlexItem>
+            </Flex>
+            <Content>
+              {orders.map((order) => (
+                <OrderCard key={order.orderId} order={order} />
+              ))}
+              {orders.length === 0 && (
+                <EmptyTitle>Your tickets will appear here</EmptyTitle>
+              )}
+            </Content>
+          </>
+        ) : (
+          <>
+            <Title>My Tickets</Title>
+            <Content>
+              {upcomingOrders.map((order) => (
+                <OrderCard key={order.orderId} order={order} />
+              ))}
+              {upcomingOrders.length === 0 && (
+                <EmptyTitle>Your tickets will appear here</EmptyTitle>
+              )}
+            </Content>
 
-          <Title>Past Events</Title>
-          <Content>
-            {pastOrders.map((order) => (
-              <OrderCard key={order.orderId} order={order} />
-            ))}
-            {pastOrders.length === 0 && (
-              <EmptyTitle>Your tickets will appear here</EmptyTitle>
-            )}
-          </Content>
-        </>
-      )}
-    </StyledOrderContainer>
+            <Title>Past Events</Title>
+            <Content>
+              {pastOrders.map((order) => (
+                <OrderCard key={order.orderId} order={order} />
+              ))}
+              {pastOrders.length === 0 && (
+                <EmptyTitle>Your tickets will appear here</EmptyTitle>
+              )}
+            </Content>
+          </>
+        )}
+      </StyledOrderContainer>
+    </OrdersLayout>
   );
 };

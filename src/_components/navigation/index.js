@@ -49,8 +49,8 @@ export const Navigation = ({ page }) => {
 
   const options = [
     { key: 'initials', label: `${firstInitial}${lastInitial}` },
-    { key: 'myTickets', label: 'My Tickets', image: myTickets },
-    { key: 'settings', label: 'Settings', image: settings },
+    { key: 'myTickets', label: 'My Tickets', image: myTickets, url: '/orders' },
+    { key: 'settings', label: 'Settings', image: settings, url: '/user' },
     {
       key: 'signOut',
       label: 'Sign Out',
@@ -75,12 +75,11 @@ export const Navigation = ({ page }) => {
         return (
           <>
             <UserItems to="/">Support</UserItems>
-            <UserItems to="/" tab="myTickets">
-              My Tickets
-            </UserItems>
-
             {isAuthorized ? (
               <>
+                <UserItems to="/orders" tab="myTickets">
+                  My Tickets
+                </UserItems>
                 <UserItems to="#" tab="noHover">
                   <StyledDropdown
                     showNavigation={page && true}
@@ -92,6 +91,13 @@ export const Navigation = ({ page }) => {
               </>
             ) : (
               <>
+                <UserItems
+                  onClick={() => handleModalOpen('Find Ticket')}
+                  tab="myTickets"
+                  to="/"
+                >
+                  My Tickets
+                </UserItems>
                 <ModalItems
                   onClick={() => handleModalOpen('Sign Up')}
                   tab="signUp"
@@ -203,12 +209,11 @@ export const Navigation = ({ page }) => {
         return (
           <>
             <UserItems to="/">Support</UserItems>
-            <UserItems to="/" tab="myTickets">
-              My Tickets
-            </UserItems>
-
             {isAuthorized ? (
               <>
+                <UserItems to="/orders" tab="myTickets">
+                  My Tickets
+                </UserItems>
                 <UserItems to="#" tab="noHover">
                   <StyledDropdown
                     showNavigation={page && true}
@@ -220,6 +225,13 @@ export const Navigation = ({ page }) => {
               </>
             ) : (
               <>
+                <UserItems
+                  onClick={() => handleModalOpen('Find Ticket')}
+                  tab="myTickets"
+                  to="/"
+                >
+                  My Tickets
+                </UserItems>
                 <ModalItems
                   onClick={() => handleModalOpen('Sign Up')}
                   tab="signUp"

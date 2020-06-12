@@ -11,6 +11,8 @@ export const Login = () => {
   const { loginType } = useSelector(uiReducer);
   const [loginMessage, setLoginMessage] = useState('');
   const [signupMessage, setSignupMessage] = useState('');
+  const [findTicketMessage, setFindTicketMessage] = useState('');
+
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
@@ -47,12 +49,30 @@ export const Login = () => {
       }
     });
   };
+
+  const handleFindTicket = (values) => {
+    const { email, phone, orderId } = values;
+    const rawPhone = phone.replace(/[^0-9]/g, '');
+    setFindTicketMessage('');
+    window.location.href = `/orders/${orderId}?email=${email}&phone=${rawPhone}`;
+  };
+
   return (
     <LoginForm
       handleSubmit={
-        loginType === 'Sign In' ? handleLoginSubmit : handleSignupSubmit
+        loginType === 'Sign In'
+          ? handleLoginSubmit
+          : loginType === 'Sign Up'
+          ? handleSignupSubmit
+          : handleFindTicket
       }
-      loginMessage={loginType === 'Sign In' ? loginMessage : signupMessage}
+      loginMessage={
+        loginType === 'Sign In'
+          ? loginMessage
+          : loginType === 'Sign Up'
+          ? signupMessage
+          : findTicketMessage
+      }
     />
   );
 };

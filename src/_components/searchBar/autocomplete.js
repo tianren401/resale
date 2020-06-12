@@ -7,6 +7,7 @@ import { FlexItem, Flex } from '_components';
 import { Icon } from '_components/icon';
 import { colors, deviceSize } from '_constants';
 import { useViewport } from '_hooks';
+import debounce from 'lodash/debounce';
 
 const SearchIcon = <Icon size={24} color={colors.brand} name="search" />;
 const SearchNavIcon = <Icon size={24} color={colors.white} name="search" />;
@@ -34,10 +35,10 @@ export const Autocomplete = ({
   const dropdownEl = useRef(null);
   const inputEl = useRef(null);
 
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-    onChange(event.target.value);
-  };
+  const handleChange = React.useCallback(
+    debounce((query) => onChange(query), 1000),
+    [onChange]
+  );
 
   const resetSearch = () => {
     setShowOptions(false);
@@ -120,7 +121,10 @@ export const Autocomplete = ({
 
         <SearchInput
           type="text"
-          onChange={handleChange}
+          onChange={(event) => {
+            setInputValue(event.target.value);
+            handleChange(event.target.value);
+          }}
           onKeyDown={handleKeyDown}
           value={inputValue}
           placeholder={placeholder}

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
   Redirect,
   useParams,
+  Route,
 } from 'react-router-dom';
 
 import { GlobalStyles } from '../globalStyles';
@@ -23,6 +23,7 @@ import { ScrollToTop } from '_components';
 import { ViewportProvider } from '_hooks';
 import { authService } from '_services';
 import { getUserInfoAction } from '_store/auth';
+import { PrivateRoute } from './privateRoute';
 
 const DynamicPerformer = () => {
   const { performerId } = useParams();
@@ -40,7 +41,6 @@ const DynamicEvent = () => {
 };
 
 const Routes = () => {
-  const user = authService.getAuthFromStorage()?.user;
   const authState = useSelector(({ authReducer }) => authReducer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -67,12 +67,8 @@ const Routes = () => {
           </Route>
           <Route path="/checkout" component={Checkout} />
           <Route path="/results" component={Results} />
-          {user && (
-            <>
-              <Route path="/user" component={UserProfile} />
-              <Route path="/orders" component={Orders} />
-            </>
-          )}
+          <PrivateRoute path="/user" component={UserProfile} />
+          <Route path="/orders" component={Orders} />
           <Redirect to="/" />
         </Switch>
       </Router>

@@ -12,8 +12,8 @@ export const getUserOrdersAction = createAsyncThunk(
 
 export const getOrderDetailsAction = createAsyncThunk(
   'content/order/details',
-  async (id) => {
-    const response = await ordersService.getOrderDetails(id);
+  async (payload) => {
+    const response = await ordersService.getOrderDetails(payload);
     return response;
   }
 );
@@ -26,6 +26,7 @@ export const ordersSlice = createSlice({
     upcomingOrders: [],
     pastOrders: [],
     currentOrder: null,
+    rejected: false,
   },
   reducers: {
     setSidebarStage(state, action) {
@@ -58,6 +59,10 @@ export const ordersSlice = createSlice({
 
     [getOrderDetailsAction.fulfilled]: (state, action) => {
       state.currentOrder = action.payload;
+    },
+
+    [getOrderDetailsAction.rejected]: (state) => {
+      state.rejected = true;
     },
   },
 });

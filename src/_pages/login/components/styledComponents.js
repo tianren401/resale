@@ -129,3 +129,30 @@ export const SuccessMessage = styled.div`
   color: black;
   margin: 30px auto;
 `;
+
+export const ExtraTextBlock = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+
+  hr {
+    color: ${colors.darkGray};
+    height: 0.5px;
+    width: 80px;
+  }
+  span {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* identical to box height, or 133% */
+
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: ${colors.darkGray};
+  }
+`;

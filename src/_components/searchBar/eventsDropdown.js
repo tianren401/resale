@@ -166,7 +166,7 @@ EventsDropdown.displayName = 'EventsDropdown';
 
 EventsDropdown.propTypes = {
   data: PropTypes.any,
-  results: PropTypes.arrayOf(PropTypes.any),
+  results: PropTypes.object,
   activeOption: PropTypes.number,
   handleItemClick: PropTypes.func,
 };

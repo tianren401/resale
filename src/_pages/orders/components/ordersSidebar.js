@@ -55,12 +55,10 @@ const sidebarItems = [
   {
     name: 'tickets',
     label: 'My Tickets',
-    url: '/orders/upcoming',
   },
   {
     name: 'past',
     label: 'Past Events',
-    url: '/orders/past',
   },
 ];
 
@@ -71,7 +69,7 @@ export const OrdersSidebar = ({ stage, handleSidebarStage }) => {
         <SidebarItem
           key={`sidebar${index}`}
           active={stage === index}
-          onClick={() => handleSidebarStage(index, item.url)}
+          onClick={() => handleSidebarStage(index)}
         >
           <GroupSvgIcon
             size={18}

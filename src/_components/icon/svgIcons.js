@@ -246,3 +246,40 @@ CloseModalIcon.defaultProps = {
   height: 20,
   fill: 'none',
 };
+
+export const DownloadIcon = ({ width, height, fill }) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox={`0 0 ${width} ${height}`}
+    fill={fill}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      width={width}
+      height={height}
+      rx="19"
+      fill="#6726F1"
+      fillOpacity="0.16"
+    />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M18.05 9.49999V18.6065L14.9218 15.4782C14.5508 15.1072 13.9492 15.1072 13.5782 15.4782C13.2073 15.8492 13.2073 16.4507 13.5782 16.8217L18.3282 21.5717C18.6992 21.9427 19.3008 21.9427 19.6718 21.5717L24.4217 16.8217C24.7927 16.4507 24.7927 15.8492 24.4217 15.4782C24.0508 15.1072 23.4492 15.1072 23.0782 15.4782L19.95 18.6065V9.49999C19.95 8.97532 19.5247 8.54999 19 8.54999C18.4753 8.54999 18.05 8.97532 18.05 9.49999ZM27.55 19.95C27.0253 19.95 26.6 20.3753 26.6 20.9V24.7C26.6 25.2247 26.1747 25.65 25.65 25.65H12.35C11.8253 25.65 11.4 25.2247 11.4 24.7V20.9C11.4 20.3753 10.9747 19.95 10.45 19.95C9.92533 19.95 9.5 20.3753 9.5 20.9V24.7C9.5 26.274 10.776 27.55 12.35 27.55H25.65C27.224 27.55 28.5 26.274 28.5 24.7V20.9C28.5 20.3753 28.0747 19.95 27.55 19.95Z"
+      fill="#6726F1"
+    />
+  </svg>
+);
+
+DownloadIcon.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number,
+  fill: PropTypes.string,
+};
+
+DownloadIcon.defaultProps = {
+  ...defaultSVGProps,
+  width: 38,
+  height: 38,
+  fill: 'none',
+};

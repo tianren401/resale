@@ -6,37 +6,11 @@ import { useHistory } from 'react-router-dom';
 
 import { Flex, FlexItem, H3 } from '_components';
 import { colors, deviceSize } from '_constants';
-import userProfileBackground from '_images/userProfileBackground.png';
 import { OrdersSidebar } from './ordersSidebar';
 import { setSidebarStage } from '_store/orders';
 import { useViewport } from '_hooks';
 
-const StyledBackground = styled.div`
-  width: 100%;
-  min-height: 840px;
-  background-image: ${`url(${userProfileBackground})`},
-    linear-gradient(
-      0deg,
-      rgba(86, 40, 218, 0.45) -100%,
-      rgba(255, 255, 255, 1) 60%
-    );
-  background-repeat: no-repeat, no-repeat;
-  background-size: 100% 100%, 100% 100%;
-  background-position: center, center;
-  padding: 50px 100px;
-  background-blend-mode: screen;
-
-  @media (max-width: ${deviceSize.tablet}px) {
-    background: white;
-    padding: 0;
-    min-height: auto;
-  }
-`;
-
-const Container = styled.div`
-  max-width: 980px;
-  margin: auto;
-`;
+import { StyledBackground, Container } from './styledComponents';
 
 const Header = styled.div`
   display: flex;

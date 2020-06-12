@@ -23,6 +23,7 @@ import {
   SwitchText,
   ErrorMessage,
   SuccessMessage,
+  ExtraTextBlock,
 } from './styledComponents';
 
 const LoginForm = (props) => {
@@ -38,6 +39,17 @@ const LoginForm = (props) => {
     dispatch(setLoginType('Sign Up'));
   };
 
+  const handleModalSwitchSignIn = () => {
+    dispatch(setLoginType('Sign In'));
+  };
+
+  let loginTitle = loginType;
+  let loginActionTitle = loginType;
+
+  if (loginType === 'Find Ticket') {
+    loginTitle = "Let's find your tickets";
+    loginActionTitle = 'Find my Tickets';
+  }
   return (
     <StyledModal>
       <Header>
@@ -47,7 +59,7 @@ const LoginForm = (props) => {
         />
         {isMobileDevice && <div>Back</div>}
       </Header>
-      <Title>{loginType}</Title>
+      <Title>{loginTitle}</Title>
       <StyledForm
         initialValues={{ email: '', password: '', fullName: '', phone: '' }}
         handleSubmit={handleSubmit}
@@ -63,11 +75,21 @@ const LoginForm = (props) => {
                   .matches(phoneRegExp, 'Phone number is not valid')
                   .required('Phone Number is Required.'),
               })
-            : Yup.object().shape({
+            : loginType === 'Sign In'
+            ? Yup.object().shape({
                 email: Yup.string()
                   .email('Please enter correct email.')
                   .required('Email is Required.'),
                 password: Yup.string().required('Password is Required.'),
+              })
+            : Yup.object().shape({
+                phone: Yup.string()
+                  .matches(phoneRegExp, 'Phone number is not valid')
+                  .required('Phone Number is Required.'),
+                email: Yup.string()
+                  .email('Please enter correct email.')
+                  .required('Email is Required.'),
+                orderId: Yup.string().required('Order ID is Required.'),
               })
         }
       >
@@ -78,6 +100,7 @@ const LoginForm = (props) => {
             ) : (
               loginMessage && <ErrorMessage>{loginMessage}</ErrorMessage>
             )}
+
             {loginType === 'Sign Up' && (
               <Field
                 id="fullName"
@@ -98,7 +121,7 @@ const LoginForm = (props) => {
               component={InputField}
               {...props}
             />
-            {loginType === 'Sign Up' && (
+            {(loginType === 'Sign Up' || loginType === 'Find Ticket') && (
               <Field
                 id="phone"
                 type="text"
@@ -109,19 +132,35 @@ const LoginForm = (props) => {
                 {...props}
               />
             )}
-            <Field
-              id="password"
-              type={passwordInputType}
-              width={isMobileDevice ? '100%' : '380px'}
-              height="50px"
-              placeholder="Password"
-              component={PasswordInputField}
-              {...props}
-            />
+            {loginType !== 'Find Ticket' && (
+              <Field
+                id="password"
+                type={passwordInputType}
+                width={isMobileDevice ? '100%' : '380px'}
+                height="50px"
+                placeholder="Password"
+                component={PasswordInputField}
+                {...props}
+              />
+            )}
+
+            {loginType === 'Find Ticket' && (
+              <Field
+                id="orderId"
+                type="text"
+                width={isMobileDevice ? '100%' : '380px'}
+                height="auto"
+                placeholder="Order Id"
+                component={InputField}
+                {...props}
+              />
+            )}
+
             {loginType === 'Sign In' && (
               <ForgotPasswordText>Forgot Password?</ForgotPasswordText>
             )}
-            <Button type="submit">{loading ? '...' : loginType}</Button>
+            <Button type="submit">{loading ? '...' : loginActionTitle}</Button>
+
             {loginType === 'Sign In' && isMobileDevice ? (
               <SwitchButton onClick={handleModalSwitch}>Sign Up</SwitchButton>
             ) : (
@@ -134,6 +173,17 @@ const LoginForm = (props) => {
                   </SwitchText>{' '}
                 </NoAccountText>
               )
+            )}
+
+            {loginType === 'Find Ticket' && (
+              <>
+                <ExtraTextBlock>
+                  <hr></hr>
+                  <span>Or</span>
+                  <hr></hr>
+                </ExtraTextBlock>
+                <Button onClick={handleModalSwitchSignIn}>Sign In</Button>
+              </>
             )}
           </>
         )}

@@ -1,8 +1,13 @@
 import { get } from '_helpers/api';
 
-function getOrderDetails(id) {
+function getOrderDetails(payload) {
+  const { email, phone, orderId } = payload;
   return get({
-    path: `content/order/${id}`,
+    path: `content/order/${orderId}`,
+    parameters: {
+      email,
+      phone,
+    },
   });
 }
 

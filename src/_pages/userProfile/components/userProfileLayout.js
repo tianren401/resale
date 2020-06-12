@@ -25,6 +25,7 @@ const StyledBackground = styled.div`
   background-position: center, center;
   padding: 50px 100px;
   background-blend-mode: screen;
+  height: calc(100vh - 60px);
 `;
 
 const Container = styled.div`

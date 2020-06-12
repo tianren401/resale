@@ -81,7 +81,7 @@ export const DropdownMenu = ({
                 key={index}
                 onClick={() => handleSelect(option)}
                 hasChildren={!!option.children}
-                to={option.key === 'settings' ? '/user' : '#'}
+                to={option.url ? option.url : '#'}
               >
                 {option.label}
                 {showNavigation ? (
@@ -139,7 +139,7 @@ export const DropdownMenu = ({
                 onClick={() => handleSelect(option)}
                 hasChildren={!!option.children}
                 showNavigation={showNavigation}
-                to={option.key === 'settings' ? '/user' : '#'}
+                to={option.url ? option.url : '#'}
               >
                 {!showNavigation && option.label}
                 {showNavigation ? (
