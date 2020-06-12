@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import places from 'places.js';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +24,8 @@ export const Places = ({ defaultRefinement, isHome }) => {
   // create our ref
   const myInput = useRef();
   const autocomplete = useRef(null);
+  const startLocation = useRef(null);
+
   useClickAway({ ref: myInput, handleClickAway });
 
   // set location
@@ -61,6 +64,11 @@ export const Places = ({ defaultRefinement, isHome }) => {
         latitude,
         longitude,
       });
+
+      startLocation.current = {
+        latitude,
+        longitude,
+      };
     }
     return () => {};
   }, [latitude, longitude, error, handleSetLocation, searchLocation]);
@@ -86,7 +94,7 @@ export const Places = ({ defaultRefinement, isHome }) => {
 
       autocomplete.current.on('clear', () => {
         // not use global search geosearch config
-        handleSetLocation(defaultRefinement);
+        handleSetLocation(startLocation?.current);
       });
     }
   }, [handleSetLocation, defaultRefinement]);
@@ -98,7 +106,20 @@ export const Places = ({ defaultRefinement, isHome }) => {
   return (
     <>
       <StyledDropdown isHome={!isMobileDevice ? isHome : ''}>
-        <IconContainer>
+        <IconContainer
+          onClick={() => {
+            // eslint-disable-next-line
+            const clearButton = ReactDOM.findDOMNode(
+              myInput.current
+            ).parentNode.getElementsByClassName('ap-icon-clear')[0];
+
+            if (clearButton) {
+              clearButton.click();
+            } else {
+              handleSetLocation({ ...startLocation, address: null });
+            }
+          }}
+        >
           <LocationIcon
             fill={
               !isMobileDevice && isHome && !isFocused ? '#ffffff' : colors.brand
